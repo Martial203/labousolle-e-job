@@ -1,0 +1,7 @@
+a{
+  @apply hover:text-primary hover:underline hover:font-bold decoration-primary decoration-2 underline-offset-0 hover:underline-offset-8 border-l px-10 w-fit;
+}
+
+button{
+  @apply hover:brightness-110 hover:bg-primary hover:text-secondary;
+}

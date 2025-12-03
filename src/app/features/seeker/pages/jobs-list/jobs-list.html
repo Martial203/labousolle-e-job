@@ -1,0 +1,40 @@
+<div>
+  <div class="bg-light-blue">
+    <div class="container px-16 py-8 mx-auto">
+      <div class="container flex flex-row gap-8 p-4 pl-6 mb-4 divide-x rounded shadow bg-secondary">
+        <div class="flex-1 whitespace-nowrap">
+          <i class="mr-4 text-primary pi pi-search"></i>
+          <input class="h-full" pInputText type="text" name="search-job" id="search-job" placeholder="Titre du poste, Mot-clé, ...">
+        </div>
+        <div class="flex-1 pl-8 whitespace-nowrap">
+          <i class="mr-4 text-primary pi pi-map-marker"></i>
+          <input class="h-full" pInputText type="text" name="search-job" id="search-job" placeholder="Emplacement">
+        </div>
+        <div class="flex-1 pl-8 whitespace-nowrap">
+          <i class="mr-4 text-primary pi pi-map-marker"></i>
+          <input class="h-full" pInputText type="text" name="search-job" id="search-job" placeholder="Sélectionner une catégorie">
+        </div>
+        <div class="flex-1 pl-8 whitespace-nowrap">
+          <p-button class="h-full" icon="pi pi-chevron-down" (click)="onShowFilterModal()">Filtre avancé &nbsp;</p-button>
+        </div>
+        <p-button class="p-4 text-white rounded bg-primary">Trouver un emploi</p-button>
+      </div>   
+    </div>
+  </div>
+  
+  <section class="container px-16 py-12 mx-auto">
+    <div class="grid grid-cols-3 gap-4 mb-12 ">
+      <app-job-card *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]"></app-job-card>
+    </div>
+
+    <div class="flex flex-row items-center justify-center gap-4">
+      <i class="pi pi-arrow-left"></i>
+      <span *ngFor="let i of [0,1,2,3,4,5]" class="p-4 rounded-full bg-primary">{{ i | number:'2.0-0' }}</span>
+      <i class="pi pi-arrow-right"></i>
+    </div>
+  </section>
+
+  <p-dialog [modal]="true" [(visible)]="isFilterModalOpen" [style]="{ width: '25rem' }">
+    <app-advanced-filter></app-advanced-filter>
+  </p-dialog>
+</div>

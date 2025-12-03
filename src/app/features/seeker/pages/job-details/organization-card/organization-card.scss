@@ -1,0 +1,12 @@
+ul{
+  li{
+    @apply flex flex-row justify-between;
+    span:last-child{
+      @apply font-bold;
+    }
+  }
+}
+
+a{
+  @apply bg-light-blue p-4 rounded hover:bg-primary;
+}
