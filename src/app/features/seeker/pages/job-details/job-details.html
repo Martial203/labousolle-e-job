@@ -1,26 +1,26 @@
 <div>
   <div class="py-8 bg-gray">
-    <p class="container px-16 mx-auto">Détails du poste</p>
+    <p class="container px-16 mx-auto text-xl font-bold">Détails du poste</p>
   </div>
 
-  <main class="container px-16 py-16 mx-auto">
+  <main class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
     <div class="flex flex-row items-center justify-between">
       <div class="flex flex-row items-center justify-start gap-4">
-        <figure class="overflow-hidden rounded-full size-32">
+        <figure class="overflow-hidden rounded-full size-24">
           <img src="/assets/images/reddit.png" class="object-cover w-full" alt="">
         </figure>
-        <h1 class="text-4xl font-semibold">Designer UX senior <span>En vedette</span></h1>
+        <h1 class="text-3xl font-semibold">Designer UX senior <span class="relative px-4 py-1 ml-2 text-xs text-red-600 bg-red-100 rounded-full bottom-1">En vedette</span></h1>
       </div>
       <div>
-        <p-button class="p-4 rounded bg-primary text-secondary" icon="pi pi-arrow-right" (click)="onShowSubmitModal()">Postulez Maintenant&nbsp;</p-button>
-        <p class="mt-4">L'offre expire le : <span>30 juin 2021</span></p>
+        <p-button class="block px-6 py-4 mb-2 rounded bg-primary text-secondary" icon="pi pi-arrow-right" (click)="onShowSubmitModal(true)">Postulez Maintenant&nbsp;</p-button>
+        <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">30 juin 2021</span></p>
       </div>
     </div>
 
-    <div class="flex flex-row gap-4">
+    <div class="flex flex-row gap-6">
       <div class="flex-1">
-        <figure class="w-full overflow-hidden">
-          <img src="" class="object-cover w-full" alt="">
+        <figure class="flex flex-row items-center justify-center w-full mb-12 overflow-hidden max-h-[35em] rounded-md">
+          <img src="/assets/images/home-banner.png" class="object-cover w-full" alt="">
         </figure>
         <p-accordion [value]="['0', '1', '2']" [multiple]="true">
           <p-accordion-panel value="0">
@@ -67,36 +67,41 @@
             </p-accordion-content>
           </p-accordion-panel>
         </p-accordion>
+
+        <div class="mx-auto mt-10 w-fit">
+          <p-button class="block px-8 py-4 mb-2 rounded w-fit bg-primary text-secondary" icon="pi pi-arrow-right" (click)="onShowSubmitModal(true)">Postulez Maintenant&nbsp;&nbsp;&nbsp;</p-button>
+          <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">30 juin 2021</span></p>
+        </div>
       </div>
 
       <div class="flex flex-col gap-4">
-        <div class="p-8 border rounded-lg">
-          <h2 class="mb-2 text-2xl">Aperçu du poste</h2>
-          <div class="flex flex-row flex-wrap gap-4">
+        <div class="p-8 border rounded-lg shadow border-gray">
+          <h2 class="mb-6 text-2xl font-semibold">Aperçu du poste</h2>
+          <div class="grid grid-cols-2 gap-6">
             <div>
-              <img src="/assets/icons/calendar-blank.png" alt="">
-              <p>POSTE PUBLIÉ</p>
-              <p>14 juin 2021</p>
+              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <p class="mb-1 text-sm text-gray">POSTE PUBLIÉ :</p>
+              <p class="text-sm font-semibold">14 juin 2021</p>
             </div>
             <div>
-              <img src="/assets/icons/calendar-blank.png" alt="">
-              <p>EXPIRATION DU POSTE</p>
-              <p>14 juillet 2021</p>
+              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <p class="mb-1 text-sm text-gray">EXPIRATION DU POSTE :</p>
+              <p class="text-sm font-semibold">14 juillet 2021</p>
             </div>
             <div>
-              <img src="/assets/icons/calendar-blank.png" alt="">
-              <p>EMPLACEMENT</p>
-              <p>New York, États-Unis</p>
+              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <p class="mb-1 text-sm text-gray">EMPLACEMENT :</p>
+              <p class="text-sm font-semibold">New York, États-Unis</p>
             </div>
             <div>
-              <img src="/assets/icons/calendar-blank.png" alt="">
-              <p>TYPE DE POSTE</p>
-              <p>Temps plein</p>
+              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <p class="mb-1 text-sm text-gray">TYPE DE POSTE :</p>
+              <p class="text-sm font-semibold">Temps plein</p>
             </div>
             <div>
-              <img src="/assets/icons/calendar-blank.png" alt="">
-              <p>EXPERIENCE</p>
-              <p>10-15 ans</p>
+              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <p class="mb-1 text-sm text-gray">EXPERIENCE :</p>
+              <p class="text-sm font-semibold">10-15 ans</p>
             </div>
           </div>
         </div>
@@ -107,21 +112,60 @@
     </div>
   </main>
 
-  <p-dialog [modal]="true" [(visible)]="isSubmitModalOpen" [style]="{ width: '25rem' }">
-    <div class="p-4">
-      <p>Postuler pour le poste: Designer UX Senior</p>
-
-      <p-button class="bg-primary text-secondary" icon="pi pi-arrow-right" iconPos="right" (click)="onAdjustCV()">Adapter mon cv et ma lettre de motivation à cette offre &nbsp;</p-button>
-    </div>  
-  </p-dialog>
-
-  <section>
+  <section class="pb-20">
     <div>
-      <h1 class="container px-16 mx-auto text-3xl">Emplois connexes</h1>
+      <h1 class="container px-16 pb-2 mx-auto text-3xl font-semibold">Emplois connexes</h1>
     </div>
     <div class="container px-16 py-16 mx-auto">
-      
+      <app-job-cards-list></app-job-cards-list>
     </div>
     
   </section>
+
+  <p-dialog [modal]="true" [(visible)]="isSubmitModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
+    <div class="px-6 pb-2">
+      <p class="mb-6 font-semibold">Postuler pour le poste: Designer UX Senior</p>
+
+      <button class="block px-4 py-3 rounded bg-primary text-secondary" (click)="onAdjustCV()">
+        Adapter mon cv et ma lettre de motivation à cette offre <br>
+        <i class="block mt-2 pi pi-arrow-right"></i>
+      </button>
+
+      <p class="mt-2 text-right text-gray"><button class="italic" (click)="onShowDocUploadModal(true)">Passer</button></p>
+    </div>  
+  </p-dialog>
+
+  <p-dialog [modal]="true" [(visible)]="isDocUploadModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
+    <div class="px-6 pb-4">
+      <p class="mb-6 font-semibold">Postuler pour le poste: Designer UX Senior</p>
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="block mb-1" for="">Choisir un CV</label>
+          <div class="relative w-full">
+            <input type="text" class="w-full px-2 py-1 border rounded border-gray" placeholder="Sélectionner...">
+            <i class="absolute top-2.5 right-2.5 pi pi-chevron-down"></i>
+          </div>
+        </div>
+        <div>
+          <label class="block mb-1" for="">Lettre de motivation</label>
+          <div class="relative w-full">
+            <input type="text" class="w-full px-2 py-1 border rounded border-gray" name="" id="" placeholder="Sélectionner...">
+            <i class="absolute top-2.5 right-2.5 pi pi-chevron-down"></i>
+          </div>
+        </div>
+        <div class="flex flex-row justify-between mt-3">
+          <button class="block px-5 py-2 font-semibold rounded bg-light-blue text-primary">Annuler</button>
+          <button class="block px-5 py-2 rounded bg-primary text-secondary" (click)="onShowSuccessfullySubmittedModal(true)">Postuler Maintenant <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>  
+  </p-dialog>
+
+  <p-dialog [modal]="true" [(visible)]="isSuccessfullySubmittedModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
+    <div class="flex flex-col items-center gap-6 px-8 py-8 text-center">
+      <img class="block w-20 mx-auto" src="/assets/icons/check.png" alt="">
+      <h2 class="text-xl font-semibold">🎉 Bonne chance, vous avex postulé !!</h2>
+      <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio adipisci laudantium pariatur, maiores facere rem aspernatur molestias impedit ducimus laboriosam nisi libero dicta repudiandae ullam expedita distinctio iste molestiae autem.</p>
+    </div>  
+  </p-dialog>
 </div>

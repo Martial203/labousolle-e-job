@@ -10,6 +10,8 @@ export class JobsList {
 
   isFilterModalOpen: boolean = false;
 
+  checked: boolean = false;
+
   constructor() { }
 
   onShowFilterModal() {

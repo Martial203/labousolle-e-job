@@ -10,11 +10,23 @@ import { Router } from '@angular/router';
 export class JobDetails {
 
   isSubmitModalOpen: boolean = false;
+  isDocUploadModalOpen: boolean = false;
+  isSuccessfullySubmittedModalOpen: boolean = false;
 
   constructor(private router: Router) { }
 
-  onShowSubmitModal() {
-    this.isSubmitModalOpen = true;
+  onShowSubmitModal(open: boolean) {
+    this.isSubmitModalOpen = open;
+  }
+
+  onShowDocUploadModal(open: boolean) {
+    this.isDocUploadModalOpen = open;
+    this.onShowSubmitModal(false);
+  }
+
+  onShowSuccessfullySubmittedModal(open: boolean) {
+    this.isSuccessfullySubmittedModalOpen = open;
+    this.onShowDocUploadModal(false);
   }
 
   onAdjustCV() {

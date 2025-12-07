@@ -2,6 +2,6 @@ span{
   @apply text-primary
 }
 
-h1{
+h1:not(.title){
   @apply text-4xl font-semibold;
 }

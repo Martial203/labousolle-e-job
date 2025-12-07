@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobCard } from './job-card';
+import { SideMenu } from './side-menu';
 
-describe('JobCard', () => {
-  let component: JobCard;
-  let fixture: ComponentFixture<JobCard>;
+describe('SideMenu', () => {
+  let component: SideMenu;
+  let fixture: ComponentFixture<SideMenu>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JobCard]
+      declarations: [SideMenu]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JobCard);
+    fixture = TestBed.createComponent(SideMenu);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
