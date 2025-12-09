@@ -1,1 +1,21 @@
 <p>categories-management works!</p>
+<button (click)="openModal()" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+  Open Modal
+</button>
+
+<p-dialog 
+  [(visible)]="displayModal" 
+  [modal]="true" 
+  [header]="'Manage Categories'"
+  [style]="{'width': '50vw'}"
+  [breakpoints]="{'960px': '75vw', '640px': '90vw'}"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <app-category-form></app-category-form>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Cancel" (click)="displayModal=false" class="p-button-text"></button>
+    <button pButton label="Save" (click)="saveCategory()" class="p-button-success"></button>
+  </ng-template>
+</p-dialog>

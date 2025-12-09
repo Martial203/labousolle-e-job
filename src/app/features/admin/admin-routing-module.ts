@@ -1,7 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { JobsManagement } from './pages/jobs-management/jobs-management';
+import { NewJob } from './pages/new-job/new-job';
+import { EnterprisesManagement } from './pages/enterprises-management/enterprises-management';
+import { CategoriesManagement } from './pages/categories-management/categories-management';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: 'jobs', pathMatch: 'full' },
+  { path: 'jobs', component: JobsManagement },
+  { path: 'jobs/new', component: NewJob },
+  { path: 'enterprises', component: EnterprisesManagement },
+  { path: 'categories', component: CategoriesManagement }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

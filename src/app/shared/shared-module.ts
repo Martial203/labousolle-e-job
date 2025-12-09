@@ -4,6 +4,7 @@ import { HeaderToolbar } from './components/header-toolbar/header-toolbar';
 import { PrimeNgModule } from './prime-ng/prime-ng-module';
 import { Footer } from './components/footer/footer';
 import { AdminRoutingModule } from "../features/admin/admin-routing-module";
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -20,6 +21,7 @@ import { AdminRoutingModule } from "../features/admin/admin-routing-module";
   exports: [
     HeaderToolbar,
     PrimeNgModule,
+    FormsModule,
     Footer
   ]
 })

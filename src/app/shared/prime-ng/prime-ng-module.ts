@@ -8,6 +8,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AccordionModule } from 'primeng/accordion';
 import { AvatarModule } from 'primeng/avatar';
+import { TableModule } from 'primeng/table';
+import { TextareaModule } from 'primeng/textarea';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { AvatarModule } from 'primeng/avatar';
     RadioButtonModule,
     CheckboxModule,
     AccordionModule,
-    AvatarModule
+    AvatarModule,
+    TableModule,
+    TextareaModule,
+    TooltipModule
   ]
 })
 export class PrimeNgModule { }
