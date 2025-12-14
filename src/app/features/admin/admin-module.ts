@@ -12,6 +12,10 @@ import { Admin } from './admin';
 import { NewJob } from './pages/new-job/new-job';
 import { CategoryForm } from './pages/categories-management/category-form/category-form';
 import { EnterpriseForm } from './pages/enterprises-management/enterprise-form/enterprise-form';
+import { NewEnterprise } from './pages/new-enterprise/new-enterprise';
+import { ContactsForm } from './pages/new-enterprise/contacts-form/contacts-form';
+import { GeneralInfosForm } from './pages/new-enterprise/general-infos-form/general-infos-form';
+import { SocialNetworksForm } from './pages/new-enterprise/social-networks-form/social-networks-form';
 
 
 @NgModule({
@@ -23,7 +27,11 @@ import { EnterpriseForm } from './pages/enterprises-management/enterprise-form/e
     Admin,
     NewJob,
     CategoryForm,
-    EnterpriseForm
+    EnterpriseForm,
+    NewEnterprise,
+    ContactsForm,
+    GeneralInfosForm,
+    SocialNetworksForm
   ],
   imports: [
     CommonModule,

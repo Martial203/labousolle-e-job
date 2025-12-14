@@ -1,0 +1,45 @@
+<form>
+  <h1>Logo et image de bannière</h1>
+  <div>
+    <label for="">Télécharger le logo</label>
+    <figure class="flex flex-row items-center justify-center w-56 overflow-hidden text-center border border-dashed rounded-md bg-opacity-20 border-gray bg-gray">
+      <!-- <img class="object-cover w-full" src="" alt=""> -->
+      <div class="flex flex-col gap-2 p-4">
+        <div><i class="block scale-150 text-primary pi pi-cloud-upload"></i></div>
+        <p class="text-xs font-bold">Parcourir une photo ou déposer en une ici</p>
+        <p class="text-xs text-primary">Une photo de plus de 400 pixels fonctionne mieux. Taille maximale de la photo 5 Mo.</p>
+      </div>
+    </figure>
+  </div>
+  <div>
+    <label for="">Nom de l'entreprise</label>
+    <input type="text" name="" id="">
+  </div>
+  <div>
+    <label for="">A propos de nous</label>
+    <p-editor></p-editor>
+  </div>
+  <div>
+    <div>
+      <label for="">Type d'organisation</label>
+      <input type="text" name="" id="">
+    </div>
+    <div>
+      <label for="">Taille de l'équipe</label>
+      <input type="text" name="" id="">
+    </div>
+    <div>
+      <label for="">Année de création</label>
+      <input type="text" name="" id="">
+    </div>
+    <div>
+      <label for="">Site web de l'entreprise</label>
+      <input type="text" name="" id="">
+    </div>
+  </div>
+  <div>
+    <label for="">Vision de l'entreprise</label>
+    <p-editor></p-editor>
+  </div>
+  <button class="px-6 py-3 rounded text-secondary bg-primary">Enregistrer et suivant <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
+</form>

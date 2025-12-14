@@ -11,6 +11,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { TableModule } from 'primeng/table';
 import { TextareaModule } from 'primeng/textarea';
 import { TooltipModule } from 'primeng/tooltip';
+import { EditorModule } from 'primeng/editor';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { TabsModule } from 'primeng/tabs';
+import { SelectModule } from 'primeng/select';
+import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
@@ -29,7 +35,13 @@ import { TooltipModule } from 'primeng/tooltip';
     AvatarModule,
     TableModule,
     TextareaModule,
-    TooltipModule
+    TooltipModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    EditorModule,
+    TabsModule,
+    SelectModule,
+    TagModule
   ]
 })
 export class PrimeNgModule { }

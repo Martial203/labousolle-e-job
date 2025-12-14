@@ -1,0 +1,6 @@
+label{
+  @apply font-semibold text-sm block mb-2;
+}
+input, textarea{
+  @apply border border-gray rounded-md px-2 py-1 w-full block;
+}

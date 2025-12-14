@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './new-job.scss',
 })
 export class NewJob {
-
+  
 }

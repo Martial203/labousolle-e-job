@@ -1,1 +1,65 @@
-<p>enterprises-management works!</p>
+<div class="w-full h-full p-8 bg-gray-50">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Enterprises</h1>
+    <p-button 
+      label="Add" 
+      icon="pi pi-plus"
+      class="p-button-primary"
+      routerLink="/admin/enterprises/new">
+    </p-button>
+  </div>
+
+  <p-table 
+    [value]="[
+      {name: 'TechCorp Inc', email: 'contact@techcorp.com', phone: '+1 (555) 123-4567'},
+      {name: 'Global Solutions Ltd', email: 'info@globalsolutions.com', phone: '+1 (555) 234-5678'},
+      {name: 'Innovation Labs', email: 'hello@innovationlabs.com', phone: '+1 (555) 345-6789'}
+    ]"
+    [rows]="10"
+    responsiveLayout="scroll"
+    styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name" class="bg-white">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="email" class="bg-white">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="phone" class="bg-white">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+        <th class="bg-white">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-enterprise>
+      <tr>
+        <td class="font-medium">{{ enterprise.name }}</td>
+        <td>{{ enterprise.email }}</td>
+        <td>{{ enterprise.phone }}</td>
+        <td>
+          <div class="flex gap-2">
+            <p-button 
+              icon="pi pi-eye" 
+              [rounded]="true" 
+              [text]="true"
+              severity="info"
+              pTooltip="Details"
+              tooltipPosition="top">
+            </p-button>
+            <p-button 
+              icon="pi pi-pencil" 
+              [rounded]="true" 
+              [text]="true"
+              severity="warn"
+              pTooltip="Edit"
+              tooltipPosition="top">
+            </p-button>
+            <p-button 
+              icon="pi pi-trash" 
+              [rounded]="true" 
+              [text]="true"
+              severity="danger"
+              pTooltip="Delete"
+              tooltipPosition="top">
+            </p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

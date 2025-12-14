@@ -1,0 +1,20 @@
+<form class="flex flex-col gap-4 p-8">
+  <div>
+    <label for="">Addresse</label>
+    <input type="text" name="" id="">
+  </div>
+  <div>
+    <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
+    <label for="">Téléphone</label>
+    <input type="tel" name="" id="">
+  </div>
+  <div>
+    <label for="">Email</label>
+    <input type="email" name="" id="">
+  </div>
+
+  <div>
+    <button class="px-6 py-2 mr-2 text-black rounded bg-gray">Précédent</button>
+    <button class="px-6 py-2 text-white rounded bg-primary">Enregistrer et suivant</button>
+  </div>
+</form>
