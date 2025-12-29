@@ -5,6 +5,7 @@ import { Admin } from './features/admin/admin';
 const routes: Routes = [
   { path: '', loadChildren: () => import('./features/seeker/seeker-module').then(m => m.SeekerModule) },
   { path: 'admin', component: Admin, loadChildren: () => import('./features/admin/admin-module').then(m => m.AdminModule) },
+  { path: 'auth', loadChildren: () => import('./features/auth/auth-module').then(m => m.AuthModule) },
   { path: '**', redirectTo: 'home' }
 ];
 

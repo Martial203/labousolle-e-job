@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { Login } from './features/auth/pages/login/login';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,8 @@ import { Component, signal } from '@angular/core';
 })
 export class App {
   protected readonly title = signal('laboussolle-e-job');
+
+  ngOnInit(): void {
+  }
 }
+

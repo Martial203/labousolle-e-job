@@ -1,0 +1,135 @@
+<div class="flex min-h-screen">
+  <!-- Left Panel -->
+  <div class="flex items-center justify-center w-full p-8 text-white lg:w-5/12 bg-gradient-to-br from-blue-600 to-blue-800">
+    <div class="text-center">
+       <p class="text-lg lg:text-xl opacity-90">Mot de passe oublié.</p>
+    </div>
+  </div>
+  
+  <!-- Right Panel -->
+  <div class="flex items-center justify-center w-full p-8 bg-white lg:w-7/12">
+    <div *ngIf="success; else signUp" class="text-center">
+      <img src="/assets/images/success-icon.svg" alt="success">
+      <h2>Félicitations</h2>
+      <p>Tu as désormais un compte chez nous.</p>
+    </div>
+    
+    <ng-template #signUp>
+      <div class="w-full max-w-md">
+        <p>Allons-y commençons</p>
+        <h2 class="mb-8 text-2xl font-semibold text-gray-800">Créer un Compte</h2>
+        
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          
+          <!-- Name Field -->
+          <div class="mb-5">
+            <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Nom</label>
+            <input 
+              pInputText
+              type="text" 
+              id="name" 
+              name="name"
+              class="w-full"
+              placeholder="Johnson Doe"
+              required
+            >
+          </div>
+
+          <!-- First Name Field -->
+          <div class="mb-5">
+            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-700">Prénom</label>
+            <input 
+              pInputText
+              type="text" 
+              id="firstName" 
+              name="firstName"
+              class="w-full"
+              placeholder="John"
+              required
+            >
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-5">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email</label>
+            <input 
+              pInputText
+              type="email" 
+              id="email" 
+              name="email"
+              class="w-full"
+              placeholder="johndoe@exemple.com"
+              required
+            >
+          </div>
+          
+          <!-- Password Field -->
+          <div class="mb-5">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Password</label>
+            <p-password
+              type="password" 
+              id="password" 
+              name="password"
+              class="w-full"
+              placeholder="••••••••••••••"
+              [toggleMask]="true"
+              required
+            ></p-password>
+          </div>
+          
+          <!-- Confirm Password Field -->
+          <div class="mb-5">
+            <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+            <p-password
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword"
+              class="w-full"
+              placeholder="••••••••••••••"
+              [toggleMask]="true"
+              [feedback]="false"
+              required
+            ></p-password>
+          </div>
+          
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-2">
+              <p-checkbox
+                id="remember" 
+                name="remember"
+                class="w-4 h-4 mr-1 text-blue-600 border-gray-300 rounded cursor-pointer focus:ring-blue-500"
+              ></p-checkbox>
+              <div>
+                <label for="remember" class="text-sm text-gray-700 cursor-pointer select-none">
+                  En créant ce compte, cela signifie que vous acceptez nos 
+                  <a href="#" class="text-blue-600 hover:underline">Conditions d'utilisation</a> et la 
+                  <a href="#" class="text-blue-600 hover:underline">Politique de confidentialité</a>.
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Submit Button -->
+          <button 
+            pButton
+            type="submit" 
+            class="w-full bg-primary"
+            severity="info"
+            (click)="success=true"
+          >
+            Créer
+          </button>
+          
+          <!-- Sign Up Link -->
+          <div class="mt-6 text-center">
+            <span class="text-sm text-gray-600">J'ai déjà un compte ? </span>
+            <a routerLink="/auth/login" class="text-sm font-medium text-blue-600 transition-colors hover:text-blue-800 hover:underline">
+              LOGIN HERE
+            </a>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+</div>

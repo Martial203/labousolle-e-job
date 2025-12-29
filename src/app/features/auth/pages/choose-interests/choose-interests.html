@@ -1,0 +1,43 @@
+<div class="flex min-h-screen">
+  <!-- Left Panel -->
+  <div class="flex items-center justify-center w-full p-8 text-white lg:w-5/12 bg-gradient-to-br from-blue-600 to-blue-800">
+    <div class="text-center">
+      <h1 class="mb-4 text-4xl font-bold lg:text-5xl">Ma personne, nous sommes ravi de t'accueillir parmi nous...</h1>
+       <p class="text-lg lg:text-xl opacity-90">Nous comprenons que choisir une orientation académique et professionnelle est une étape importante de ta vie, et nous sommes là pour te guider tout au long de ce processus.</p>
+    </div>
+  </div>
+  
+  <!-- Right Panel -->
+  <div class="flex items-center justify-center w-full p-8 bg-white lg:w-7/12">
+    <div class="w-full max-w-md">
+      <p>Vas-y tu peux tout nous dire</p>
+      <h2 class="mb-8 text-2xl font-semibold text-gray-800">Tes centres d'intérêts</h2>
+      
+      <form #loginForm="ngForm">
+        
+        <div class="flex flex-row flex-wrap gap-2 mb-10">
+          <button class="block" pButton outlined *ngFor="let i of [0,1,2,3,4,5]">Administration publique</button>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex flex-row gap-8 text-center">
+          <button 
+            pButton
+            class="w-36"
+            type="submit" 
+          >
+            Créer
+          </button>
+          <button 
+            pButton
+            class="w-36"
+            severity="info"
+            type="submit" 
+          >
+            Suivant
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { TabsModule } from 'primeng/tabs';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
+import { PasswordModule } from 'primeng/password';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { TagModule } from 'primeng/tag';
     EditorModule,
     TabsModule,
     SelectModule,
-    TagModule
+    TagModule,
+    PasswordModule
   ]
 })
 export class PrimeNgModule { }

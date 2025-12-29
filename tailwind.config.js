@@ -9,6 +9,7 @@ export default {
         "secondary": "#FFFFFF",
         "light-blue": "#F0F9FD",
         "gray": "#9199A3",
+        "input-border": "#ACACAC",
         "muted-icon-background": "#E7F0FA",
       }
     },
