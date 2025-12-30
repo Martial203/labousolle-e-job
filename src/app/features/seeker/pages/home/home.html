@@ -13,7 +13,7 @@
               <i class="mr-4 text-primary pi pi-map-marker"></i>
               <input class="h-full text-sm border-none outline-none" type="text" name="search-job" id="search-job" placeholder="Votre emplacement">
             </div>
-            <p-button severity="info">Rechercher</p-button>
+            <p-button class="border-none" severity="info">Rechercher</p-button>
           </div>
           <p class="text-sm"><label class="text-gray">Suggestion :</label> Designer, Programmation, <span class="font-semibold">Marketing numérique</span>, etc</p>
         </div>
@@ -41,7 +41,7 @@
   <section class="container pt-16 pb-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Recommandations</h1>
-      <p-button class="flex flex-row items-center px-6 font-semibold border rounded text-primary" icon="pi pi-arrow-right" iconPos="right" variant="outlined">Voir tout &nbsp;</p-button>
+      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -51,7 +51,7 @@
   <section class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emploi vedettes</h1>
-      <p-button class="flex flex-row items-center px-6 font-semibold border rounded text-primary" icon="pi pi-arrow-right" iconPos="right" variant="outlined">Voir tout &nbsp;</p-button>
+      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -61,7 +61,7 @@
   <section class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emplois recents</h1>
-      <p-button class="flex flex-row items-center px-6 font-semibold border rounded text-primary" icon="pi pi-arrow-right" iconPos="right" variant="outlined">Voir tout &nbsp;</p-button>
+      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -71,7 +71,7 @@
   <section class="container pt-12 pb-20 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Catégories populaires</h1>
-      <p-button class="flex flex-row items-center px-6 font-semibold border rounded text-primary" icon="pi pi-arrow-right" iconPos="right" variant="outlined">Voir tout &nbsp;</p-button>
+      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div class="grid grid-cols-4 gap-x-6 gap-y-8">
       <div *ngFor="let category of categories" class="flex flex-row items-center justify-start gap-4 p-4 rounded hover:scale-[1.01] hover:shadow-xl hover:cursor-pointer group">

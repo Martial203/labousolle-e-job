@@ -5,6 +5,7 @@ import { PrimeNgModule } from './prime-ng/prime-ng-module';
 import { Footer } from './components/footer/footer';
 import { AdminRoutingModule } from "../features/admin/admin-routing-module";
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     PrimeNgModule,
     AdminRoutingModule
 ],

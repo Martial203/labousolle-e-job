@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Login } from './features/auth/pages/login/login';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,17 @@ import { Login } from './features/auth/pages/login/login';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('laboussolle-e-job');
+
+  showHeader: boolean = true;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      const currentRoute = this.router.url;
+      this.showHeader = !currentRoute.startsWith('/auth');
+    });
   }
+
 }
 

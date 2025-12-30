@@ -30,6 +30,6 @@ export class JobDetails {
   }
 
   onAdjustCV() {
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('/cv-builder')
   }
 }

@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class ChooseInterests {
 
+  selectedInterests: Set<number> = new Set<number>();
+
+  constructor() {}
+
+  toggleInterest(index: number): void {
+    if(!this.selectedInterests.delete(index)) this.selectedInterests.add(index);
+  }
+
 }

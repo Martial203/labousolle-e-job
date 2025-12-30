@@ -6,7 +6,8 @@ import { JobDetails } from './pages/job-details/job-details';
 import { CvBuilder } from './pages/cv-builder/cv-builder';
 
 const routes: Routes = [
-  { path: '', component: Home },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: Home },
   { path: 'jobs', component: JobsList },
   { path: 'jobs/:id', component: JobDetails },
   { path: 'cv-builder', component: CvBuilder },

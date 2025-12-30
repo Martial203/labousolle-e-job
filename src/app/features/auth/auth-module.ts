@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared-module';
 import { SignUp } from './pages/sign-up/sign-up';
 import { ForgottenPassword } from './pages/forgotten-password/forgotten-password';
 import { ChooseInterests } from './pages/choose-interests/choose-interests';
+import { Auth } from './auth/auth';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ChooseInterests } from './pages/choose-interests/choose-interests';
     Login,
     SignUp,
     ForgottenPassword,
-    ChooseInterests
+    ChooseInterests,
+    Auth
   ],
   imports: [
     CommonModule,

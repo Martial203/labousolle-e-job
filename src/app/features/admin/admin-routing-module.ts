@@ -7,7 +7,6 @@ import { CategoriesManagement } from './pages/categories-management/categories-m
 import { NewEnterprise } from './pages/new-enterprise/new-enterprise';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'jobs', pathMatch: 'full' },
   { path: 'jobs', component: JobsManagement },
   { path: 'jobs/new', component: NewJob },
   { path: 'enterprises', component: EnterprisesManagement },
