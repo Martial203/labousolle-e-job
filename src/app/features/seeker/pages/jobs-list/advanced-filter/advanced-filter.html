@@ -1,37 +1,21 @@
 <div>
-  <app-search-bar></app-search-bar>  
-  <div class="flex flex-row divide-x divide-gray">
-    <div class="flex-1 px-6">
-      <h2 class="mb-3">Experience</h2>
-      <ul class="flex flex-col gap-2 text-sm">
-        <li *ngFor="let i of [0,1,2,3,4,5,6,7]">
-          <!-- <p-radiobutton></p-radiobutton> -->
-          <label for="" class="ml-2">Débutant</label>
+  <app-search-bar (onFilterRequested)="onClose()" [filtering]="true"></app-search-bar>  
+  <div class="flex flex-row h-full mt-4 divide-x divide-divide-color">
+    <div class="flex-1 px-6 pb-4">
+      <h2 class="mb-4 text-lg font-semibold">Experience</h2>
+      <ul class="flex flex-col gap-4 text-sm">
+        <li *ngFor="let experience of experiences">
+          <p-checkbox name="{{ experience }}" [binary]="true"></p-checkbox>
+          <label for="{{ experience }}" class="ml-2">{{ experience }}</label>
         </li>
       </ul>
     </div>
-    <div class="flex-1 px-6">
-      <h2 class="mb-3">Type de poste</h2>
-      <ul class="flex flex-col gap-2 text-sm">
-        <li class="flex items-center">
-          <p-checkbox name="pizza" />
-          <label for="ingredient4" class="ml-2"> Tous </label>
-        </li>
-        <li class="flex items-center">
-          <p-checkbox name="pizza" />
-          <label for="ingredient4" class="ml-2"> Emploi </label>
-        </li>
-        <li class="flex items-center">
-          <p-checkbox name="pizza" />
-          <label for="ingredient4" class="ml-2"> Stage </label>
-        </li>
-        <li class="flex items-center">
-          <p-checkbox name="pizza" />
-          <label for="ingredient4" class="ml-2"> Freelance </label>
-        </li>
-        <li class="flex items-center">
-          <p-checkbox name="pizza" />
-          <label for="ingredient4" class="ml-2"> Bénévolat </label>
+    <div class="flex-1 px-8">
+      <h2 class="mb-4 text-lg font-semibold">Type de poste</h2>
+      <ul class="flex flex-col gap-4 text-sm">
+        <li class="flex items-center" *ngFor="let contract of contractTypes">
+          <p-checkbox name="{{ contract }}" [binary]="true"></p-checkbox>
+          <label for="{{ contract }}" class="ml-2"> {{ contract }} </label>
         </li>
       </ul>
     </div>

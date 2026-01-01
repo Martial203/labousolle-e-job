@@ -8,6 +8,7 @@ import { SignUp } from './pages/sign-up/sign-up';
 import { ForgottenPassword } from './pages/forgotten-password/forgotten-password';
 import { ChooseInterests } from './pages/choose-interests/choose-interests';
 import { Auth } from './auth/auth';
+import { NewPassword } from './pages/new-password/new-password';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { Auth } from './auth/auth';
     SignUp,
     ForgottenPassword,
     ChooseInterests,
-    Auth
+    Auth,
+    NewPassword
   ],
   imports: [
     CommonModule,

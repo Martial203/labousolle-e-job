@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,33 +19,11 @@ export class SignUp {
 
   success: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   onSubmit(): void {
-    // Vérification que les mots de passe correspondent
-    if (this.signupData.password !== this.signupData.confirmPassword) {
-      console.error('Les mots de passe ne correspondent pas');
-      // Vous pouvez afficher un message d'erreur à l'utilisateur
-      // Par exemple avec PrimeNG MessageService
-      return;
-    }
-
-    console.log('Signup attempt:', {
-      name: this.signupData.name,
-      surname: this.signupData.surname,
-      email: this.signupData.email,
-      password: '***',
-      acceptTerms: this.signupData.acceptTerms
-    });
-    
-    // Ajoutez ici votre logique d'inscription
-    // Par exemple: this.authService.signup(this.signupData)
+    this.success = true;
+    setTimeout(() => this.router.navigateByUrl('/auth/choose-interests'), 3000)
   }
 
-  onGoogleSignUp(): void {
-    console.log('Google sign-up clicked');
-    
-    // Ajoutez ici votre logique d'inscription Google
-    // Par exemple: this.authService.signUpWithGoogle()
-  }
 }

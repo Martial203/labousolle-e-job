@@ -10,17 +10,15 @@
       <app-job-cards-list></app-job-cards-list>
     </div>
 
-    <div class="flex flex-row items-center justify-center gap-4 mb-8 text-sm">
+    <div class="flex flex-row items-center justify-center gap-4 mt-4 mb-20 text-sm">
       <button class="mr-2 rounded-full bg-light-blue px-3 py-2.5"><i class="pi pi-arrow-left text-primary"></i></button>
-      <span *ngFor="let i of [1,2,3,4,5]" class="flex hover:shadow flex-row cursor-pointer items-center justify-center rounded-full size-10 {{ i===1 ? 'bg-primary text-secondary hover:brightness-110' : 'hover:bg-gray'}}">{{ i | number:'2.0-0' }}</span>
+      <span *ngFor="let i of [1,2,3,4,5]" class="flex hover:shadow flex-row cursor-pointer items-center justify-center rounded-full size-10 {{ i===1 ? 'bg-primary text-secondary hover:brightness-110' : 'hover:bg-gray hover:bg-opacity-50 hover:font-semibold'}}">{{ i | number:'2.0-0' }}</span>
       <button class="px-3 ml-2 rounded-full py-2.5 hover:bg-light-blue"><i class="pi pi-arrow-right text-primary"></i></button>
     </div>
   </section>
 
   <p-dialog [modal]="true" [(visible)]="isFilterModalOpen" [style]="{ width: 'auto', background: '#ffffff' }">
-    <div class="px-6 pt-2 pb-6 shadow-xl rounded-l6">
-      <app-advanced-filter></app-advanced-filter>
-    </div>
+    <app-advanced-filter (closeFilter)="onShowFilterModal()"></app-advanced-filter>
   </p-dialog>
 
   

@@ -18,7 +18,10 @@ import { TabsModule } from 'primeng/tabs';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { PasswordModule } from 'primeng/password';
-
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputOtpModule } from 'primeng/inputotp';
+import { MessageModule } from 'primeng/message';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
   declarations: [],
@@ -43,7 +46,11 @@ import { PasswordModule } from 'primeng/password';
     TabsModule,
     SelectModule,
     TagModule,
-    PasswordModule
+    PasswordModule,
+    FloatLabelModule,
+    InputOtpModule,
+    MessageModule,
+    ToolbarModule
   ]
 })
 export class PrimeNgModule { }

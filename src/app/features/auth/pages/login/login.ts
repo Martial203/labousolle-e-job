@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,27 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './login.scss',
 })
 export class Login {
-  loginData = {
-    email: '',
-    password: '',
-    remember: false
-  };
 
-  onSubmit(): void {
+  constructor(private router: Router) {}
+
+  onSubmit(credentials: { email: string, password: string }): void {
     console.log('Login attempt:', {
-      email: this.loginData.email,
-      password: '***',
-      remember: this.loginData.remember
+      email: credentials.email,
+      password: credentials.password
     });
-    
-    // Ajoutez ici votre logique de connexion
-    // Par exemple: this.authService.login(this.loginData.email, this.loginData.password)
-  }
 
-  onGoogleSignIn(): void {
-    console.log('Google sign-in clicked');
-    
-    // Ajoutez ici votre logique de connexion Google
-    // Par exemple: this.authService.signInWithGoogle()
+    this.router.navigateByUrl('/home');
   }
 }

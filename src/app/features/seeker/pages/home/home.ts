@@ -15,6 +15,8 @@ export class Home {
 
   responsiveOptions: any[] | undefined;
 
+  interests!: string[];
+
   constructor() {}
 
   ngOnInit(): void {
@@ -22,6 +24,7 @@ export class Home {
     this.trendingJobs = [0,1,2,3,4,5];
     this.recentJobs = [0,1,2,3,4,5];
     this.categories = [0,1,2,3,4,5,6,7];
+    this.interests = ['Designer', 'Programmation', 'Marketing numérique'];
 
     this.responsiveOptions = [
       {

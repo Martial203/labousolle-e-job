@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,6 +9,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class SearchBar {
 
   @Output() onFilterRequested: EventEmitter<void> = new EventEmitter<void>();
+  @Input() filtering: boolean = false;
+
   constructor() { }
 
   onShowFilterModal() {

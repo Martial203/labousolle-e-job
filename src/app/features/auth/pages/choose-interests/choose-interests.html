@@ -16,13 +16,13 @@
       <form #loginForm="ngForm">
         
         <div class="flex flex-row flex-wrap gap-2 mb-10">
-          <button class="block" pButton [outlined]="!selectedInterests.has(i)" [icon]="selectedInterests.has(i) ? 'pi pi-check' : ''" [severity]="selectedInterests.has(i) ? 'info' : 'secondary'" *ngFor="let i of [0,1,2,3,4,5]" (click)="toggleInterest(i)">Administration publique</button>
+          <button class="block {{ selectedInterests.has(i) ? 'selected' : '' }}" severity="secondary" pButton [outlined]="!selectedInterests.has(i)" [icon]="selectedInterests.has(i) ? 'pi pi-check' : ''" *ngFor="let interest of interests; let i = index" (click)="toggleInterest(i)">{{ interest }}</button>
         </div>
         
         <!-- Submit Button -->
         <div class="flex flex-row gap-8 text-center">
           <button pButton class="font-medium w-36" type="submit" severity="secondary" routerLink="/home">Passer</button>
-          <button pButton class="font-medium w-36" severity="info" type="submit" routerLink="/home">Suivant</button>
+          <button pButton class="font-medium w-36" severity="info" type="submit" (click)="onSubmit()">Suivant</button>
         </div>
       </form>
     </div>

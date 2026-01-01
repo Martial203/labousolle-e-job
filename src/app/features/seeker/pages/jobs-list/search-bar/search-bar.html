@@ -1,4 +1,4 @@
-<div class="container flex flex-row gap-8 p-4 pl-6 mb-4 divide-x rounded shadow divide-gray bg-secondary">
+<div class="container flex flex-row gap-3 p-4 pl-5 mb-4 divide-x rounded shadow divide-divide-color bg-secondary">
   <div class="flex-1 whitespace-nowrap">
     <i class="mr-4 text-primary pi pi-search"></i>
     <input class="h-full border-none outline-none" type="text" name="search-job" id="search-job" placeholder="Titre du poste, Mot-clé, ...">
@@ -11,8 +11,8 @@
     <i class="mr-4 text-primary pi pi-map-marker"></i>
     <input class="h-full border-none outline-none" type="text" name="search-job" id="search-job" placeholder="Sélectionner une catégorie">
   </div>
-  <div class="flex flex-row items-center flex-1 pl-8 whitespace-nowrap">
-    <button class="block h-full" (click)="onShowFilterModal()">Filtre avancé  <i class="ml-2 align-middle pi pi-chevron-down"></i></button>
+  <div class="flex flex-row items-center flex-1 pl-8 mr-4 whitespace-nowrap">
+    <button class="block h-full {{ filtering ? 'text-primary' : '' }}" (click)="onShowFilterModal()">Filtre avancé  <i class="ml-2 align-middle pi {{ filtering ? 'pi-chevron-up' : 'pi-chevron-down' }} "></i></button>
   </div>
-  <p-button class="p-4 text-white rounded bg-primary">Trouver un emploi</p-button>
+  <p-button class="mr-1 text-white border-none rounded whitespace-nowrap" severity="info">Trouver un emploi</p-button>
 </div> 

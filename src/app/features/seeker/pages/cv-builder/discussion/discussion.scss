@@ -1,0 +1,11 @@
+div.message{
+  div.content{
+    @apply text-gray shadow;
+  }
+}
+div.me{
+  @apply self-end;
+  div.content{
+    @apply bg-primary text-secondary;
+  }
+}

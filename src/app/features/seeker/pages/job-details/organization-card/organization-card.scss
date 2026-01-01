@@ -2,7 +2,7 @@ ul{
   li{
     @apply flex flex-row justify-between;
     span:last-child{
-      @apply font-bold;
+      @apply font-semibold;
     }
   }
 }

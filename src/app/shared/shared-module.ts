@@ -4,7 +4,7 @@ import { HeaderToolbar } from './components/header-toolbar/header-toolbar';
 import { PrimeNgModule } from './prime-ng/prime-ng-module';
 import { Footer } from './components/footer/footer';
 import { AdminRoutingModule } from "../features/admin/admin-routing-module";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
@@ -24,6 +24,7 @@ import { RouterModule } from '@angular/router';
     HeaderToolbar,
     PrimeNgModule,
     FormsModule,
+    ReactiveFormsModule,
     Footer
   ]
 })

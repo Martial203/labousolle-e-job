@@ -18,45 +18,45 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
     
     <ng-template #signUp>
       <div class="w-full max-w-md">
-        <p>Allons-y commençons</p>
+        <p class="text-sm">Allons-y commençons</p>
         <h2 class="mb-8 text-2xl font-semibold text-gray-800">Créer un Compte</h2>
         
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <form (ngSubmit)="onSubmit()" #signUpForm="ngForm" class="flex flex-col gap-6">
           
           <!-- Name Field -->
-          <div class="mb-5">
+          <p-floatlabel variant="on">
             <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Nom</label>
-            <input pInputText type="text" id="name" name="name" class="w-full" placeholder="Johnson Doe" required>
-          </div>
+            <input pInputText type="text" id="name" name="name" class="w-full" placeholder="Johnson Doe" ngModel required>
+          </p-floatlabel>
 
           <!-- First Name Field -->
-          <div class="mb-5">
+          <p-floatlabel variant="on">
             <label for="firstName" class="block mb-2 text-sm font-medium text-gray-700">Prénom</label>
-            <input pInputText type="text" id="firstName" name="firstName" class="w-full" placeholder="John" required>
-          </div>
+            <input pInputText type="text" id="firstName" name="firstName" class="w-full" placeholder="John" ngModel required>
+          </p-floatlabel>
 
           <!-- Email Field -->
-          <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email</label>
-            <input pInputText type="email" id="email" name="email" class="w-full" placeholder="johndoe@exemple.com" required>
-          </div>
+          <p-floatlabel variant="on">
+            <input type="email" id="email" name="email" pInputText [invalid]="email.invalid && email.touched" placeholder="johndoe@exemple.com" autocomplete="email" ngModel #email="ngModel" class="w-full" required email>
+            <label for="email" class="mb-2 text-sm font-medium text-gray-700 ">Email</label>
+          </p-floatlabel>
           
           <!-- Password Field -->
-          <div class="mb-5">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Password</label>
-            <p-password type="password" id="password" name="password" class="w-full" placeholder="••••••••••••••" [toggleMask]="true" required></p-password>
-          </div>
+          <p-floatlabel variant="on">
+            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="••••••••••••••" [toggleMask]="true" ngModel required></p-password>
+            <label for="password" class="mb-2 text-sm font-medium text-gray-700">Password</label>
+          </p-floatlabel>
           
           <!-- Confirm Password Field -->
-          <div class="mb-5">
-            <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
-            <p-password type="password" id="confirmPassword" name="confirmPassword" class="w-full"  placeholder="••••••••••••••" [toggleMask]="true" [feedback]="false" required></p-password>
-          </div>
+          <p-floatlabel variant="on">
+            <p-password type="password" inputStyleClass="w-full" id="confirmPassword" name="confirmPassword" class="w-full"  placeholder="••••••••••••••" [toggleMask]="true" [feedback]="false" ngModel required></p-password>
+            <label for="confirmPassword" class="mb-2 text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+          </p-floatlabel>
           
           <!-- Remember Me & Forgot Password -->
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
-              <p-checkbox id="remember" name="remember" class="w-4 h-4 mr-1 text-blue-600 border-gray-300 rounded cursor-pointer focus:ring-blue-500"></p-checkbox>
+              <p-checkbox id="remember" name="remember" class="w-4 h-4 mr-1 text-blue-600 border-gray-300 rounded cursor-pointer focus:ring-blue-500" [binary]="true" ngModel required></p-checkbox>
               <div>
                 <label for="remember" class="text-sm text-gray-700 cursor-pointer select-none">
                   En créant ce compte, cela signifie que vous acceptez nos 
@@ -68,9 +68,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           </div>
           
           <!-- Submit Button -->
-          <button pButton type="submit" class="w-full bg-primary" severity="info" (click)="success=true">
-            Créer
-          </button>
+          <button pButton type="submit" class="w-full bg-primary" severity="info" [disabled]="signUpForm.invalid">Créer</button>
           
           <!-- Sign Up Link -->
           <div class="mt-6 text-center">

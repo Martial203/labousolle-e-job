@@ -12,6 +12,8 @@ export default {
         "light-blue": "#F0F9FD",
         "gray": "#9199A3",
         "input-border": "#ACACAC",
+        "input-background": "#F0F1F2",
+        "divide-color": "#9199A360",
         "muted-icon-background": "#E7F0FA",
       }
     },

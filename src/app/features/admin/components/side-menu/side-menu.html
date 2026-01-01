@@ -1,8 +1,31 @@
-<div>
-  <ul>
-    <a routerLink="jobs/new"><li>Publier une offre d'emploi</li></a>
-    <a routerLink="jobs"><li>Emplois</li></a>
-    <a routerLink="categories"><li>Categories</li></a>
-    <a routerLink="enterprises"><li>Entreprises</li></a>
-  </ul>
+<div class="w-64 min-h-screen p-6 bg-gray-100 shadow-lg">
+  <nav class="space-y-2">
+    <a routerLink="jobs/new" 
+       routerLinkActive="active" 
+       class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-divide-color">
+      <i class="text-lg pi pi-plus"></i>
+      <span>Publier une offre d'emploi</span>
+    </a>
+    
+    <a routerLink="jobs" 
+       routerLinkActive="active" 
+       class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-divide-color">
+      <i class="text-lg pi pi-briefcase"></i>
+      <span>Emplois</span>
+    </a>
+    
+    <a routerLink="categories" 
+       routerLinkActive="active" 
+       class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-divide-color">
+      <i class="text-lg pi pi-list"></i>
+      <span>Categories</span>
+    </a>
+    
+    <a routerLink="enterprises" 
+       routerLinkActive="active" 
+       class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-divide-color">
+      <i class="text-lg pi pi-building"></i>
+      <span>Entreprises</span>
+    </a>
+  </nav>
 </div>

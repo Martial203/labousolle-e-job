@@ -15,7 +15,7 @@ export class JobsList {
   constructor() { }
 
   onShowFilterModal() {
-    this.isFilterModalOpen = true;
+    this.isFilterModalOpen = !this.isFilterModalOpen;
     console.log('Filter modal opened');
   }
 }

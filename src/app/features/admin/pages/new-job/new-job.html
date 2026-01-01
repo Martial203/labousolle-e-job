@@ -1,17 +1,17 @@
-<form class="flex flex-col gap-6 pb-16">
-  <h1 class="text-xl font-semibold">Publier une offre d'emploi</h1>
+<form class="flex flex-col gap-6 px-6 pb-16">
+  <h1 class="text-2xl font-semibold">Publier une offre d'emploi</h1>
   <div class="flex flex-col gap-4">
     <div>
       <label for="">Intitulé du poste</label>
-      <input placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
+      <input pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
     </div>
     <div>
       <label for="">Tags</label>
-      <input placeholder="Mots-clés du poste, tags, etc..." type="text">
+      <input pInputText placeholder="Mots-clés du poste, tags, etc..." type="text">
     </div>
     <div>
       <label for="">Adresse mail pour postuler</label>
-      <input placeholder="contact@gmail.com" type="email">
+      <input pInputText placeholder="contact@gmail.com" type="email">
     </div>
     <div>
       <h2>Salaire</h2>
@@ -19,16 +19,16 @@
         <div>
           <label for="">Salaire minimum</label>
           <!-- <input placeholder="Salaire minimum..." type="text"> -->
-          <p-inputgroup class="pl-0.5 pr-2 border rounded-lg border-gray">
-            <input class="border-none" placeholder="Salaire minimum..." />
+          <p-inputgroup>
+            <input pInputText class="border-none" placeholder="Salaire minimum..." />
             <p-inputgroup-addon cl>FCFA</p-inputgroup-addon>
           </p-inputgroup>
         </div>
         <div>
           <label for="">Salaire maximum</label>
           <!-- <input placeholder="Salaire maximum..." type="text"> -->
-          <p-inputgroup class="pl-0.5 pr-2 border rounded-lg border-gray">
-            <input class="border-none" placeholder="Salaire maximun..." />
+          <p-inputgroup>
+            <input pInputText class="border-none" placeholder="Salaire maximun..." />
             <p-inputgroup-addon cl>FCFA</p-inputgroup-addon>
           </p-inputgroup>
         </div>
@@ -39,32 +39,32 @@
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label for="">Éducation</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
         <div>
           <label for="">Expérience</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
         <div>
           <label for="">Type de poste</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
         <div>
           <label for="">Postes disponibles</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
         <div>
           <label for="">Date d'expiration</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
         <div>
           <label for="">Niveau du poste</label>
-          <input type="text">
+          <input pInputText type="text">
         </div>
       </div>
       <div>
         <label for="">Lieu</label>
-        <input type="text">
+        <input pInputText type="text">
       </div>
     </div>
     <div>

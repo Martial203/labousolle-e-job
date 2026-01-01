@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-20">
         <h1 class="text-[5em] font-semibold leading-[1.3] title">Trouve ton <br><span>emploi</span> de <span>rêve</span></h1>
         <div>
-          <div class="flex flex-row gap-8 p-4 pl-6 mb-6 divide-x rounded-md shadow divide-gray border-gray bg-secondary">
+          <div class="flex flex-row gap-8 p-4 pl-6 mb-6 divide-x rounded-md shadow divide-divide-color border-gray bg-secondary">
             <div class="whitespace-nowrap">
               <i class="mr-4 text-primary pi pi-search"></i>
               <input class="h-full text-sm border-none outline-none" type="text" name="search-job" id="search-job" placeholder="Titre du poste, Mot-clé, ...">
@@ -15,7 +15,7 @@
             </div>
             <p-button class="border-none" severity="info">Rechercher</p-button>
           </div>
-          <p class="text-sm"><label class="text-gray">Suggestion :</label> Designer, Programmation, <span class="font-semibold">Marketing numérique</span>, etc</p>
+          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest }}, </a> etc</p>
         </div>
       </div>
       <div class="relative">
@@ -41,7 +41,7 @@
   <section class="container pt-16 pb-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Recommandations</h1>
-      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -51,7 +51,7 @@
   <section class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emploi vedettes</h1>
-      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -61,7 +61,7 @@
   <section class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emplois recents</h1>
-      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
       <app-job-cards-list></app-job-cards-list>
@@ -71,7 +71,7 @@
   <section class="container pt-12 pb-20 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Catégories populaires</h1>
-      <button class="px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div class="grid grid-cols-4 gap-x-6 gap-y-8">
       <div *ngFor="let category of categories" class="flex flex-row items-center justify-start gap-4 p-4 rounded hover:scale-[1.01] hover:shadow-xl hover:cursor-pointer group">
@@ -89,9 +89,9 @@
   <section class="bg-gray">
     <div class="container pt-20 mx-auto pb-28 px-14">
       <h1 class="mb-12 text-center">Témoignages des clients</h1>
-      <p-carousel [value]="[0,1,2,3,4,5,6,7,8]" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
+      <p-carousel [value]="[0,1,2,3,4,5,6,7,8]" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
         <ng-template let-product #item>
-          <div class="mx-4"><app-testimony></app-testimony></div>
+          <div class="mx-4 mb-4"><app-testimony></app-testimony></div>
         </ng-template>
       </p-carousel>
     </div>

@@ -5,3 +5,7 @@ span{
 h1:not(.title){
   @apply text-4xl font-semibold;
 }
+
+button.see-more-button{
+  @apply  px-6 font-semibold border rounded border-[#0f70b720] text-primary whitespace-nowrap hover:bg-primary hover:text-secondary hover:shadow-lg hover:bg-opacity-70;
+}

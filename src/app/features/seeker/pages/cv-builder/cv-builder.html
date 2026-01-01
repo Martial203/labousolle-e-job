@@ -4,24 +4,28 @@
   </aside>
   <section class="w-full px-6">
     <header class="w-full">
-      <div class="flex flex-row justify-between p-4 mx-auto shadow-md">
-        <div class="flex flex-row items-center justify-between gap-8">
-          <figure class="overflow-hidden rounded-full w-26"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
-          <h1>SAMBA</h1>
-        </div>
-        <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal"></p-avatar>
-      </div>
+      <p-toolbar class="mx-auto shadow-md ">
+        <ng-template #start>
+          <div class="flex flex-row items-center justify-between gap-8 ml-1">
+            <figure class="overflow-hidden rounded-full w-26"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
+            <h1 class="font-semibold">SAMBA</h1>
+          </div>
+        </ng-template>
+        <ng-template #end>
+          <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
+        </ng-template>
+      </p-toolbar>
     </header>
     <main class="flex flex-col gap-16 px-8 py-12">
       <div class="flex-1 overflow-y-auto">
         <app-discussion></app-discussion>
       </div>
-      <div class="flex flex-row items-center w-full h-20 gap-4 pl-4 overflow-hidden border rounded-3xl h-fit">
-        <p-button icon="pi pi-link" class="block"></p-button>
-        <textarea class="flex-1 py-1 bg-transparent border-none outline-none" rows="1"  name="" id=""></textarea>
+      <div class="flex flex-row items-center w-full h-20 gap-4 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl h-fit">
+        <p-button icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary"></p-button>
+        <textarea pTextarea class="flex-1 py-1 bg-transparent" style="border: none; box-shadow: 0;" rows="1"  name="" id=""></textarea>
         <div class="flex flex-row items-center gap-4 p-2">
-          <button class="block" class="p-2 px-3 bg-transparent rounded-full text-primary"><i class="scale-[1.4] pi pi-microphone"></i></button>
-          <button class="block" class="p-2 px-3 rounded-full bg-primary text-secondary"> <i class="pi pi-arrow-up"></i></button>
+          <button pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone"></button>
+          <button pButton [rounded]="true" severity="info" icon="pi pi-arrow-up"></button>
         </div>
       </div>
     </main>
