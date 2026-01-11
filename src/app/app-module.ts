@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
 import { SharedModule } from './shared/shared-module';
 import Aura from '@primeuix/themes/aura';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,9 @@ import Aura from '@primeuix/themes/aura';
       theme: {
         preset: Aura
       }
-    })
+    }),
+    ConfirmationService,
+    MessageService
   ],
   bootstrap: [App]
 })

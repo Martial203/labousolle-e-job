@@ -1,38 +1,25 @@
 <form class="flex flex-col gap-4">
   <h1 class="text-xl font-semibold">Liens réseaux sociaux</h1>
   <div class="flex flex-col gap-4">
-    <div>
-      <label class="block mb-2 text-sm font-semibold" for="">Lien social 1</label>
-      <div class="px-4 py-2 border divide-x rounded border-gray divide-gray">
-        <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
-        <input class="pl-4" type="text" id="facebook" name="facebook" placeholder="Lien vers la page Facebook de l'entreprise">
-      </div>
-    </div>
-    <div>
-      <label class="block mb-2 text-sm font-semibold" for="">Lien social 1</label>
-      <div class="px-4 py-2 border divide-x rounded border-gray divide-gray">
-        <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
-        <input class="pl-4" type="text" id="facebook" name="facebook" placeholder="Lien vers la page Facebook de l'entreprise">
-      </div>
-    </div>
-    <div>
-      <label class="block mb-2 text-sm font-semibold" for="">Lien social 1</label>
-      <div class="px-4 py-2 border divide-x rounded border-gray divide-gray">
-        <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
-        <input class="pl-4" type="text" id="facebook" name="facebook" placeholder="Lien vers la page Facebook de l'entreprise">
-      </div>
-    </div>
-    <div>
-      <label class="block mb-2 text-sm font-semibold" for="">Lien social 1</label>
-      <div class="px-4 py-2 border divide-x rounded border-gray divide-gray">
-        <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
-        <input class="pl-4" type="text" id="facebook" name="facebook" placeholder="Lien vers la page Facebook de l'entreprise">
+    <div *ngFor="let socialNetwork of networks; let i=index">
+      <label class="block mb-2 text-sm font-semibold" for="">Lien social {{ i + 1 }}</label>
+      <div class="flex flex-row items-center justify-between gap-4">
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            <p-select [options]="socialNetworks" class="p-0 m-0" placeholder="Select a City"/>
+          </p-inputgroup-addon>
+          <input pInputText class="pl-4" type="text" id="{{socialNetwork}}" [name]="socialNetwork" placeholder="Lien vers la page facebook de l'entreprise">
+        </p-inputgroup>
+        <button pButton class="scale-[1.2]" icon="pi pi-times-circle" severity="secondary" size="large" (click)="removeAField(socialNetwork)"></button>
       </div>
     </div>
   </div>
-  <div><button class="block w-full py-2 text-center rounded text-secondary bg-primary"><i class="mr-2 align-middle pi pi-plus-circle"></i>Ajouter un nouveau lien social</button></div>
-  <div>
-    <button class="px-6 py-2 mr-2 text-black rounded bg-gray">Précédent</button>
-    <button class="px-6 py-2 text-white rounded bg-primary">Enregistrer et suivant</button>
+  <div class="mt-4">
+    <!-- <button class="block w-full py-2 text-center rounded text-secondary bg-primary" (click)="addAField()"><i class="mr-2 align-middle pi pi-plus-circle"></i>Ajouter un nouveau lien social</button> -->
+    <button pButton class="block w-full" severity="info" label="Ajouter un nouveau lien social" icon="pi pi-plus-circle" (click)="addAField()"></button>
+  </div>
+  <div class="flex flex-row gap-4">
+    <button pButton severity="secondary" label="Précédent"></button>
+    <button pButton severity="info" label="Enregistrer et suivant"></button>
   </div>
 </form>

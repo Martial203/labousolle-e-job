@@ -1,7 +1,7 @@
 <div class="jobs-management-container">
   <div class="flex flex-row justify-between header">
-    <h1 class="text-xl font-semibold">Jobs Management</h1>
-    <button pButton type="button" routerLink="/admin/jobs/new" label="Add Job" icon="pi pi-plus" class="p-button-success"></button>
+    <h1 class="text-xl font-semibold">Mes emplois (599)</h1>
+    <button pButton type="button" routerLink="/admin/jobs/new" label="Add Job" icon="pi pi-plus" class="p-button-success" severity="info"></button>
   </div>
 
   <p-table
@@ -9,43 +9,47 @@
     [value]="jobs"
     [paginator]="true"
     [rows]="10"
-    responsiveLayout="scroll"
     [tableStyle]="{ 'min-width': '50rem' }"
     [globalFilterFields]="['title','description','status']"
-    [rows]="10"
     [showCurrentPageReport]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} jobs"
   >
     <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
+      <div class="flex items-center justify-end">
+        <p-iconField class="p-input-icon-left">
+          <p-inputIcon class="pi pi-search"></p-inputIcon>
           <input pInputText type="text" #globalFilter (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search jobs..." />
-        </span>
+        </p-iconField>
       </div>
     </ng-template>
 
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
-        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+        <th pSortableColumn="title">Emplois <p-sortIcon field="title"></p-sortIcon></th>
         <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+        <th pSortableColumn="description">Candidatures <p-sortIcon field="description"></p-sortIcon></th>
         <th>Actions</th>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-job>
       <tr>
-        <td>{{ job.title }}</td>
-        <td>{{ job.description }}</td>
         <td>
-          <p-tag [value]="job.status" severity="warn"></p-tag>
+          <h2 class="mb-1 font-semibold">{{ job.title }}</h2>
+          <p class="text-xs text-gray">Temps plein * 27 jours restants</p>
         </td>
+        <td class="{{ job.status === 'Active' ? 'text-green-500' : 'text-red-500' }}"><i class="mr-0.5 pi {{ job.status==='Active' ? 'pi-check-circle' : 'pi-times-circle' }}"></i> {{ job.status }}</td>
+        <td><i class="pi pi-users"></i> 100 candidatures</td>
         <td>
-          <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
-          <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"></button>
+          <button pButton icon="pi pi-ellipsis-v" (click)="menu.toggle($event)" class="p-button-rounded p-button-text"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
+
+  <p-tieredMenu #menu [model]="items" [popup]="true" />
+
+
 </div>
+
+

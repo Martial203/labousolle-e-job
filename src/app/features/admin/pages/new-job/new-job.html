@@ -5,79 +5,77 @@
       <label for="">Intitulé du poste</label>
       <input pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
     </div>
-    <div>
+    <!-- <div>
       <label for="">Tags</label>
       <input pInputText placeholder="Mots-clés du poste, tags, etc..." type="text">
-    </div>
+    </div> -->
     <div>
       <label for="">Adresse mail pour postuler</label>
       <input pInputText placeholder="contact@gmail.com" type="email">
     </div>
-    <div>
+    <!-- <div>
       <h2>Salaire</h2>
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label for="">Salaire minimum</label>
-          <!-- <input placeholder="Salaire minimum..." type="text"> -->
           <p-inputgroup>
-            <input pInputText class="border-none" placeholder="Salaire minimum..." />
-            <p-inputgroup-addon cl>FCFA</p-inputgroup-addon>
+            <p-input-number class="border-none" placeholder="Salaire minimum..." />
+            <p-inputgroup-addon>FCFA</p-inputgroup-addon>
           </p-inputgroup>
         </div>
         <div>
           <label for="">Salaire maximum</label>
-          <!-- <input placeholder="Salaire maximum..." type="text"> -->
           <p-inputgroup>
-            <input pInputText class="border-none" placeholder="Salaire maximun..." />
-            <p-inputgroup-addon cl>FCFA</p-inputgroup-addon>
+            <p-input-number class="border-none" placeholder="Salaire maximun..." />
+            <p-inputgroup-addon>FCFA</p-inputgroup-addon>
           </p-inputgroup>
         </div>
       </div>
-    </div>
+    </div> -->
     <div>
       <h2>Informations avancées</h2>
       <div class="grid grid-cols-2 gap-4">
-        <div>
+        <!-- <div>
           <label for="">Éducation</label>
-          <input pInputText type="text">
-        </div>
+          <p-select placeholder="Sélectionner"></p-select>
+        </div> -->
         <div>
           <label for="">Expérience</label>
-          <input pInputText type="text">
+          <p-select placeholder="Sélectionner" [options]="experiences"></p-select>
         </div>
         <div>
           <label for="">Type de poste</label>
-          <input pInputText type="text">
+          <p-select placeholder="Sélectionner" [options]="contractTypes"></p-select>
         </div>
-        <div>
+        <!-- <div>
           <label for="">Postes disponibles</label>
-          <input pInputText type="text">
-        </div>
+          <p-select placeholder="Sélectionner"></p-select>
+        </div> -->
         <div>
           <label for="">Date d'expiration</label>
-          <input pInputText type="text">
+          <p-datepicker inputStyleClass="w-full" placeholder="JJ/MM/AAAA"></p-datepicker>
         </div>
-        <div>
+        <!-- <div>
           <label for="">Niveau du poste</label>
-          <input pInputText type="text">
+          <p-select placeholder="Sélectionner"></p-select>
+        </div> -->
+        <div>
+          <label for="">Lieu</label>
+          <input pInputText type="text" placeholder="Douala, Cameroun" autocomplete="address-line1">
         </div>
-      </div>
-      <div>
-        <label for="">Lieu</label>
-        <input pInputText type="text">
       </div>
     </div>
     <div>
       <h2>Description et responsabilités</h2>
-      <div>
+      <div class="mb-4">
         <label for="">Description</label>
-        <p-editor name="description" ngModel [style]="{ height: '320px' }" />
+        <p-editor name="description" placeholder="Ajoutez votre description de poste..." ngModel [style]="{ height: '180px' }" />
       </div>
       <div>
         <label for="">Responsabilités</label>
-        <p-editor name="responsibilities" ngModel [style]="{ height: '320px' }" />
+        <p-editor name="responsibilities" placeholder="Ajoutez vos responsabilités..." ngModel [style]="{ height: '180px' }" />
       </div>
     </div>
   </div>
-  <button class="px-6 py-3 rounded bg-primary w-fit text-secondary">Publier l'offre d'emploi <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
+  <button pButton class="w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right"></button>
 </form>

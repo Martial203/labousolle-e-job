@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoriesManagement } from './categories-management';
+import { ChatMessageInput } from './chat-message-input';
 
-describe('CategoriesManagement', () => {
-  let component: CategoriesManagement;
-  let fixture: ComponentFixture<CategoriesManagement>;
+describe('ChatMessageInput', () => {
+  let component: ChatMessageInput;
+  let fixture: ComponentFixture<ChatMessageInput>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CategoriesManagement]
+      declarations: [ChatMessageInput]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CategoriesManagement);
+    fixture = TestBed.createComponent(ChatMessageInput);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,15 +7,18 @@ import { Component } from '@angular/core';
   styleUrl: './social-networks-form.scss',
 })
 export class SocialNetworksForm {
-  cities: any[] = [];
+
+  socialNetworks: string[] = ['Facebook', 'Twitter', 'LinkedIn', 'Instagram', 'YouTube'];
+
+  networks: number[] = [0];
   
-  ngOnInit() {
-    this.cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+  ngOnInit() { }
+
+  addAField(): void{
+    this.networks.push(this.networks.length);
+  }
+
+  removeAField(network: number): void{
+    this.networks = this.networks.filter(n => n !== network);
   }
 }

@@ -1,33 +1,30 @@
-<div class="container flex flex-row w-full h-full px-16 mx-auto">
-  <aside class="w-[30em]">
+<div class="container flex flex-row w-full h-full px-16 pb-10 mx-auto">
+  <aside class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6">
     <app-chat-history></app-chat-history>
   </aside>
-  <section class="w-full px-6">
-    <header class="w-full">
-      <p-toolbar class="mx-auto shadow-md ">
-        <ng-template #start>
-          <div class="flex flex-row items-center justify-between gap-8 ml-1">
-            <figure class="overflow-hidden rounded-full w-26"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
-            <h1 class="font-semibold">SAMBA</h1>
-          </div>
-        </ng-template>
-        <ng-template #end>
-          <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
-        </ng-template>
-      </p-toolbar>
-    </header>
-    <main class="flex flex-col gap-16 px-8 py-12">
-      <div class="flex-1 overflow-y-auto">
-        <app-discussion></app-discussion>
-      </div>
-      <div class="flex flex-row items-center w-full h-20 gap-4 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl h-fit">
-        <p-button icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary"></p-button>
-        <textarea pTextarea class="flex-1 py-1 bg-transparent" style="border: none; box-shadow: 0;" rows="1"  name="" id=""></textarea>
-        <div class="flex flex-row items-center gap-4 p-2">
-          <button pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone"></button>
-          <button pButton [rounded]="true" severity="info" icon="pi pi-arrow-up"></button>
+  <section class="w-full px-6 overflow-auto">
+    <div class="h-[calc(100vh-15em)] overflow-y-auto mb-2">
+      <header class="w-full">
+        <p-toolbar class="mx-auto shadow-md ">
+          <ng-template #start>
+            <div class="flex flex-row items-center justify-between gap-8 ml-1">
+              <figure class="overflow-hidden rounded-full w-26"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
+              <h1 class="font-semibold">SAMBA</h1>
+            </div>
+          </ng-template>
+          <ng-template #end>
+            <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
+          </ng-template>
+        </p-toolbar>
+      </header>
+      <main class="flex flex-col gap-16 px-8 py-12">
+        <div class="flex-1 overflow-y-auto">
+          <app-discussion></app-discussion>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
+    <div>
+      <app-chat-message-input></app-chat-message-input>
+    </div>
   </section>
 </div>

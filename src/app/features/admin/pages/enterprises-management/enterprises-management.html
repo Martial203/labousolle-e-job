@@ -1,10 +1,11 @@
 <div class="w-full h-full p-8 bg-gray-50">
   <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Enterprises</h1>
+    <h1 class="text-3xl font-bold text-gray-900">Entreprises</h1>
     <p-button 
       label="Add" 
       icon="pi pi-plus"
       class="p-button-primary"
+      severity="info"
       routerLink="/admin/enterprises/new">
     </p-button>
   </div>
@@ -55,7 +56,9 @@
               [text]="true"
               severity="danger"
               pTooltip="Delete"
-              tooltipPosition="top">
+              tooltipPosition="top"
+              (click)="confirmDeletion($event, enterprise.id)"
+              >
             </p-button>
           </div>
         </td>
@@ -63,3 +66,6 @@
     </ng-template>
   </p-table>
 </div>
+
+<p-toast />
+<p-confirmdialog />

@@ -22,6 +22,14 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputOtpModule } from 'primeng/inputotp';
 import { MessageModule } from 'primeng/message';
 import { ToolbarModule } from 'primeng/toolbar';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { RippleModule } from 'primeng/ripple';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -50,7 +58,15 @@ import { ToolbarModule } from 'primeng/toolbar';
     FloatLabelModule,
     InputOtpModule,
     MessageModule,
-    ToolbarModule
+    ToolbarModule,
+    InputNumberModule,
+    DatePickerModule,
+    InputIconModule,
+    IconFieldModule,
+    TieredMenuModule,
+    RippleModule,
+    ConfirmDialogModule,
+    ToastModule
   ]
 })
 export class PrimeNgModule { }

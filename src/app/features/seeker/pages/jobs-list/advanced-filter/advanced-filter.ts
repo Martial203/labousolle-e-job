@@ -25,6 +25,6 @@ export class AdvancedFilter {
 
   private initData(): void {
     this.experiences = ['Débutants', '1-2 ans', '2-4 ans', '4-6 ans', '6-8 ans', '8-10 ans', '10-15 ans', '15+ ans'];
-    this.contractTypes = ['Tous', 'Emploi', 'Stage', 'Freelance', 'Bénévolat'];
+    this.contractTypes = ['Tous', 'Emploi', 'Stage'];
   }
 }

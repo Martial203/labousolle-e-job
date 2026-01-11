@@ -1,45 +1,56 @@
-<form>
-  <h1>Logo et image de bannière</h1>
+<form class="flex flex-col gap-4">
+  <h1 class="text-lg font-semibold">Logo et image de bannière</h1>
   <div>
-    <label for="">Télécharger le logo</label>
-    <figure class="flex flex-row items-center justify-center w-56 overflow-hidden text-center border border-dashed rounded-md bg-opacity-20 border-gray bg-gray">
-      <!-- <img class="object-cover w-full" src="" alt=""> -->
-      <div class="flex flex-col gap-2 p-4">
-        <div><i class="block scale-150 text-primary pi pi-cloud-upload"></i></div>
-        <p class="text-xs font-bold">Parcourir une photo ou déposer en une ici</p>
-        <p class="text-xs text-primary">Une photo de plus de 400 pixels fonctionne mieux. Taille maximale de la photo 5 Mo.</p>
-      </div>
+    <div class="flex flex-row">
+      <label for="">Télécharger le logo</label>
+      <button *ngIf="selectedFile" pButton class="relative z-10 top-6 left-16 scale-[70%]" icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onResetLogo()"></button>
+    </div>
+    <figure pRipple class="flex flex-row items-center justify-center w-56 h-56 overflow-hidden text-center border border-dashed rounded-md cursor-pointer ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="logoInputField.click()">
+      <ng-container *ngIf="selectedFile; else placeholder">
+        <img class="object-cover w-full h-full" [src]="preview" alt="">
+        <!-- <button pButton class="absolute top-0 right-0" icon="pi pi-times"></button> -->
+      </ng-container>
+      <ng-template #placeholder>
+        <div class="flex flex-col gap-2 px-4 py-8">
+          <div><i class="block text-primary pi pi-cloud-upload" style="font-size: 2.5rem"></i></div>
+          <p class="text-sm font-semibold">Parcourir une photo ou déposer en une ici</p>
+          <p class="text-xs text-primary">Une photo de plus de 400 pixels fonctionne mieux. Taille maximale de la photo 5 Mo.</p>
+        </div>
+      </ng-template>
     </figure>
+    <input #logoInputField type="file" class="hidden" accept=".jpg, .png, .jpeg, .gif" (change)="onLogoSelected($event)">
   </div>
-  <div>
-    <label for="">Nom de l'entreprise</label>
-    <input type="text" name="" id="">
-  </div>
-  <div>
-    <label for="">A propos de nous</label>
-    <p-editor></p-editor>
-  </div>
-  <div>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label for="">Nom de l'entreprise</label>
+      <input pInputText type="text" name="" id="">
+    </div>
     <div>
       <label for="">Type d'organisation</label>
-      <input type="text" name="" id="">
+      <p-select type="text" name="" id=""></p-select>
     </div>
     <div>
       <label for="">Taille de l'équipe</label>
-      <input type="text" name="" id="">
+      <p-select type="text" name="" id=""></p-select>
     </div>
     <div>
-      <label for="">Année de création</label>
-      <input type="text" name="" id="">
+      <label for="">Date de création</label>
+      <p-datepicker inputStyleClass="w-full"></p-datepicker>
     </div>
     <div>
       <label for="">Site web de l'entreprise</label>
-      <input type="text" name="" id="">
+      <input pInputText type="url" name="" id="">
     </div>
   </div>
   <div>
-    <label for="">Vision de l'entreprise</label>
-    <p-editor></p-editor>
+    <label for="">A propos de nous</label>
+    <p-editor name="aboutUs" placeholder="Écrivez ici les informations sur votre entreprise. Faites savoir au candidat qui nous sommes..." ngModel [style]="{ height: '180px' }" />
   </div>
-  <button class="px-6 py-3 rounded text-secondary bg-primary">Enregistrer et suivant <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
+  <div>
+    <label for="">Vision de l'entreprise</label>
+    <p-editor name="ourVision" placeholder="Parlez-nous de la vision de votre entreprise..." ngModel [style]="{ height: '180px' }" />
+  </div>
+  <!-- <button class="px-6 py-3 rounded text-secondary bg-primary">Enregistrer et suivant <i class="ml-2 align-middle pi pi-arrow-right"></i></button> -->
+  <button pButton severity="info" class="mt-6" label="Enregistrer et suivant" icon="pi pi-arrow-right" iconPos="right"></button>
+
 </form>

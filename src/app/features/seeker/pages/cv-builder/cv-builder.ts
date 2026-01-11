@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './cv-builder.scss',
 })
 export class CvBuilder {
+ 
 
 }

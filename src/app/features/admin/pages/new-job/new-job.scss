@@ -1,6 +1,9 @@
 label{
   @apply font-semibold text-sm block mb-2;
 }
-input, textarea{
+input, textarea, p-select, p-datepicker{
   @apply w-full;
+}
+h2{
+  @apply mt-1 mb-3 text-lg font-semibold;
 }

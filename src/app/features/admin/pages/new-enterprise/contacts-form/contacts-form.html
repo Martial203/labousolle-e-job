@@ -1,20 +1,34 @@
 <form class="flex flex-col gap-4 p-8">
   <div>
-    <label for="">Addresse</label>
-    <input type="text" name="" id="">
+    <label for="">Emplacement sur la carte</label>
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-map-marker"></i>
+      </p-inputgroup-addon>
+      <input pInputText name="address" autocomplete="address-level1" type="text" placeholder="Adresse">
+    </p-inputgroup>
   </div>
   <div>
-    <p-select [options]="cities" optionLabel="name" placeholder="Select a City" class="w-full pr-4 md:w-56" />
     <label for="">Téléphone</label>
-    <input type="tel" name="" id="">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+          <i class="pi pi-phone"></i>
+      </p-inputgroup-addon>
+      <input pInputText name="tel" type="tel" autocomplete="tel" placeholder="Numéro de téléphone" />
+    </p-inputgroup>
   </div>
   <div>
     <label for="">Email</label>
-    <input type="email" name="" id="">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+          <i class="pi pi-envelope"></i>
+      </p-inputgroup-addon>
+      <input pInputText name="email" type="email" autocomplete="email" placeholder="Adresse e-mail" />
+    </p-inputgroup>
   </div>
 
-  <div>
-    <button class="px-6 py-2 mr-2 text-black rounded bg-gray">Précédent</button>
-    <button class="px-6 py-2 text-white rounded bg-primary">Enregistrer et suivant</button>
+  <div class="flex flex-row gap-4 mt-4">
+    <button pButton severity="secondary" label="Précédent"></button>
+    <button pButton severity="info" label="Terminer l'édition" icon="pi pi-arrow-right" iconPos="right"></button>
   </div>
 </form>

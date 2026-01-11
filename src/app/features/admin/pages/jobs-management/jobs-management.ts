@@ -1,17 +1,41 @@
 import { Component } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-jobs-management',
   standalone: false,
   templateUrl: './jobs-management.html',
-  styleUrl: './jobs-management.scss',
+  styleUrl: './jobs-management.scss'
 })
 export class JobsManagement {
   jobs: any[] = [];
+  items: MenuItem[] | undefined;
 
   constructor() {
     this.loadJobs();
   }
+
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Voir les détails',
+        icon: 'pi pi-eye',
+      },
+      {
+        label: 'Marquer comme expiré',
+        icon: 'pi pi-times-circle',
+      },
+      {
+        label: 'Modifier',
+        icon: 'pi pi-pencil'
+      },
+      {
+        label: 'Supprimer',
+        icon: 'pi pi-trash',
+      },
+    ]
+  }
+
 
   loadJobs(): void {
     // Replace with actual service call

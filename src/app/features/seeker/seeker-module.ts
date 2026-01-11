@@ -15,6 +15,7 @@ import { Discussion } from './pages/cv-builder/discussion/discussion';
 import { Testimony } from './pages/home/testimony/testimony';
 import { SearchBar } from './pages/jobs-list/search-bar/search-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-message-input';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ChatHistory,
     Discussion,
     Testimony,
-    SearchBar
+    SearchBar,
+    ChatMessageInput
   ],
   imports: [
     CommonModule,
