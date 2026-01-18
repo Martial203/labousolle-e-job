@@ -10,7 +10,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
   
   <!-- Right Panel -->
   <div class="flex items-center justify-center w-full p-8 bg-white lg:w-7/12">
-    <div *ngIf="success; else signUp" class="flex flex-col gap-4 text-center">
+    <div *ngIf="processState === PROCESS_STATES.SUCCESS; else signUp" class="flex flex-col gap-4 text-center">
       <img class="w-24 mx-auto" src="/assets/images/success-icon.svg" alt="success">
       <h2 class="text-2xl font-semibold text-primary">Félicitations</h2>
       <p>Tu as désormais un compte chez nous.</p>
@@ -21,7 +21,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
         <p class="text-sm">Allons-y commençons</p>
         <h2 class="mb-8 text-2xl font-semibold text-gray-800">Créer un Compte</h2>
         
-        <form (ngSubmit)="onSubmit()" #signUpForm="ngForm" class="flex flex-col gap-6">
+        <form (ngSubmit)="onSubmit(signUpForm.value)" #signUpForm="ngForm" class="flex flex-col gap-6">
           
           <!-- Name Field -->
           <p-floatlabel variant="on">
@@ -43,7 +43,17 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           
           <!-- Password Field -->
           <p-floatlabel variant="on">
-            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="••••••••••••••" [toggleMask]="true" ngModel required></p-password>
+            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="••••••••••••••" [toggleMask]="true" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" autocomplete="password" variant="filled" ngModel required>
+              <ng-template #footer>
+                <p-divider />
+                <ul class="pl-2 my-0 leading-normal">
+                    <li>At least one lowercase</li>
+                    <li>At least one uppercase</li>
+                    <li>At least one numeric</li>
+                    <li>Minimum 8 characters</li>
+                </ul>
+              </ng-template>
+            </p-password>
             <label for="password" class="mb-2 text-sm font-medium text-gray-700">Password</label>
           </p-floatlabel>
           
@@ -56,7 +66,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           <!-- Remember Me & Forgot Password -->
           <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
-              <p-checkbox id="remember" name="remember" class="w-4 h-4 mr-1 text-blue-600 border-gray-300 rounded cursor-pointer focus:ring-blue-500" [binary]="true" ngModel required></p-checkbox>
+              <p-checkbox #acceptTerms id="remember" class="w-4 h-4 mr-1 text-blue-600 border-gray-300 rounded cursor-pointer focus:ring-blue-500" [binary]="true" required></p-checkbox>
               <div>
                 <label for="remember" class="text-sm text-gray-700 cursor-pointer select-none">
                   En créant ce compte, cela signifie que vous acceptez nos 
@@ -68,7 +78,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           </div>
           
           <!-- Submit Button -->
-          <button pButton type="submit" class="w-full bg-primary" severity="info" [disabled]="signUpForm.invalid">Créer</button>
+          <button pButton type="submit" class="w-full bg-primary" severity="info" [disabled]="signUpForm.invalid || !acceptTerms.checked || processState===PROCESS_STATES.LOADING || (signUpForm.value.password!==signUpForm.value.confirmPassword)" [loading]="processState === PROCESS_STATES.LOADING">Créer</button>
           
           <!-- Sign Up Link -->
           <div class="mt-6 text-center">

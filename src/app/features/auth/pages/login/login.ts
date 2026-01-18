@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { LoginCredentials } from '../../models/login-credentials/login-credentials';
+import { ProcessState } from '../../../../core/enums/process-state/process-state';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +12,20 @@ import { Router } from '@angular/router';
 })
 export class Login {
 
-  constructor(private router: Router) {}
+  readonly PROCESS_STATES = ProcessState;
 
-  onSubmit(credentials: { email: string, password: string }): void {
-    console.log('Login attempt:', {
-      email: credentials.email,
-      password: credentials.password
+  processState: ProcessState = ProcessState.INACTIVE;
+  
+  constructor(private authService: AuthService, private router: Router) {}
+
+  onSubmit(credentials: LoginCredentials): void {
+    this.processState = ProcessState.LOADING;
+    this.authService.login(credentials).subscribe({
+      next: () => {
+        this.processState = ProcessState.SUCCESS;
+        setTimeout(() => this.router.navigateByUrl('/'), 3000);
+      },
+      error: (err) => this.processState = this.PROCESS_STATES.ERROR
     });
-
-    this.router.navigateByUrl('/home');
   }
 }

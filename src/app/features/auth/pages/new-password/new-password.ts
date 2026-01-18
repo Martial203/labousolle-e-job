@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ProcessState } from '../../../../core/enums/process-state/process-state';
 
 @Component({
   selector: 'app-new-password',
@@ -9,12 +11,33 @@ import { Router } from '@angular/router';
 })
 export class NewPassword {
 
-  success: boolean = false;
+  readonly PROCESS_STATES = ProcessState;
 
-  constructor(private router: Router) {}
+  processState: ProcessState = ProcessState.INACTIVE; 
+  resetToken?: string;
 
-  onSubmit(password: string): void {
-    this.success = true;
-    setTimeout(() => this.router.navigateByUrl('/home'), 3000)
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.resetToken = this.route.snapshot.paramMap.get('resetToken') ?? undefined;
+  }
+
+  onSubmit(data: { password: string, confirmPassword: string }): void {
+    if(this.resetToken===undefined) return;
+    this.processState = ProcessState.LOADING;
+    this.authService.changePassword({ 
+      resetToken: this.resetToken, 
+      newPassword: data.password, 
+      confirmPassword: data.confirmPassword
+    }).subscribe({
+      next: () => {
+        this.processState = ProcessState.SUCCESS;
+        setTimeout(() => this.router.navigateByUrl('/home'), 3000)
+      },
+      error: (err) => {
+        console.log(err);
+        this.processState = ProcessState.ERROR;
+      }
+    })
   }
 }

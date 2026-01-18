@@ -9,6 +9,7 @@ import { providePrimeNG } from 'primeng/config';
 import { SharedModule } from './shared/shared-module';
 import Aura from '@primeuix/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CoreModule } from './core/core-module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    CoreModule,
     SharedModule
   ],
   providers: [

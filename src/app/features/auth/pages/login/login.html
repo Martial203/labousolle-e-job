@@ -39,7 +39,7 @@
         </div>
         
         <!-- Submit Button -->
-        <button type="submit" pButton severity="info" [disabled]="loginForm.invalid" class="w-full">Se connecter</button>
+        <button type="submit" pButton severity="info" [disabled]="loginForm.invalid || processState===PROCESS_STATES.LOADING" class="w-full" [loading]="processState===PROCESS_STATES.LOADING">Se connecter</button>
         
         <!-- Sign Up Link -->
         <div class="mt-6 text-center">

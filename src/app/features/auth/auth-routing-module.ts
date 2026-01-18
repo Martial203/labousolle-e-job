@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUp },
   { path: 'choose-interests', component: ChooseInterests },
   { path: 'forgotten-password', component: ForgottenPassword },
-  { path: 'new-password', component: NewPassword }
+  { path: 'new-password/:resetToken', component: NewPassword }
 ];
 
 @NgModule({

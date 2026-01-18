@@ -1,5 +1,7 @@
+import { AuthService } from './../../../../core/services/auth/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProcessState } from '../../../../core/enums/process-state/process-state';
 
 @Component({
   selector: 'app-forgotten-password',
@@ -9,21 +11,44 @@ import { Router } from '@angular/router';
 })
 export class ForgottenPassword {
 
-  emailSent: boolean = false;
+  readonly PROCESS_STATES = ProcessState;
+  
+  processState: ProcessState = ProcessState.INACTIVE;
+  emailSent: string|null = null;
 
-  constructor(private router: Router) { }
 
-  onSubmit(email: string): void{
-    this.emailSent = true;
+  constructor(private authService: AuthService, private router: Router) { }
+
+  onInitPasswordReset(email: string): void{
+    this.processState = ProcessState.LOADING;
+    this.authService.orderPasswordReset(email).subscribe({
+      next: () => {
+        this.processState = ProcessState.SUCCESS;
+        this.emailSent = email;
+      },
+      error: (err) => {
+        console.log(err);
+        this.processState = ProcessState.ERROR;
+      }
+    });
   }
 
   modifyEmail(): void {
-    this.emailSent = false
+    this.emailSent = null
   }
 
   onOtpSubmit(otp: string): void {
-    if(otp.length === 6){
-      this.router.navigateByUrl('/auth/new-password');
-    }
+    if(this.emailSent==null) return;
+    this.processState = ProcessState.LOADING;
+    this.authService.verifyOtpCode({ email: this.emailSent, code: otp }).subscribe({
+      next: (res) => {
+        this.processState = ProcessState.SUCCESS;
+        setTimeout(() => this.router.navigateByUrl(`/auth/new-password/${res.reset_token}`), 2000);
+      },
+      error: (err) => {
+        console.log(err);
+        this.processState = ProcessState.ERROR;
+      }
+    })
   }
 }

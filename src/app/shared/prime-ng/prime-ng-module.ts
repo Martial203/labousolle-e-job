@@ -30,6 +30,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { RippleModule } from 'primeng/ripple';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [],
@@ -66,7 +67,8 @@ import { ToastModule } from 'primeng/toast';
     TieredMenuModule,
     RippleModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DividerModule
   ]
 })
 export class PrimeNgModule { }
