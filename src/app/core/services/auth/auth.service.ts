@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignUpCredentials } from '../../../features/auth/models/sign-up-credentials/sign-up-credentials';
 import { LoginCredentials } from '../../../features/auth/models/login-credentials/login-credentials';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { Category } from '../../models/category/category';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +56,24 @@ export class AuthService {
       confirm_password: data.confirmPassword
     }
     return this.http.post(`${environment.apiUrl}/auth/password-reset/reset/`, body);
+  }
+
+  setProfileInterests(interestsIds: number[]): Observable<any>{
+    const body = {
+      category_ids: interestsIds
+    }
+    return this.http.post<any>(`${environment.apiUrl}/auth/choose-interests/`, body);
+  }
+
+  getProfileInterests(): Observable<Category[]>{
+    return this.http.get<Category[]>(`${environment.apiUrl}/auth/choose-interests/`).pipe(
+      map(categories => categories.map((category: any) => ({
+        id: category.id,
+        name: category.name,
+        description: category.description,
+        icon: category.icon,
+        jobsCount: category.jobs_count
+      })))
+    );
   }
 }

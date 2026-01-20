@@ -1,5 +1,10 @@
+import { JobService } from './../../../../core/services/job/job.service';
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from '../../../../core/models/category/category';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ProcessState } from '../../../../core/enums/process-state/process-state';
 
 @Component({
   selector: 'app-choose-interests',
@@ -9,35 +14,37 @@ import { Router } from '@angular/router';
 })
 export class ChooseInterests {
 
-  selectedInterests: Set<number> = new Set<number>();
-  interests: string[] = [];
+  processState: ProcessState = ProcessState.INACTIVE;
+  readonly PROCESS_STATES = ProcessState;
 
-  constructor(private router: Router) {}
+  selectedInterestsIds: Set<number> = new Set<number>();
+  interests$!: Observable<Category[]>;
+
+  constructor(private authService: AuthService, private jobService: JobService, private router: Router) {}
 
   ngOnInit(): void {
     this.initInterests();
   }
 
   toggleInterest(index: number): void {
-    if(!this.selectedInterests.delete(index)) this.selectedInterests.add(index);
+    if(!this.selectedInterestsIds.delete(index)) this.selectedInterestsIds.add(index);
   }
 
   onSubmit(): void {
-    this.router.navigateByUrl('/home');
+    this.processState = ProcessState.LOADING;
+    this.authService.setProfileInterests(Array.from(this.selectedInterestsIds)).subscribe({
+      next: () => {
+        this.processState = ProcessState.SUCCESS;
+        setTimeout(() => this.router.navigateByUrl('/home'), 3000);
+      },
+      error: (err) => {
+        console.log(err)
+        this.processState = ProcessState.ERROR;
+      }
+    })
   }
 
   private initInterests(): void {
-    this.interests = [
-      'Administration publique',
-      'Agriculture et agronomie',
-      'Armée',
-      'Cinéma',
-      'Education',
-      'Elevage',
-      'Arts et beaux-arts',
-      'Santé',
-      'Sciences',
-      'Technologie'
-    ]
+    this.interests$ = this.jobService.getCategories();
   }
 }

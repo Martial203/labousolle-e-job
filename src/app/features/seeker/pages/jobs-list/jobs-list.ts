@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Job } from '../../../../core/models/job/job';
+import { Observable } from 'rxjs';
+import { JobService } from '../../../../core/services/job/job.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -14,7 +17,13 @@ export class JobsList {
   activePage: number = 1;
   totalPages: number = 5;
 
-  constructor() { }
+  jobs$!: Observable<Job[]>;
+
+  constructor(private jobService: JobService) { }
+
+  ngOnInit(): void {
+
+  }
 
   onShowFilterModal() {
     this.isFilterModalOpen = !this.isFilterModalOpen;

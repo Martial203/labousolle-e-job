@@ -15,7 +15,7 @@
             </div>
             <p-button class="border-none" severity="info">Rechercher</p-button>
           </div>
-          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest }}, </a> etc</p>
+          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest }}, </a> etc</p>
         </div>
       </div>
       <div class="relative">
@@ -38,33 +38,33 @@
     </div>
   </section>
   
-  <section class="container pt-16 pb-12 mx-auto px-14">
+  <section *ngIf="recommendedJobs$|async as recommendedJobs" class="container pt-16 pb-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Recommandations</h1>
       <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
-      <app-job-cards-list></app-job-cards-list>
+      <app-job-cards-list [jobs]="recommendedJobs"></app-job-cards-list>
     </div>
   </section>
 
-  <section class="container py-12 mx-auto px-14">
+  <section *ngIf="trendingJobs$|async as trendingJobs" class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emploi vedettes</h1>
       <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
-      <app-job-cards-list></app-job-cards-list>
+      <app-job-cards-list [jobs]="trendingJobs"></app-job-cards-list>
     </div>
   </section>
   
-  <section class="container py-12 mx-auto px-14">
+  <section *ngIf="recentJobs$|async as recentJobs" class="container py-12 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">
       <h1>Offres d'emplois recents</h1>
       <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
     <div>
-      <app-job-cards-list></app-job-cards-list>
+      <app-job-cards-list [jobs]="recentJobs"></app-job-cards-list>
     </div>
   </section>
 
@@ -73,14 +73,14 @@
       <h1>Catégories populaires</h1>
       <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
     </div>
-    <div class="grid grid-cols-4 gap-x-6 gap-y-8">
+    <div *ngIf="categories$|async as categories" class="grid grid-cols-4 gap-x-6 gap-y-8">
       <div *ngFor="let category of categories" class="flex flex-row items-center justify-start gap-4 p-4 rounded hover:scale-[1.01] hover:shadow-xl hover:cursor-pointer group">
         <figure class="p-4 rounded bg-primary bg-opacity-15 w-fit group-hover:bg-opacity-100">
           <img class="group-hover:brightness-200 group-hover:contrast-200" src="/assets/icons/pen-nib-duotone.png" alt="">
         </figure>
         <div>
-          <h2>Fraphisme et design</h2>
-          <p>357 postes ouverts</p>
+          <h2>{{ category.name }}</h2>
+          <p>{{ category.jobsCount }} postes ouverts</p>
         </div>
       </div>
     </div>

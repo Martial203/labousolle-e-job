@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { JobService } from '../../../../core/services/job/job.service';
+import { Observable } from 'rxjs';
+import { Job } from '../../../../core/models/job/job';
 
 @Component({
   selector: 'app-job-details',
@@ -13,7 +16,14 @@ export class JobDetails {
   isDocUploadModalOpen: boolean = false;
   isSuccessfullySubmittedModalOpen: boolean = false;
 
-  constructor(private router: Router) { }
+  job$!: Observable<Job>;
+
+  constructor(private jobService: JobService, private router: Router, private route: ActivatedRoute) { }
+
+  ngOnInit(): void{
+    const jobId = Number(this.route.snapshot.paramMap.get('jobId'));
+    this.job$ = this.jobService.getJobDetails(jobId);
+  }
 
   onShowSubmitModal(open: boolean) {
     this.isSubmitModalOpen = open;

@@ -1,4 +1,9 @@
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
+import { JobService } from '../../../../core/services/job/job.service';
+import { Category } from '../../../../core/models/category/category';
+import { Job } from '../../../../core/models/job/job';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,24 +13,23 @@ import { Component } from '@angular/core';
 })
 export class Home {
 
-  recommendedJobs!: any [];
-  trendingJobs!: any [];
-  recentJobs!: any [];
-  categories!: any [];
+  recommendedJobs$!: Observable<Job[]>;
+  trendingJobs$!: Observable<Job[]>;
+  recentJobs$!: Observable<Job[]>;
+  categories$!: Observable<Category[]>;
+  userInterests$!: Observable<Category[]>;
 
   responsiveOptions: any[] | undefined;
 
-  interests!: string[];
-
-  constructor() {}
+  constructor(private authService: AuthService, private jobService: JobService) {}
 
   ngOnInit(): void {
-    this.recommendedJobs = [0,1,2,3,4,5];
-    this.trendingJobs = [0,1,2,3,4,5];
-    this.recentJobs = [0,1,2,3,4,5];
-    this.categories = [0,1,2,3,4,5,6,7];
-    this.interests = ['Designer', 'Programmation', 'Marketing numérique'];
-
+    this.recommendedJobs$ = this.jobService.getRecommendedJobs();
+    this.trendingJobs$ = this.jobService.getFeaturedJobs();
+    this.recentJobs$ = this.jobService.getRecentJobs();
+    this.categories$ = this.jobService.getCategories();
+    this.userInterests$ = this.authService.getProfileInterests();
+    
     this.responsiveOptions = [
       {
         breakpoint: '1400px',
