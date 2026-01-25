@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Company } from '../../../../../core/models/company/company';
 
 @Component({
   selector: 'app-organization-card',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './organization-card.scss',
 })
 export class OrganizationCard {
+
+  @Input() company!: Company;
 
 }

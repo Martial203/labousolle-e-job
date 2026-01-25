@@ -9,7 +9,6 @@ import { EnterprisesManagement } from './pages/enterprises-management/enterprise
 import { SideMenu } from './components/side-menu/side-menu';
 import { Admin } from './admin';
 import { NewJob } from './pages/new-job/new-job';
-import { EnterpriseForm } from './pages/enterprises-management/enterprise-form/enterprise-form';
 import { NewEnterprise } from './pages/new-enterprise/new-enterprise';
 import { ContactsForm } from './pages/new-enterprise/contacts-form/contacts-form';
 import { GeneralInfosForm } from './pages/new-enterprise/general-infos-form/general-infos-form';
@@ -23,7 +22,6 @@ import { SocialNetworksForm } from './pages/new-enterprise/social-networks-form/
     SideMenu,
     Admin,
     NewJob,
-    EnterpriseForm,
     NewEnterprise,
     ContactsForm,
     GeneralInfosForm,

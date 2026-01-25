@@ -23,32 +23,36 @@
   <div class="grid grid-cols-2 gap-4">
     <div>
       <label for="">Nom de l'entreprise</label>
-      <input pInputText type="text" name="" id="">
+      <input pInputText type="text" name="name" id="">
     </div>
     <div>
       <label for="">Type d'organisation</label>
-      <p-select type="text" name="" id=""></p-select>
+      <p-select type="text" name="type" id=""></p-select>
     </div>
     <div>
       <label for="">Taille de l'équipe</label>
-      <p-select type="text" name="" id=""></p-select>
+      <p-select type="text" name="size" id=""></p-select>
     </div>
     <div>
       <label for="">Date de création</label>
-      <p-datepicker inputStyleClass="w-full"></p-datepicker>
+      <p-datepicker inputStyleClass="w-full" name="creationDate"></p-datepicker>
     </div>
     <div>
       <label for="">Site web de l'entreprise</label>
-      <input pInputText type="url" name="" id="">
+      <input pInputText type="url" name="website" id="">
+    </div>
+    <div>
+      <label for="">Adresse</label>
+      <input pInputText type="text" name="address" id="">
     </div>
   </div>
   <div>
     <label for="">A propos de nous</label>
-    <p-editor name="aboutUs" placeholder="Écrivez ici les informations sur votre entreprise. Faites savoir au candidat qui nous sommes..." ngModel [style]="{ height: '180px' }" />
+    <p-editor name="about" placeholder="Écrivez ici les informations sur votre entreprise. Faites savoir au candidat qui nous sommes..." ngModel [style]="{ height: '180px' }" />
   </div>
   <div>
     <label for="">Vision de l'entreprise</label>
-    <p-editor name="ourVision" placeholder="Parlez-nous de la vision de votre entreprise..." ngModel [style]="{ height: '180px' }" />
+    <p-editor name="vision" placeholder="Parlez-nous de la vision de votre entreprise..." ngModel [style]="{ height: '180px' }" />
   </div>
   <!-- <button class="px-6 py-3 rounded text-secondary bg-primary">Enregistrer et suivant <i class="ml-2 align-middle pi pi-arrow-right"></i></button> -->
   <button pButton severity="info" class="mt-6" label="Enregistrer et suivant" icon="pi pi-arrow-right" iconPos="right"></button>

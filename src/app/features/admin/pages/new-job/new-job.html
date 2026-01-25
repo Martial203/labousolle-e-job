@@ -1,67 +1,53 @@
-<form class="flex flex-col gap-6 px-6 pb-16">
+<form #jobForm="ngForm" class="flex flex-col gap-6 px-6 pb-16" (ngSubmit)="onSubmit(jobForm.value)">
   <h1 class="text-2xl font-semibold">Publier une offre d'emploi</h1>
   <div class="flex flex-col gap-4">
+    <!-- <div>
+      <label for="">Image de couverture</label>
+      <figure class="flex flex-row items-center justify-center h-24 overflow-hidden border rounded-lg" (click)="fileInput.click()">
+        <img src="/assets/" alt="" class="object-cover w-full">
+      </figure>
+      <input #fileInput type="file" name="coverImage" accept="image/*" class="hidden w-full">
+    </div> -->
     <div>
       <label for="">Intitulé du poste</label>
-      <input pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
+      <input name="title" pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
     </div>
-    <!-- <div>
-      <label for="">Tags</label>
-      <input pInputText placeholder="Mots-clés du poste, tags, etc..." type="text">
-    </div> -->
     <div>
       <label for="">Adresse mail pour postuler</label>
-      <input pInputText placeholder="contact@gmail.com" type="email">
+      <input name="email" pInputText placeholder="contact@gmail.com" type="email">
     </div>
-    <!-- <div>
-      <h2>Salaire</h2>
-      <div class="grid grid-cols-2 gap-4">
-        <div>
-          <label for="">Salaire minimum</label>
-          <p-inputgroup>
-            <p-input-number class="border-none" placeholder="Salaire minimum..." />
-            <p-inputgroup-addon>FCFA</p-inputgroup-addon>
-          </p-inputgroup>
-        </div>
-        <div>
-          <label for="">Salaire maximum</label>
-          <p-inputgroup>
-            <p-input-number class="border-none" placeholder="Salaire maximun..." />
-            <p-inputgroup-addon>FCFA</p-inputgroup-addon>
-          </p-inputgroup>
-        </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div *ngIf="categories$|async as categories">
+        <label for="">Catégorie</label>
+        <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" name="companyId" [showClear]="true" [filter]="true" filterBy="label"></p-select>
       </div>
-    </div> -->
+      <div *ngIf="companies$|async as companies">
+        <label for="">Entreprise</label>
+        <p-select placeholder="Sélectionner" [options]="companies" optionLabel="label" name="companyId" [showClear]="true" [filter]="true" filterBy="label">
+          <ng-template pTemplate="footer">
+            <button pButton (click)="displayDialog=true" label="Ajouter" icon="pi pi-plus" class="w-full"></button>
+          </ng-template>
+        </p-select>
+      </div>
+    </div>
     <div>
       <h2>Informations avancées</h2>
       <div class="grid grid-cols-2 gap-4">
-        <!-- <div>
-          <label for="">Éducation</label>
-          <p-select placeholder="Sélectionner"></p-select>
-        </div> -->
         <div>
           <label for="">Expérience</label>
-          <p-select placeholder="Sélectionner" [options]="experiences"></p-select>
+          <p-select placeholder="Sélectionner" [options]="experiences" name="experience"></p-select>
         </div>
         <div>
           <label for="">Type de poste</label>
-          <p-select placeholder="Sélectionner" [options]="contractTypes"></p-select>
+          <p-select placeholder="Sélectionner" [options]="contractTypes" name="jobType"></p-select>
         </div>
-        <!-- <div>
-          <label for="">Postes disponibles</label>
-          <p-select placeholder="Sélectionner"></p-select>
-        </div> -->
         <div>
           <label for="">Date d'expiration</label>
-          <p-datepicker inputStyleClass="w-full" placeholder="JJ/MM/AAAA"></p-datepicker>
+          <p-datepicker inputStyleClass="w-full" placeholder="JJ/MM/AAAA" name="expirationDate"></p-datepicker>
         </div>
-        <!-- <div>
-          <label for="">Niveau du poste</label>
-          <p-select placeholder="Sélectionner"></p-select>
-        </div> -->
         <div>
           <label for="">Lieu</label>
-          <input pInputText type="text" placeholder="Douala, Cameroun" autocomplete="address-line1">
+          <input pInputText type="text" placeholder="Douala, Cameroun" autocomplete="address-line1" name="address">
         </div>
       </div>
     </div>
@@ -79,3 +65,7 @@
   </div>
   <button pButton class="w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right"></button>
 </form>
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [maximizable]="true" header="Ajouter une entreprise">
+  <app-new-enterprise></app-new-enterprise>
+</p-dialog>

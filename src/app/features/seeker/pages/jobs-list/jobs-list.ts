@@ -22,7 +22,7 @@ export class JobsList {
   constructor(private jobService: JobService) { }
 
   ngOnInit(): void {
-
+    this.jobs$ = this.jobService.searchJobs("");
   }
 
   onShowFilterModal() {

@@ -18,6 +18,28 @@ export class JobService {
 
   constructor(private http: HttpClient){ }
 
+  createJob(jobData: Job): Observable<any> {
+    const body = {
+      title: jobData.title,
+      category: jobData.categoryId,
+      company: jobData.companyId,
+      expiration_date: jobData.expirationDate,
+      city: jobData.address,
+      country: ' ',
+      job_type: jobData.jobType,
+      image: ' ',
+      about: jobData.about,
+      description: jobData.description,
+      profile_required: jobData.profileRequired,
+      experience_required: jobData.experience,
+      salary_min: 0,
+      salary_max: 0,
+      education_level: ' ',
+      skills:[]
+    }
+    return this.http.post(`${environment.apiUrl}/jobs/`, body);
+  }  
+
   getJobDetails(jobId: number): Observable<Job> {
     return this.http.get<Job>(`${environment.apiUrl}/jobs/${jobId}/`);
   }
@@ -44,5 +66,29 @@ export class JobService {
         jobsCount: category.jobs_count
       })))
     );
+  }
+
+  updateAJob(jobId: number, jobData: Job): Observable<any> {
+    const body = {
+
+    }
+    return this.http.patch(`${environment.apiUrl}/jobs/${jobId}/`, jobData);
+  }
+
+  deleteAJob(jobId: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/jobs/${jobId}/`);
+  }
+
+  applyToJob(jobId: number, applicantData: { cv: string, coverLetter: string }): Observable<any> {
+    const body = {
+      cv: applicantData.cv,
+      cover_letter: applicantData.coverLetter
+    }
+    return this.http.post(`${environment.apiUrl}/jobs/${jobId}/apply/`, body);
+  }
+
+  searchJobs(query: string): Observable<Job[]> {
+    const body = {};
+    return this.http.get<Job[]>(`${environment.apiUrl}/jobs/search/?q=${query}`);
   }
 }

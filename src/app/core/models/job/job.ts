@@ -3,8 +3,8 @@ export class Job {
   title!: string;
   address!: string;
   coverImage!: string;
-  companyName!: string;
-  companyLogo!: string;
+  companyId!: number;
+  categoryId!: number;
   expirationDate!: Date;
   creationDate!: Date;
   isFeatured!: boolean;

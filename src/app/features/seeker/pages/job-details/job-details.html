@@ -3,11 +3,11 @@
     <p class="container px-16 mx-auto text-xl font-bold">Détails du poste</p>
   </div>
 
-  <main class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
+  <main *ngIf="company$|async as company" class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
     <div class="flex flex-row items-center justify-between">
       <div class="flex flex-row items-center justify-start gap-4">
         <figure class="overflow-hidden rounded-full size-24">
-          <img [src]="job.companyLogo" class="object-cover w-full" [alt]="job.companyName">
+          <img [src]="company.logo" class="object-cover w-full" [alt]="company.name">
         </figure>
         <h1 class="text-3xl font-semibold">
           {{ job.title }} 
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div>
-          <app-organization-card></app-organization-card>
+          <app-organization-card [company]="company"></app-organization-card>
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ import { SharedModule } from './shared/shared-module';
 import Aura from '@primeuix/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CoreModule } from './core/core-module';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,9 @@ import { CoreModule } from './core/core-module';
         preset: Aura
       }
     }),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
     ConfirmationService,
     MessageService
   ],
