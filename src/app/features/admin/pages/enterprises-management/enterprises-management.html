@@ -11,11 +11,8 @@
   </div>
 
   <p-table 
-    [value]="[
-      {name: 'TechCorp Inc', email: 'contact@techcorp.com', phone: '+1 (555) 123-4567'},
-      {name: 'Global Solutions Ltd', email: 'info@globalsolutions.com', phone: '+1 (555) 234-5678'},
-      {name: 'Innovation Labs', email: 'hello@innovationlabs.com', phone: '+1 (555) 345-6789'}
-    ]"
+    *ngIf="companies$|async as companies"
+    [value]="mapToCompanyRow(companies)"
     [rows]="10"
     responsiveLayout="scroll"
     styleClass="p-datatable-striped">

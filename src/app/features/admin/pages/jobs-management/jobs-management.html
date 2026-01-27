@@ -5,8 +5,9 @@
   </div>
 
   <p-table
+    *ngIf="jobs$|async as jobs"
     #dt
-    [value]="jobs"
+    [value]="mapToJobRow(jobs)"
     [paginator]="true"
     [rows]="10"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -46,7 +47,7 @@
       </tr>
     </ng-template>
   </p-table>
-
+  
   <p-tieredMenu #menu [model]="items" [popup]="true" />
 
 

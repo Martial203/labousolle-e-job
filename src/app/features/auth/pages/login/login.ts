@@ -23,9 +23,12 @@ export class Login {
     this.authService.login(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
-        setTimeout(() => this.router.navigateByUrl('/'), 3000);
+        setTimeout(() => this.router.navigateByUrl('/'), 2000);
       },
-      error: (err) => this.processState = this.PROCESS_STATES.ERROR
+      error: (err) => {
+        console.log(err);
+        this.processState = this.PROCESS_STATES.ERROR;
+      }
     });
   }
 }

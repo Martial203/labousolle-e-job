@@ -1,5 +1,15 @@
+import { JobService } from './../../../../core/services/job/job.service';
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { Observable, map } from 'rxjs';
+import { Job } from '../../../../core/models/job/job';
+
+interface JobRow {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+}
 
 @Component({
   selector: 'app-jobs-management',
@@ -8,42 +18,24 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './jobs-management.scss'
 })
 export class JobsManagement {
-  jobs: any[] = [];
+  
+  jobs$!: Observable<Job[]>;
   items: MenuItem[] | undefined;
 
-  constructor() {
-    this.loadJobs();
-  }
+  constructor(private jobService: JobService) {}
 
   ngOnInit() {
-    this.items = [
-      {
-        label: 'Voir les détails',
-        icon: 'pi pi-eye',
-      },
-      {
-        label: 'Marquer comme expiré',
-        icon: 'pi pi-times-circle',
-      },
-      {
-        label: 'Modifier',
-        icon: 'pi pi-pencil'
-      },
-      {
-        label: 'Supprimer',
-        icon: 'pi pi-trash',
-      },
-    ]
+    this.jobs$ = this.jobService.getJobs();
   }
 
-
-  loadJobs(): void {
-    // Replace with actual service call
-    this.jobs = [
-      { id: 1, title: 'Software Engineer', description: 'Full-stack developer', status: 'Active' },
-      { id: 2, title: 'Product Manager', description: 'Lead product strategy', status: 'Active' },
-      { id: 3, title: 'Designer', description: 'UI/UX Design', status: 'Inactive' },
-    ];
+  mapToJobRow(jobs: Job[]): JobRow[] {
+    if(!jobs) return [];
+    return jobs.map(job => ({
+      id: job.id,
+      title: job.title,
+      description: job.description,
+      status: 'Active'
+    }))
   }
 
   addJob(): void {

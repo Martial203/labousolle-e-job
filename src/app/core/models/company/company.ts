@@ -12,13 +12,15 @@ export class Company {
   website!: string;
   about!: string;
   vision!: string;
-  socialNetworks!: SocialNetwork[];
+  socialNetworks!: SocialNetwork;
   contacts!: string[];
 }
 
 export class SocialNetwork {
-  name!: SocialNetworkType;
-  url!: string;
+  facebookUrl!: string;
+  twitterUrl!: string;
+  instagramUrl!: string;
+  youtubeUrl!: string;
 }
 
 export class Contact {
@@ -26,3 +28,4 @@ export class Contact {
   email!: string;
   phone!: string;
 }
+

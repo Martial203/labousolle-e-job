@@ -2,9 +2,12 @@ export class Job {
   id!: number;
   title!: string;
   address!: string;
-  coverImage!: string;
+  coverImage!: Blob;
   companyId!: number;
+  companyName!: string;
+  companyLogo!: any;
   categoryId!: number;
+  categoryName!: string;
   expirationDate!: Date;
   creationDate!: Date;
   isFeatured!: boolean;

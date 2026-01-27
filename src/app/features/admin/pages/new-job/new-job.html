@@ -1,29 +1,36 @@
 <form #jobForm="ngForm" class="flex flex-col gap-6 px-6 pb-16" (ngSubmit)="onSubmit(jobForm.value)">
   <h1 class="text-2xl font-semibold">Publier une offre d'emploi</h1>
   <div class="flex flex-col gap-4">
-    <!-- <div>
-      <label for="">Image de couverture</label>
-      <figure class="flex flex-row items-center justify-center h-24 overflow-hidden border rounded-lg" (click)="fileInput.click()">
-        <img src="/assets/" alt="" class="object-cover w-full">
-      </figure>
-      <input #fileInput type="file" name="coverImage" accept="image/*" class="hidden w-full">
-    </div> -->
+    <figure pRipple class="relative flex flex-row items-center justify-center w-full overflow-hidden text-center border border-dashed rounded-md cursor-pointer h-96 ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="coverInputField.click()">
+      <ng-container *ngIf="selectedFile; else placeholder">
+        <img class="object-cover w-full h-full" [src]="preview" alt="">
+        <!-- <button pButton class="absolute top-0 right-0" icon="pi pi-times"></button> -->
+      </ng-container>
+      <ng-template #placeholder>
+        <div class="flex flex-col gap-2 px-4 py-8">
+          <div><i class="block text-primary pi pi-cloud-upload" style="font-size: 2.5rem"></i></div>
+          <p class="text-sm font-semibold">Parcourir une photo ou déposer en une ici</p>
+          <p class="text-xs text-primary">Une photo de plus de 400 pixels fonctionne mieux. Taille maximale de la photo 5 Mo.</p>
+        </div>
+      </ng-template>
+    </figure>
+    <input #coverInputField type="file" class="hidden" accept=".jpg, .png, .jpeg, .gif" (change)="onCoverSelected($event)">
     <div>
       <label for="">Intitulé du poste</label>
-      <input name="title" pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text">
+      <input name="title" pInputText placeholder="Ajoutez l'intitulé du poste, le rôle, le nombre de postes, etc." type="text" required ngModel>
     </div>
     <div>
       <label for="">Adresse mail pour postuler</label>
-      <input name="email" pInputText placeholder="contact@gmail.com" type="email">
+      <input name="email" pInputText placeholder="contact@gmail.com" type="email" required ngModel>
     </div>
     <div class="grid grid-cols-2 gap-4">
       <div *ngIf="categories$|async as categories">
         <label for="">Catégorie</label>
-        <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" name="companyId" [showClear]="true" [filter]="true" filterBy="label"></p-select>
+        <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" name="categoryId" [showClear]="true" [filter]="true" filterBy="label" required ngModel></p-select>
       </div>
       <div *ngIf="companies$|async as companies">
         <label for="">Entreprise</label>
-        <p-select placeholder="Sélectionner" [options]="companies" optionLabel="label" name="companyId" [showClear]="true" [filter]="true" filterBy="label">
+        <p-select placeholder="Sélectionner" [options]="companies" optionLabel="label" name="companyId" [showClear]="true" [filter]="true" filterBy="label" required ngModel>
           <ng-template pTemplate="footer">
             <button pButton (click)="displayDialog=true" label="Ajouter" icon="pi pi-plus" class="w-full"></button>
           </ng-template>
@@ -35,19 +42,19 @@
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label for="">Expérience</label>
-          <p-select placeholder="Sélectionner" [options]="experiences" name="experience"></p-select>
+          <p-select placeholder="Sélectionner" [options]="experiences" name="experience" required ngModel></p-select>
         </div>
         <div>
           <label for="">Type de poste</label>
-          <p-select placeholder="Sélectionner" [options]="contractTypes" name="jobType"></p-select>
+          <p-select placeholder="Sélectionner" [options]="contractTypes" name="jobType" required ngModel></p-select>
         </div>
         <div>
           <label for="">Date d'expiration</label>
-          <p-datepicker inputStyleClass="w-full" placeholder="JJ/MM/AAAA" name="expirationDate"></p-datepicker>
+          <p-datepicker inputStyleClass="w-full" placeholder="JJ/MM/AAAA" name="expirationDate" required ngModel></p-datepicker>
         </div>
         <div>
           <label for="">Lieu</label>
-          <input pInputText type="text" placeholder="Douala, Cameroun" autocomplete="address-line1" name="address">
+          <input pInputText type="text" placeholder="Douala, Cameroun" autocomplete="address-line1" name="address" required ngModel>
         </div>
       </div>
     </div>
@@ -55,11 +62,11 @@
       <h2>Description et responsabilités</h2>
       <div class="mb-4">
         <label for="">Description</label>
-        <p-editor name="description" placeholder="Ajoutez votre description de poste..." ngModel [style]="{ height: '180px' }" />
+        <p-editor name="description" placeholder="Ajoutez votre description de poste..." required ngModel [style]="{ height: '180px' }" />
       </div>
       <div>
         <label for="">Responsabilités</label>
-        <p-editor name="responsibilities" placeholder="Ajoutez vos responsabilités..." ngModel [style]="{ height: '180px' }" />
+        <p-editor name="profileRequired" placeholder="Ajoutez vos responsabilités..." required ngModel [style]="{ height: '180px' }" />
       </div>
     </div>
   </div>

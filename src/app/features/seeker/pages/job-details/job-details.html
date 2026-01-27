@@ -3,60 +3,54 @@
     <p class="container px-16 mx-auto text-xl font-bold">Détails du poste</p>
   </div>
 
-  <main *ngIf="company$|async as company" class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
+  <main *ngIf="job$|async as job" class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
     <div class="flex flex-row items-center justify-between">
       <div class="flex flex-row items-center justify-start gap-4">
         <figure class="overflow-hidden rounded-full size-24">
-          <img [src]="company.logo" class="object-cover w-full" [alt]="company.name">
+          <img [src]="job.company.logo" class="object-cover w-full" [alt]="job.company.name">
         </figure>
         <h1 class="text-3xl font-semibold">
-          {{ job.title }} 
-          <span *ngIf="job.isFeatured" class="px-4 py-1 ml-6 text-sm text-red-300 bg-red-100 rounded-full">En vedette</span>
+          {{ job.job.title }} 
+          <span *ngIf="job.job.isFeatured" class="px-4 py-1 ml-6 text-sm text-red-300 bg-red-100 rounded-full">En vedette</span>
         </h1>
       </div>
       <div>
         <button class="px-8 py-4 mb-2 text-xl font-semibold rounded text-secondary bg-primary" (click)="onShowSubmitModal(true)">Postulez maintenant <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
-        <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">{{ job.expirationDate | date }}</span></p>
+        <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">{{ job.job.expirationDate | date }}</span></p>
       </div>
     </div>
 
     <div class="flex flex-row gap-6">
       <div class="flex-1">
         <figure class="flex flex-row items-center justify-center w-full mb-12 overflow-hidden max-h-[35em] rounded-md">
-          <img [src]="job.coverImage" class="object-cover w-full" [alt]="job.title">
+          <img [src]="job.job.coverImage" class="object-cover w-full" [alt]="job.job.title">
         </figure>
         <p-accordion [value]="['0', '1', '2']" [multiple]="true">
           <p-accordion-panel value="0">
             <p-accordion-header>Qui sont-ils ?</p-accordion-header>
             <p-accordion-content>
-              <p class="m-0">
-                {{ job.about }}
-              </p>
+              <div class="m-0" [innerHtml]="job.company.about"></div>
             </p-accordion-content>
           </p-accordion-panel>
 
           <p-accordion-panel value="1">
             <p-accordion-header>Descriptif du poste</p-accordion-header>
             <p-accordion-content>
-              <p class="m-0">
-                {{ job.description }}
-              </p>
+              <div class="m-0" [innerHtml]="job.job.description"></div>
             </p-accordion-content>
           </p-accordion-panel>
 
           <p-accordion-panel value="2">
             <p-accordion-header>Profil recherché</p-accordion-header>
             <p-accordion-content>
-              <p class="m-0">
-                {{ job.profileRequired }}
-              </p>
+              <div class="m-0" [innerHtml]="job.job.profileRequired"></div>
             </p-accordion-content>
           </p-accordion-panel>
         </p-accordion>
 
         <div class="mx-auto mt-10 w-fit">
           <button class="px-8 py-4 mb-2 text-xl font-semibold rounded text-secondary bg-primary" (click)="onShowSubmitModal(true)">Postulez maintenant <i class="ml-2 align-middle pi pi-arrow-right"></i></button>
-          <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">{{ job.expirationDate | date }}</span></p>
+          <p class="text-sm text-right">L'offre expire le : <span class="font-semibold text-red-600">{{ job.job.expirationDate | date }}</span></p>
         </div>
       </div>
 
@@ -65,34 +59,34 @@
           <h2 class="mb-6 text-2xl font-semibold">Aperçu du poste</h2>
           <div class="grid grid-cols-2 gap-6">
             <div>
-              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <img class="mb-4 w-7" src="/assets/icons/CalendarBlank.png" alt="">
               <p class="mb-1 text-sm text-gray">POSTE PUBLIÉ :</p>
-              <p class="text-sm font-semibold">{{ job.creationDate | date }}</p>
+              <p class="text-sm font-semibold">{{ job.job.creationDate | date }}</p>
             </div>
             <div>
-              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <img class="mb-4 w-7" src="/assets/icons/Timer.png" alt="">
               <p class="mb-1 text-sm text-gray">EXPIRATION DU POSTE :</p>
-              <p class="text-sm font-semibold">{{ job.expirationDate | date }}</p>
+              <p class="text-sm font-semibold">{{ job.job.expirationDate | date }}</p>
             </div>
             <div>
-              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <img class="mb-4 w-7" src="/assets/icons/MapPinLine.png" alt="">
               <p class="mb-1 text-sm text-gray">EMPLACEMENT :</p>
-              <p class="text-sm font-semibold">{{ job.address }}</p>
+              <p class="text-sm font-semibold">{{ job.job.address }}</p>
             </div>
             <div>
-              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <img class="mb-4 w-7" src="/assets/icons/briefcase.png" alt="">
               <p class="mb-1 text-sm text-gray">TYPE DE POSTE :</p>
-              <p class="text-sm font-semibold">{{ job.jobType }}</p>
+              <p class="text-sm font-semibold capitalize">{{ job.job.jobType }}</p>
             </div>
             <div>
-              <img class="mb-4 w-7" src="/assets/icons/calendar-blank.png" alt="">
+              <img class="mb-4 w-7" src="/assets/icons/briefcase.png" alt="">
               <p class="mb-1 text-sm text-gray">EXPERIENCE :</p>
-              <p class="text-sm font-semibold">{{ job.experience }}</p>
+              <p class="text-sm font-semibold">{{ job.job.experience }}</p>
             </div>
           </div>
         </div>
         <div>
-          <app-organization-card [company]="company"></app-organization-card>
+          <app-organization-card [company]="job.company"></app-organization-card>
         </div>
       </div>
     </div>
@@ -103,25 +97,25 @@
       <h1 class="container px-16 pb-2 mx-auto text-3xl font-semibold">Emplois connexes</h1>
     </div>
     <div class="container px-16 py-16 mx-auto">
-      <app-job-cards-list></app-job-cards-list>
+      <app-job-cards-list [jobs]="job.similarJobs"></app-job-cards-list>
     </div>
     
   </section>
 
   <p-dialog [modal]="true" [(visible)]="isSubmitModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
       <ng-template #header>
-        <p class="mb-2 font-semibold text-md">Postuler pour le poste: {{ job.title }}</p>
+        <p class="mb-2 font-semibold text-md">Postuler pour le poste: {{ job.job.title }}</p>
       </ng-template>
       <ng-template #closeicon>
         <i class="relative pi pi-times-circle bottom-2.5"></i>
       </ng-template>
       <p-button class="relative mb-2 text-secondary" icon="pi pi-arrow-right" severity="info" iconPos="bottom" label="Adapter mon cv et ma lettre de motivation à cette offre" (click)="onAdjustCV()"></p-button>
-      <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="onShowDocUploadModal(true)">Passer</button></p>
+      <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="apply()">Passer</button></p>
   </p-dialog>
 
   <p-dialog [modal]="true" [(visible)]="isDocUploadModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
     <ng-template #header>
-      <p class="mb-2 font-semibold text-md">Postuler pour le poste: {{ job.title }}</p>
+      <p class="mb-2 font-semibold text-md">Postuler pour le poste: {{ job.job.title }}</p>
     </ng-template>
     <ng-template #closeicon>
       <i class="relative pi pi-times-circle"></i>

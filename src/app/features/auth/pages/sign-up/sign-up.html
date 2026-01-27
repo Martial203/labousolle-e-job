@@ -40,10 +40,16 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
             <input type="email" id="email" name="email" pInputText [invalid]="email.invalid && email.touched" placeholder="johndoe@exemple.com" autocomplete="email" ngModel #email="ngModel" class="w-full" required email>
             <label for="email" class="mb-2 text-sm font-medium text-gray-700 ">Email</label>
           </p-floatlabel>
+
+          <!-- Phone Field -->
+          <p-floatlabel variant="on">
+            <input type="tel" id="phone" name="phone" pInputText placeholder="Entrer votre numéro de téléphone" autocomplete="tel" ngModel class="w-full" required>
+            <label for="phone" class="mb-2 text-sm font-medium text-gray-700 ">Téléphone</label>
+          </p-floatlabel>
           
           <!-- Password Field -->
           <p-floatlabel variant="on">
-            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="••••••••••••••" [toggleMask]="true" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" autocomplete="password" variant="filled" ngModel required>
+            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="Fournir un mot de passe" [toggleMask]="true" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" autocomplete="password" variant="filled" ngModel required>
               <ng-template #footer>
                 <p-divider />
                 <ul class="pl-2 my-0 leading-normal">
@@ -59,7 +65,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           
           <!-- Confirm Password Field -->
           <p-floatlabel variant="on">
-            <p-password type="password" inputStyleClass="w-full" id="confirmPassword" name="confirmPassword" class="w-full"  placeholder="••••••••••••••" [toggleMask]="true" [feedback]="false" ngModel required></p-password>
+            <p-password type="password" inputStyleClass="w-full" id="confirmPassword" name="confirmPassword" class="w-full"  placeholder="Confirmer le mot de passe." [toggleMask]="true" [feedback]="false" autocomplete="password" ngModel required></p-password>
             <label for="confirmPassword" class="mb-2 text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
           </p-floatlabel>
           
@@ -76,6 +82,11 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
               </div>
             </div>
           </div>
+          
+          <!-- Success Message -->
+          <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Compte crée avec succès !" class="w-full mb-4"></p-message>
+          <!-- Error Message -->
+          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue lors de la création du compte." class="w-full mb-4"></p-message>
           
           <!-- Submit Button -->
           <button pButton type="submit" class="w-full bg-primary" severity="info" [disabled]="signUpForm.invalid || !acceptTerms.checked || processState===PROCESS_STATES.LOADING || (signUpForm.value.password!==signUpForm.value.confirmPassword)" [loading]="processState === PROCESS_STATES.LOADING">Créer</button>

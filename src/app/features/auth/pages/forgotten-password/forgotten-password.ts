@@ -23,7 +23,7 @@ export class ForgottenPassword {
     this.processState = ProcessState.LOADING;
     this.authService.orderPasswordReset(email).subscribe({
       next: () => {
-        this.processState = ProcessState.SUCCESS;
+        this.processState = ProcessState.INACTIVE;
         this.emailSent = email;
       },
       error: (err) => {

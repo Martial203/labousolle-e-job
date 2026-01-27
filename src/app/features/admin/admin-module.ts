@@ -30,8 +30,7 @@ import { SocialNetworksForm } from './pages/new-enterprise/social-networks-form/
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule,
-    ReactiveFormsModule
+    SharedModule
   ]
 })
 export class AdminModule { }

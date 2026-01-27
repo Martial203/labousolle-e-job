@@ -32,7 +32,7 @@ export class NewPassword {
     }).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
-        setTimeout(() => this.router.navigateByUrl('/home'), 3000)
+        setTimeout(() => this.router.navigateByUrl('/home'), 2000)
       },
       error: (err) => {
         console.log(err);

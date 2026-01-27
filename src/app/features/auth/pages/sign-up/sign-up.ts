@@ -29,9 +29,10 @@ export class SignUp {
     this.authService.signUp(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
-        setTimeout(() => this.router.navigateByUrl('/choose-interests'), 3000);
+        setTimeout(() => this.router.navigateByUrl('/auth/choose-interests'), 2000);
       },
       error: (err) => {
+        console.log(err)
         this.processState = ProcessState.ERROR;
       }
     });

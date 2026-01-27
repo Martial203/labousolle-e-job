@@ -25,7 +25,7 @@ export class AuthService {
       nom: credentials.name,
       prenom: credentials.firstName,
       email: credentials.email,
-      phoneNumber: credentials.phoneNumber ?? "0000000000",
+      phoneNumber: credentials.phone,
       password: credentials.password,
       confirm_password: credentials.confirmPassword
     }
@@ -66,7 +66,7 @@ export class AuthService {
       new_password: data.newPassword,
       confirm_password: data.confirmPassword
     }
-    return this.http.post(`${environment.apiUrl}/auth/password-reset/reset/`, body);
+    return this.http.post(`${environment.apiUrl}/auth/password-reset/confirm/`, body);
   }
 
   setProfileInterests(interestsIds: number[]): Observable<any>{
@@ -78,12 +78,12 @@ export class AuthService {
 
   getProfileInterests(): Observable<Category[]>{
     return this.http.get<Category[]>(`${environment.apiUrl}/auth/choose-interests/`).pipe(
-      map(categories => categories.map((category: any) => ({
+      map((categories: any) => categories.categories_details.map((category: any) => ({
         id: category.id,
         name: category.name,
-        description: category.description,
-        icon: category.icon,
-        jobsCount: category.jobs_count
+        description: '',
+        icon: '',
+        jobsCount: 0
       })))
     );
   }

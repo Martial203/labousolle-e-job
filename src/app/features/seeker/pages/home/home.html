@@ -15,7 +15,7 @@
             </div>
             <p-button class="border-none" severity="info">Rechercher</p-button>
           </div>
-          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest }}, </a> etc</p>
+          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest.name }}, </a> etc</p>
         </div>
       </div>
       <div class="relative">
@@ -38,35 +38,41 @@
     </div>
   </section>
   
-  <section *ngIf="recommendedJobs$|async as recommendedJobs" class="container pt-16 pb-12 mx-auto px-14">
-    <div class="flex flex-row justify-between mb-14">
-      <h1>Recommandations</h1>
-      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
-    </div>
-    <div>
-      <app-job-cards-list [jobs]="recommendedJobs"></app-job-cards-list>
-    </div>
-  </section>
+  <ng-container *ngIf="recommendedJobs$|async as recommendedJobs">
+    <section *ngIf="recommendedJobs.length>0" class="container pt-16 pb-12 mx-auto px-14">
+      <div class="flex flex-row justify-between mb-14">
+        <h1>Recommandations</h1>
+        <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      </div>
+      <div>
+        <app-job-cards-list [jobs]="recommendedJobs"></app-job-cards-list>
+      </div>
+    </section>
+  </ng-container>
 
-  <section *ngIf="trendingJobs$|async as trendingJobs" class="container py-12 mx-auto px-14">
-    <div class="flex flex-row justify-between mb-14">
-      <h1>Offres d'emploi vedettes</h1>
-      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
-    </div>
-    <div>
-      <app-job-cards-list [jobs]="trendingJobs"></app-job-cards-list>
-    </div>
-  </section>
+  <ng-container *ngIf="trendingJobs$|async as trendingJobs">
+    <section *ngIf="trendingJobs.length>0" class="container py-12 mx-auto px-14">
+      <div class="flex flex-row justify-between mb-14">
+        <h1>Offres d'emploi vedettes</h1>
+        <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      </div>
+      <div>
+        <app-job-cards-list [jobs]="trendingJobs"></app-job-cards-list>
+      </div>
+    </section>
+  </ng-container>
   
-  <section *ngIf="recentJobs$|async as recentJobs" class="container py-12 mx-auto px-14">
-    <div class="flex flex-row justify-between mb-14">
-      <h1>Offres d'emplois recents</h1>
-      <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
-    </div>
-    <div>
-      <app-job-cards-list [jobs]="recentJobs"></app-job-cards-list>
-    </div>
-  </section>
+  <ng-container *ngIf="recentJobs$|async as recentJobs">
+    <section *ngIf="recentJobs.length>0" class="container py-12 mx-auto px-14">
+      <div class="flex flex-row justify-between mb-14">
+        <h1>Offres d'emplois recents</h1>
+        <button class="see-more-button">Voir plus &nbsp; <i class="align-middle pi pi-arrow-right"></i></button>
+      </div>
+      <div>
+        <app-job-cards-list [jobs]="recentJobs"></app-job-cards-list>
+      </div>
+    </section>
+  </ng-container>
 
   <section class="container pt-12 pb-20 mx-auto px-14">
     <div class="flex flex-row justify-between mb-14">

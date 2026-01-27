@@ -13,16 +13,20 @@
       <p class="mb-2">Vas-y tu peux tout nous dire</p>
       <h2 class="mb-8 text-3xl font-semibold text-gray-800">Tes centres d'intérêts</h2>
       
-      <div>
+      <div class="flex flex-col">
         
         <div *ngIf="interests$|async as interests" class="flex flex-row flex-wrap gap-2 mb-10">
           <button class="block {{ selectedInterestsIds.has(interest.id) ? 'selected' : '' }}" severity="secondary" pButton [outlined]="!selectedInterestsIds.has(interest.id)" [icon]="selectedInterestsIds.has(interest.id) ? 'pi pi-check' : ''" *ngFor="let interest of interests" (click)="toggleInterest(interest.id)">{{ interest.name }}</button>
         </div>
         
+        <div *ngIf="[PROCESS_STATES.SUCCESS, PROCESS_STATES.ERROR].includes(processState)" class="mb-4">
+          <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Centres d'intérêts définis avec succès !" class="w-full mb-4"></p-message>
+          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer." class="w-full mb-4"></p-message>
+        </div>
         <!-- Submit Button -->
-        <div class="flex flex-row gap-8 text-center">
+        <div class="flex flex-row gap-8 mt-4 text-center">
           <button pButton class="font-medium w-36" type="submit" severity="secondary" routerLink="/home">Passer</button>
-          <button pButton class="font-medium w-36" severity="info" type="submit" [disabled]="selectedInterestsIds.size<3" (click)="onSubmit()">Suivant</button>
+          <button pButton class="font-medium w-36" severity="info" type="submit" [loading]="processState===PROCESS_STATES.LOADING" [disabled]="selectedInterestsIds.size<1" (click)="onSubmit()">Suivant</button>
         </div>
       </div>
     </div>

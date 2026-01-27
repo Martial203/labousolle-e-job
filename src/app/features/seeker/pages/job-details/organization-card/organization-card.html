@@ -10,7 +10,7 @@
     <ul class="flex flex-col gap-2 mb-8 text-sm">
       <li>
         <span>Fondée le :</span>
-        <span>{{ company.creationDate | date : 'full' }}</span>
+        <span>{{ company.creationDate | date }}</span>
       </li>
       <li>
         <span>Type d'organisation :</span>
@@ -22,22 +22,22 @@
       </li>
       <li>
         <span>Téléphone :</span>
-        <span><a href="tel:{{ company.phone }}">{{ company.phone }}</a></span>
+        <span>{{ company.phone }}</span>
       </li>
       <li>
         <span>Email :</span>
-        <span><a href="mailto:{{ company.email }}">{{ company.email }}</a></span>
+        <span>{{ company.email }}</span>
       </li>
       <li>
         <span>Site web :</span>
-        <span>https://twitter.com</span>
+        <span>{{ company.website }}</span>
       </li>
     </ul>
-    <div class="flex flex-row gap-2 justify-normal">
-      <a href="#"><img src="/assets/icons/sociale.png" alt=""></a>
-      <a href="#"><img src="/assets/icons/sociale.png" alt=""></a>
-      <a href="#"><img src="/assets/icons/sociale.png" alt=""></a>
-      <a href="#"><img src="/assets/icons/sociale.png" alt=""></a>
+    <div *ngIf="company.socialNetworks as socialNetworks" class="flex flex-row gap-2 justify-normal">
+      <a *ngIf="socialNetworks.facebookUrl as url" [href]="url" class="group"><i class="text-2xl group-hover:text-secondary text-primary pi pi-facebook"></i></a>
+      <a *ngIf="socialNetworks.twitterUrl as url" [href]="url" class="group"><i class="text-2xl group-hover:text-secondary text-primary pi pi-twitter"></i></a>
+      <a *ngIf="socialNetworks.instagramUrl as url" [href]="url" class="group"><i class="text-2xl group-hover:text-secondary text-primary pi pi-instagram"></i></a>
+      <a *ngIf="socialNetworks.youtubeUrl as url" [href]="url" class="group"><i class="text-2xl group-hover:text-secondary text-primary pi pi-youtube"></i></a>
     </div>
   </div>
 </div>

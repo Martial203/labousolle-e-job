@@ -18,16 +18,13 @@ export class JobDetails {
   isDocUploadModalOpen: boolean = false;
   isSuccessfullySubmittedModalOpen: boolean = false;
 
-  job$!: Observable<Job>;
-  company$!: Observable<Company>;
+  job$!: Observable<{ job: Job, company: Company, similarJobs: Job[] }>;
 
   constructor(private jobService: JobService, private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void{
-    const jobId = Number(this.route.snapshot.paramMap.get('jobId'));
-    this.job$ = this.jobService.getJobDetails(jobId).pipe(
-      tap(job => this.company$ = this.companyService.getCompanyDetails(job.companyId))
-    );
+    const jobId = Number(this.route.snapshot.paramMap.get('id'));
+    this.job$ = this.jobService.getJobDetails(jobId);
   }
 
   onShowSubmitModal(open: boolean) {
@@ -46,5 +43,9 @@ export class JobDetails {
 
   onAdjustCV() {
     this.router.navigateByUrl('/cv-builder')
+  }
+
+  apply(): void{
+    this.jobService.applyToJob(1);
   }
 }

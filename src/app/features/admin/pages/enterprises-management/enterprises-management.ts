@@ -1,5 +1,15 @@
 import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Observable, map } from 'rxjs';
+import { Company } from '../../../../core/models/company/company';
+import { CompanyService } from '../../../../core/services/company/company.service';
+
+interface CompanyRow {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
 
 @Component({
   selector: 'app-enterprises-management',
@@ -9,9 +19,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class EnterprisesManagement {
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
+  companies$!: Observable<Company[]>;
 
-  confirmDeletion(event: Event, enterpriseId: string): void {
+  constructor(private companyService: CompanyService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
+
+  ngOnInit(): void {
+    this.companies$ = this.companyService.getCompanies();
+  }
+
+  confirmDeletion(event: Event, enterpriseId: number): void {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Voulez vous vraiment supprimer cette entreprise ?',
@@ -35,7 +51,18 @@ export class EnterprisesManagement {
     });
   }
 
-  deleteAnEnterprise(enterpriseId: string): void{
-    
+  deleteAnEnterprise(enterpriseId: number): void{
+    this.companyService.deleteCompany(enterpriseId);
   }
+
+  mapToCompanyRow(companies: Company[]): CompanyRow[] {
+    console.log(companies)
+    return companies.map(company => ({
+      id: company.id,
+      name: company.name,
+      email: company.email,
+      phone: company.phone
+    }))
+  }
+
 }
