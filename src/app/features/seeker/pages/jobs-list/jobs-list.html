@@ -1,18 +1,18 @@
-<div>
+<div *ngIf="jobs$|async as jobs">
   <div class="bg-light-blue">
     <div class="container px-16 py-8 mx-auto">
-      <app-search-bar (onFilterRequested)="onShowFilterModal()"></app-search-bar>
+      <app-search-bar (onFilterRequested)="onShowFilterModal()" (onSearch)="onSearch($event)"></app-search-bar>
     </div>
   </div>
   
   <section class="container px-16 py-12 mx-auto">
     <div class="mb-16">
-      <app-job-cards-list></app-job-cards-list>
+      <app-job-cards-list [jobs]="jobs.jobs"></app-job-cards-list>
     </div>
 
     <div class="flex flex-row items-center justify-center gap-4 mt-4 mb-20 text-sm">
       <button class="mr-2 rounded-full bg-light-blue px-3 py-2.5 {{activePage===1 ? 'opacity-30' : ''}}" (click)="onChangePage(activePage-1)" [disabled]="activePage===1"><i class="pi pi-arrow-left text-primary"></i></button>
-      <span *ngFor="let i of [1,2,3,4,5]" class="flex hover:shadow flex-row cursor-pointer items-center justify-center rounded-full size-10 {{ i===activePage ? 'bg-primary text-secondary hover:brightness-110' : 'hover:bg-gray hover:bg-opacity-50 hover:font-semibold'}}" (click)="onChangePage(i)">{{ i | number:'2.0-0' }}</span>
+      <span *ngFor="let i of getPages(jobs.totalPage)" class="flex hover:shadow flex-row cursor-pointer items-center justify-center rounded-full size-10 {{ i===activePage ? 'bg-primary text-secondary hover:brightness-110' : 'hover:bg-gray hover:bg-opacity-50 hover:font-semibold'}}" (click)="onChangePage(i)">{{ i | number:'2.0-0' }}</span>
       <button class="px-3 ml-2 rounded-full py-2.5 hover:bg-light-blue {{activePage===totalPages ? 'opacity-30' : ''}}" (click)="onChangePage(activePage+1)" [disabled]="activePage===totalPages"><i class="pi pi-arrow-right text-primary"></i></button>
     </div>
   </section>

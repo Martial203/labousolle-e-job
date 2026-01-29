@@ -17,3 +17,15 @@ export class Job {
   profileRequired!: string;
   experience!: string;
 }
+
+export class JobSearchParams {
+  [key: string]: any;
+  category?: string;
+  city?: string;
+  experience_max?: number;
+  experience_min?: number;
+  job_type?: string;
+  page_size?: number;
+  page?: number;
+  q?: string;
+}

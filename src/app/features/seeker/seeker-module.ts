@@ -16,6 +16,7 @@ import { Testimony } from './pages/home/testimony/testimony';
 import { SearchBar } from './pages/jobs-list/search-bar/search-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-message-input';
+import { TemplatePicker } from './pages/cv-builder/template-picker/template-picker';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-mes
     Discussion,
     Testimony,
     SearchBar,
-    ChatMessageInput
+    ChatMessageInput,
+    TemplatePicker
   ],
   imports: [
     CommonModule,

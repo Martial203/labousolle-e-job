@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ChatHeader, ChatMessage } from '../../models/chat/chat';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Chat {
+export class ChatService {
   
   private _history$: BehaviorSubject<ChatHeader[]> = new BehaviorSubject<ChatHeader[]>([]);
   get history$() { return this._history$.asObservable() }
@@ -35,6 +35,24 @@ export class Chat {
   }
 
   getLetterTemplates(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiUrl}/ai-agent/letter-templates/`);
+    const params = new HttpParams();
+    params.set('language', 'fr')
+    return this.http.get<any[]>(`${environment.apiUrl}/ai-agent/letter-templates/`, { params });
+  }
+
+  getCVTemplates(): Observable<any[]> {
+    const params = new HttpParams();
+    params.set('language', 'fr')
+    return this.http.get<any[]>(`${environment.apiUrl}/ai-agent/cv-templates/`, { params });
+  }
+
+  initChat(documentType: 'CV'|'LETTER', templateId: number, job_id?: number): Observable<any> {
+    const body = {
+      language: "fr",
+      document_type: documentType,
+      template_id: templateId,
+      job_id: job_id
+    };
+    return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body);
   }
 }

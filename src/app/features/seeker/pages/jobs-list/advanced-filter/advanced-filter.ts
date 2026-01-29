@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { JobSearchParams } from '../../../../../core/models/job/job';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-advanced-filter',
@@ -8,10 +10,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AdvancedFilter {
 
+  @ViewChild('filterForm') filterForm!: NgForm;
   @Output() closeFilter: EventEmitter<void> = new EventEmitter<void>();
+  @Output() filter: EventEmitter<JobSearchParams> = new EventEmitter<JobSearchParams>();
 
   experiences!: String[];
   contractTypes!: String[];
+  params: JobSearchParams = new JobSearchParams();
 
   constructor() {}
 
@@ -21,6 +26,11 @@ export class AdvancedFilter {
 
   onClose(): void {
     this.closeFilter.emit();
+  }
+
+  onGetSearch(val: JobSearchParams): void{
+    this.params = { ...this.params, ...val, experience_max: this.filterForm.value.experience[0], job_type: this.filterForm.value.contract[0] }
+    this.filter.emit(this.params);
   }
 
   private initData(): void {

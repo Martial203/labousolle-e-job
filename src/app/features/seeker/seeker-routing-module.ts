@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'jobs', component: JobsList },
   { path: 'jobs/:id', component: JobDetails },
   { path: 'cv-builder', component: CvBuilder },
+  { path: 'cv-builder/:jobId', component: CvBuilder },
 ];
 
 @NgModule({

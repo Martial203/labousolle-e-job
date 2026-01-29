@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Category } from '../../models/category/category';
 import { Company } from '../../models/company/company';
-import { Job } from '../../models/job/job';
+import { Job, JobSearchParams } from '../../models/job/job';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
@@ -165,10 +165,22 @@ export class JobService {
     return this.http.post(`${environment.apiUrl}/jobs/${jobId}/apply/`, body);
   }
 
-  searchJobs(query: string): Observable<Job[]> {
-    const body = {};
-    return this.http.get<Job[]>(`${environment.apiUrl}/jobs/search/?q=${query}`).pipe(
-      map((res: any) => res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob)))
+  searchJobs(query: JobSearchParams): Observable<{ jobs: Job[], count: number, page: number, totalPage: number }> {
+    const params = new HttpParams();
+    
+    Object.keys(query).forEach((key: string) => {
+      params.set(key, query[key])
+    })
+    return this.http.get<Job[]>(`${environment.apiUrl}/jobs/search/`, { params }).pipe(
+      map((res: any) => {
+        const jobs: Job[] = res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob));
+        return {
+          jobs: jobs,
+          count: res.total,
+          page: res.page,
+          totalPage: res.total_pages
+        }
+      })
     );
   }
 

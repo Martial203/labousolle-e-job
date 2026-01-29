@@ -1,5 +1,5 @@
 <div class="overflow-auto">
-  <button class="block w-full p-4 font-semibold text-left bg-primary text-secondary">Nouveau chat</button>
+  <button class="block w-full p-4 font-semibold text-left hover:shadow hover:brightness-110 bg-primary text-secondary" (click)="onInit()">Nouveau chat</button>
   <p-accordion [value]="['0','1']" [multiple]="true">
     <p-accordion-panel value="0">
       <p-accordion-header>
@@ -10,7 +10,10 @@
       </p-accordion-header>
       <p-accordion-content>
         <ul>
-          <li *ngFor="let i of [0,1,2,3,4,5,6]" class="block w-full px-2 py-1 hover:bg-light-blue"><button class="truncate">Lorem ipsum dolor sit amet</button></li>
+          <li *ngFor="let i of [0,1,2,3,4,5,6]" class="flex flex-row justify-between w-full px-2 py-1 hover:bg-light-blue group">
+            <button class="truncate" (click)="onSelect(i)">Lorem ipsum dolor sit amet</button>
+            <button class="hidden group-hover:block" (click)="onDelete(i)"><i class="pi pi-times"></i></button>
+          </li>
         </ul>
       </p-accordion-content>
     </p-accordion-panel>

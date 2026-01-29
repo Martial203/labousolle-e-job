@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-message-input',
@@ -7,9 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './chat-message-input.scss',
 })
 export class ChatMessageInput {
-   private recognition: any;
+  private recognition: any;
   text = '';
   visible: boolean = false;
+
+  @Output() message: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     const SpeechRecognition =
@@ -31,6 +33,10 @@ export class ChatMessageInput {
       onResult(transcript);
     };
     this.recognition.start();
+  }
+
+  onSend(): void{
+    this.message.emit(this.text);
   }
 
   stop() {
