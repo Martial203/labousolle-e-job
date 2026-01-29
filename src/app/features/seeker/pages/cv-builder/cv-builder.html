@@ -30,5 +30,5 @@
 </div>
 
 <p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true">
-  <app-template-picker (result)="initChat()" (cancel)="displayTemplatePicker=false"></app-template-picker>
+  <app-template-picker [selectedType]="documentType" (cancel)="displayTemplatePicker=false"></app-template-picker>
 </p-dialog>

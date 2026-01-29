@@ -1,8 +1,8 @@
-<div class="container flex flex-row h-full gap-4 px-16 mx-auto">
-  <aside class="h-full pb-4">
+<div class="container flex flex-row h-full gap-4 px-2 mx-auto lg:px-16">
+  <aside class="hidden h-full pb-4 lg:block">
     <app-side-menu></app-side-menu>
   </aside>
-  <div class="w-full overflow-auto h-[calc(100vh-9.5em)] overflow-y-auto mb-2">
+  <div class="w-full overflow-auto h-full lg:h-[calc(100vh-9.5em)] overflow-y-auto mb-2">
     <router-outlet></router-outlet>
   </div>
 </div>

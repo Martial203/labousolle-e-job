@@ -45,7 +45,13 @@ export class AuthService {
   }
 
   logout(): Observable<any>{
-    return this.http.post(`${environment.apiUrl}/auth/logout/`, null);
+    return this.http.post(`${environment.apiUrl}/auth/logout/`, null).pipe(
+      tap(() => {
+        this.user = null!;
+        localStorage.clear();
+        sessionStorage.clear();
+      })
+    );
   }
 
   orderPasswordReset(email: string): Observable<any>{

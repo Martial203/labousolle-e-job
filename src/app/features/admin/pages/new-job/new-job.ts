@@ -75,7 +75,7 @@ export class NewJob {
     this.processState = ProcessState.LOADING;
     console.log(value)
     if (!this.selectedFile) return;
-    value.coverImage = new Blob([this.selectedFile], { type: this.selectedFile.type });
+    value.coverImage = this.selectedFile;
     value.categoryId = value.categoryId.value;
     value.companyId = value.companyId.value;
     this.jobService.createJob(value).subscribe({

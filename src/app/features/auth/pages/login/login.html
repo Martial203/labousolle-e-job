@@ -1,6 +1,6 @@
 <div class="flex min-h-screen">
   <!-- Left Panel -->
-  <div class="flex items-center justify-center w-full p-8 text-white lg:w-5/12 bg-primary">
+  <div class="items-center justify-center hidden w-full p-8 text-white lg:w-5/12 bg-primary md:flex">
     <div class="text-center">
       <h1 class="mb-4 text-4xl font-bold lg:text-5xl">hao ! tu es là</h1>
       <p class="text-lg lg:text-xl opacity-90">Nous sommes ravis de te revoir</p>
@@ -26,14 +26,14 @@
         </p-floatlabel>
         
         <!-- Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between mb-6">
+        <div class="flex flex-wrap items-center justify-between mb-6 gap-y-2">
           <div class="flex items-center gap-2">
             <p-checkbox type="checkbox" id="remember" name="remember" [binary]="true" class="w-4 h-4 border-gray-300 rounded cursor-pointer text-primary focus:ring-primary"></p-checkbox>
             <label for="remember" class="text-sm text-gray-700 cursor-pointer select-none whitespace-nowrap">
               Me rappeler mes identifiants
             </label>
           </div>
-          <a routerLink="/auth/forgotten-password" class="text-sm transition-colors text-primary hover:text-primary hover:underline">
+          <a routerLink="/auth/forgotten-password" class="flex-1 block text-sm text-right transition-colors text-primary hover:text-primary hover:underline whitespace-nowrap">
             Mot de passe oublié?
           </a>
         </div>

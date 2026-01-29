@@ -2,7 +2,7 @@ export class Job {
   id!: number;
   title!: string;
   address!: string;
-  coverImage!: Blob;
+  coverImage!: any;
   companyId!: number;
   companyName!: string;
   companyLogo!: any;

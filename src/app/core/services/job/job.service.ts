@@ -22,10 +22,10 @@ export class JobService {
 
   createJob(jobData: Job): Observable<any> {
     console.log(jobData)
-    const body = {
+    const body: { [key: string]: any } = {
       title: jobData.title,
-      category: jobData.categoryId,
-      company: jobData.companyId,
+      category: jobData.categoryId.toString(),
+      company: jobData.companyId.toString(),
       expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
       city: jobData.address,
       country: 'null',
@@ -34,13 +34,15 @@ export class JobService {
       about: "null",
       description: jobData.description,
       profile_required: jobData.profileRequired,
-      experience_required: 1,
-      salary_min: 0,
-      salary_max: 0,
+      experience_required: '1',
+      salary_min: '0',
+      salary_max: '0',
       education_level: 'none',
-      skills:[]
+      skills: JSON.stringify(["empty", "null"])
     }
-    return this.http.post(`${environment.apiUrl}/jobs/`, body);
+    const formData = new FormData()
+    Object.keys(body).forEach(key => formData.append(key, body[key]))
+    return this.http.post(`${environment.apiUrl}/jobs/`, formData);
   }  
 
   getJobs(): Observable<Job[]> {

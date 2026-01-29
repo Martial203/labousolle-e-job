@@ -31,6 +31,7 @@ import { RippleModule } from 'primeng/ripple';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
+import { PopoverModule } from 'primeng/popover';
 
 @NgModule({
   declarations: [],
@@ -68,7 +69,8 @@ import { DividerModule } from 'primeng/divider';
     RippleModule,
     ConfirmDialogModule,
     ToastModule,
-    DividerModule
+    DividerModule,
+    PopoverModule
   ]
 })
 export class PrimeNgModule { }

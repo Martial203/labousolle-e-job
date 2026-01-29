@@ -1,4 +1,4 @@
-<form #jobForm="ngForm" class="flex flex-col gap-6 px-6 pb-16" (ngSubmit)="onSubmit(jobForm.value)">
+<form enctype="multipart/form-data" #jobForm="ngForm" class="flex flex-col gap-6 px-6 pb-16" (ngSubmit)="onSubmit(jobForm.value)">
   <h1 class="text-2xl font-semibold">Publier une offre d'emploi</h1>
   <div class="flex flex-col gap-4">
     <figure pRipple class="relative flex flex-row items-center justify-center w-full overflow-hidden text-center border border-dashed rounded-md cursor-pointer h-96 ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="coverInputField.click()">
@@ -23,7 +23,7 @@
       <label for="">Adresse mail pour postuler</label>
       <input name="email" pInputText placeholder="contact@gmail.com" type="email" required ngModel>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div *ngIf="categories$|async as categories">
         <label for="">Catégorie</label>
         <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" name="categoryId" [showClear]="true" [filter]="true" filterBy="label" required ngModel></p-select>
@@ -39,7 +39,7 @@
     </div>
     <div>
       <h2>Informations avancées</h2>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div>
           <label for="">Expérience</label>
           <p-select placeholder="Sélectionner" [options]="experiences" name="experience" required ngModel></p-select>
@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <button pButton class="w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right"></button>
+  <button pButton class="w-full lg:w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right"></button>
 </form>
 
 <p-dialog [(visible)]="displayDialog" [modal]="true" [maximizable]="true" header="Ajouter une entreprise">

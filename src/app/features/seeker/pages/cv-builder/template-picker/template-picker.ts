@@ -17,10 +17,11 @@ interface Template {
 export class TemplatePicker {
 
   @Input() jobId!: number|undefined;
+  @Input() selectedType: DocumentType = DocumentType.CV;
+
   @Output() result: EventEmitter<Template> = new EventEmitter<Template>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
-  selectedType: DocumentType = DocumentType.CV;
   selectedTemplate: any;
 
   readonly DOCUMENT_TYPES = DocumentType;

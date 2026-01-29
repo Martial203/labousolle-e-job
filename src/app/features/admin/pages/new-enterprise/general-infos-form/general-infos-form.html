@@ -5,7 +5,7 @@
       <label for="">Télécharger le logo</label>
       <button *ngIf="selectedFile" pButton class="relative z-10 top-6 left-16 scale-[70%]" icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onResetLogo()"></button>
     </div>
-    <figure pRipple class="relative flex flex-row items-center justify-center w-56 h-56 overflow-hidden text-center border border-dashed rounded-md cursor-pointer ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="logoInputField.click()">
+    <figure pRipple class="relative flex flex-row items-center justify-center w-full h-56 overflow-hidden text-center border border-dashed rounded-md cursor-pointer lg:w-56 ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="logoInputField.click()">
       <ng-container *ngIf="selectedFile; else placeholder">
         <img class="object-cover w-full h-full" [src]="preview" alt="">
         <!-- <button pButton class="absolute top-0 right-0" icon="pi pi-times"></button> -->
@@ -20,7 +20,7 @@
     </figure>
     <input #logoInputField type="file" class="hidden" accept=".jpg, .png, .jpeg, .gif" (change)="onLogoSelected($event)">
   </div>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
     <div>
       <label for="">Nom de l'entreprise</label>
       <input pInputText type="text" name="name" id="">
