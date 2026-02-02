@@ -5,6 +5,7 @@ import { JobService } from '../../../../core/services/job/job.service';
 import { Observable, tap } from 'rxjs';
 import { Job } from '../../../../core/models/job/job';
 import { CompanyService } from '../../../../core/services/company/company.service';
+import { ProcessState } from '../../../../core/enums/process-state/process-state';
 
 @Component({
   selector: 'app-job-details',
@@ -18,13 +19,17 @@ export class JobDetails {
   isDocUploadModalOpen: boolean = false;
   isSuccessfullySubmittedModalOpen: boolean = false;
 
+  jobId!: number;
   job$!: Observable<{ job: Job, company: Company, similarJobs: Job[] }>;
+  state: ProcessState = ProcessState.INACTIVE;
+  readonly PROCESS_STATES = ProcessState;
+
 
   constructor(private jobService: JobService, private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void{
-    const jobId = Number(this.route.snapshot.paramMap.get('id'));
-    this.job$ = this.jobService.getJobDetails(jobId);
+    this.jobId = Number(this.route.snapshot.paramMap.get('id'));
+    this.job$ = this.jobService.getJobDetails(this.jobId);
   }
 
   onShowSubmitModal(open: boolean) {
@@ -46,6 +51,16 @@ export class JobDetails {
   }
 
   apply(): void{
-    this.jobService.applyToJob(1);
+    this.state = ProcessState.LOADING;
+    this.jobService.applyToJob(this.jobId).subscribe({
+      next: (res) => {
+        console.log(res)
+        this.state = ProcessState.SUCCESS
+      },
+      error: (err) => {
+        console.log(err)
+        this.state = ProcessState.ERROR
+      }}
+    );
   }
 }

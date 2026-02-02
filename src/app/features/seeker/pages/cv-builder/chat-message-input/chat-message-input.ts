@@ -10,6 +10,7 @@ export class ChatMessageInput {
   private recognition: any;
   text = '';
   visible: boolean = false;
+  attachment!: File;
 
   @Output() message: EventEmitter<string> = new EventEmitter<string>();
 
@@ -37,6 +38,8 @@ export class ChatMessageInput {
 
   onSend(): void{
     this.message.emit(this.text);
+    this.text = '';
+    this.attachment = null!;
   }
 
   stop() {
@@ -49,5 +52,10 @@ export class ChatMessageInput {
 
   stopSpeech() {
     this.stop();
+  }
+
+  uploadAttachment(event: any): void{
+    const files = event.target.value;
+    this.attachment = files[0]
   }
 }

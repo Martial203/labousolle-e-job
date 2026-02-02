@@ -14,7 +14,8 @@ export class AuthService {
 
   readonly USER_KEY = 'user-key';
 
-  user!: User;
+  private _user!: User;
+  get user(): User { return this._user }
   
   constructor(private http: HttpClient) {
     this.retrieveUserInfosLocally();
@@ -30,7 +31,7 @@ export class AuthService {
       confirm_password: credentials.confirmPassword
     }
     return this.http.post(`${environment.apiUrl}/auth/register/`, body).pipe(
-      tap((res: any) => this.user = this.mapLoginResponseToUser(res))
+      tap((res: any) => this._user = this.mapLoginResponseToUser(res))
     );
   }
 
@@ -40,14 +41,14 @@ export class AuthService {
       password: credentials.password
     }
     return this.http.post(`${environment.apiUrl}/auth/login/`, body).pipe(
-      tap((res: any) => this.user = this.mapLoginResponseToUser(res))
+      tap((res: any) => this._user = this.mapLoginResponseToUser(res))
     );
   }
 
   logout(): Observable<any>{
     return this.http.post(`${environment.apiUrl}/auth/logout/`, null).pipe(
       tap(() => {
-        this.user = null!;
+        this._user = null!;
         localStorage.clear();
         sessionStorage.clear();
       })
@@ -114,7 +115,7 @@ export class AuthService {
 
   private retrieveUserInfosLocally(): void{
     const val = localStorage.getItem(this.USER_KEY);
-    if(val) this.user = JSON.parse(val);
+    if(val) this._user = JSON.parse(val);
     console.log(val)
   }
 }

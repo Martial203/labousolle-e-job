@@ -1,16 +1,14 @@
 <div class="flex flex-col gap-6 pb-4">
-  <div *ngFor="let message of [0,1,2,3,4,5,6,7,8,9]" class="flex flex-row message w-[90%] {{ message%2===0 ? 'me' : '' }}">
-    <div class="w-32">
+  <div *ngFor="let message of messages" class="flex flex-row message w-[90%] {{ message.sender==='user' ? 'me' : '' }}">
+    <div class="w-32 mr-2">
       <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal"></p-avatar>
     </div>
     <div>
       <p class="mb-2">
-        <strong>You</strong>
-        <span class="ml-2 text-sm text-gray"> 02:22 AM</span>
+        <strong>{{ message.sender==='user' ? 'You' : 'Assistant' }}</strong>
+        <span class="ml-2 text-sm text-gray"> {{ message.date | date }}</span>
       </p>
-      <div *ngIf="message!==7; else document" class="p-4 rounded-2xl content text-secondary">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste at, excepturi consequatur pariatur culpa odit harum dolor dicta corrupti? Numquam, dolorem. Magni qui laboriosam placeat fugit id quisquam? Laudantium, consectetur?
-      </div>
+      <div class="p-4 leading-relaxed whitespace-pre-line rounded-2xl content text-secondary" [innerHTML]="message.content"></div>
       <ng-template #document>
         <figure class="relative flex flex-row items-center justify-center w-2/3 overflow-hidden h-60 rounded-2xl content">
           <img class="object-cover w-full" src="/assets/images/home-banner.png" alt="">
@@ -22,4 +20,14 @@
       </ng-template>
     </div>
   </div>
+  <ng-container *ngIf="typingState===PROCESS_STATES.LOADING">
+    <div class="inline-flex items-center gap-1 px-3 py-2 mt-2 ml-10 rounded-full shadow-sm bg-primary/15 w-fit">
+      <span class="w-2.5 h-2.5 bg-primary rounded-full animate-ping"></span>
+      <span class="w-2.5 h-2.5 bg-primary rounded-full animate-ping delay-200"></span>
+      <span class="w-2.5 h-2.5 bg-primary rounded-full animate-ping delay-400"></span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="typingState===PROCESS_STATES.ERROR">
+    <p-message severity="error" text="L'envoi de message a échoué, veuillez ressayer." class="w-full mb-4"></p-message>
+  </ng-container>
 </div>

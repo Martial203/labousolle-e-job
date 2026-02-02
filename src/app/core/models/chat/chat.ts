@@ -1,13 +1,21 @@
 export class ChatHeader {
-  id!: number;
+  id!: string;
   title!: string;
   date!: Date;
+  documentType!: DocumentType;
+  language!: string;
+  status!: string;
 }
 
 export class ChatMessage {
-  id!: number;
   sender!: 'user' | 'agent';
   content!: string;
   date!: Date;
-  chatId!: number;
+  chatId!: string;
+}
+
+export interface ChatGroupedByPeriod {
+  today: ChatHeader[];
+  lastWeek: ChatHeader[];
+  lastMonth: ChatHeader[];
 }

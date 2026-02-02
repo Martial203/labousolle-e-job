@@ -7,6 +7,7 @@ import { Job } from '../../../../core/models/job/job';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { NgForm } from '@angular/forms';
 import { ViewportScroller } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 interface SelectOption {
   label: string;
@@ -36,7 +37,7 @@ export class NewJob {
 
   @ViewChild("jobForm") jobForm!: NgForm;
 
-  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller) {}
+  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.companies$ = this.companyService.getCompanies().pipe(
@@ -51,6 +52,8 @@ export class NewJob {
         value: category.id
       })))
     );
+
+    const jobId = this.route.snapshot.params['id'];
   }
 
   onCoverSelected(event: Event) {

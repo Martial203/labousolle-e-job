@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { Category } from '../../models/category/category';
 import { Company } from '../../models/company/company';
 import { Job, JobSearchParams } from '../../models/job/job';
@@ -158,13 +158,16 @@ export class JobService {
   }
 
   applyToJob(jobId: number): Observable<any> {
-    const body = { }
-    const email = 'martialnounga@gmail.com';
-    const subject = 'Application to the role a Software engineer';
-    const mailBody = 'Helloo, my name is Martial NOUNGA, and here I submit my application for the role of software engineer. You can see my CV and motivation letter in attachement.';
-    const mailtoUrl = `mailto:${email}?subject=${subject}&body=${mailBody}`;
-    window.open(mailtoUrl, '_blank');
-    return this.http.post(`${environment.apiUrl}/jobs/${jobId}/apply/`, body);
+    return this.http.get(`${environment.apiUrl}/jobs/${jobId}/generate_application_email/`).pipe(
+      tap((res: any) => {
+        const email = res.recipient_email;
+        const subject = encodeURIComponent(res.subject);
+        const body = encodeURIComponent(res.body);
+        const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
+        const mail = window.open(mailtoUrl, '_blank');
+        console.log(mail)
+      })
+    )
   }
 
   searchJobs(query: JobSearchParams): Observable<{ jobs: Job[], count: number, page: number, totalPage: number }> {

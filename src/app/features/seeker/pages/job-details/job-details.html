@@ -110,7 +110,11 @@
         <i class="relative pi pi-times-circle bottom-2.5"></i>
       </ng-template>
       <p-button class="relative mb-2 text-secondary" icon="pi pi-arrow-right" severity="info" iconPos="bottom" label="Adapter mon cv et ma lettre de motivation à cette offre" (click)="onAdjustCV()"></p-button>
-      <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="apply()">Passer</button></p>
+      <div class="mt-2">
+        <p-message *ngIf="state===PROCESS_STATES.SUCCESS" severity="success" text="Vous pouvez postuler !" class="w-full mb-4"></p-message>
+        <p-message *ngIf="state===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer ultérieurement." class="w-full mb-4"></p-message>
+      </div>
+      <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="apply()">Je dispose déjà de tout le necessaire</button></p>
   </p-dialog>
 
   <p-dialog [modal]="true" [(visible)]="isDocUploadModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">

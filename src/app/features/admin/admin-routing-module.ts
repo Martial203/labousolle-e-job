@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'jobs', pathMatch: 'full' },
   { path: 'jobs', component: JobsManagement },
   { path: 'jobs/new', component: NewJob },
+  { path: 'jobs/new/:id', component: NewJob },
   { path: 'enterprises', component: EnterprisesManagement },
   { path: 'enterprises/new', component: NewEnterprise },
 ];

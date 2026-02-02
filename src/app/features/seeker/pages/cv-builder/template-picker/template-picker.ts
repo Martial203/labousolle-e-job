@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChatService } from '../../../../../core/services/chat/chat.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
 import { DocumentType } from '../../../../../core/enums/document-type/document-type';
+import { DocumentTemplate } from '../../../../../core/models/template/document-template';
+import { Observable, tap } from 'rxjs';
 
 interface Template {
   type: DocumentType;
@@ -28,33 +30,26 @@ export class TemplatePicker {
 
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
-  
 
-  templates = {
-    CV: [
-      { id: 1, name: 'Modern', description: 'Clean and contemporary design', preview: '/assets/templates/cv-modern.jpg' },
-      { id: 2, name: 'Classic', description: 'Traditional professional layout', preview: '/assets/templates/cv-classic.jpg' },
-      { id: 3, name: 'Creative', description: 'Stand out with creative flair', preview: '/assets/templates/cv-creative.jpg' },
-    ],
-    LETTER: [
-      { id: 1, name: 'Formal', description: 'Professional formal letter', preview: '/assets/templates/letter-formal.jpg' },
-      { id: 2, name: 'Friendly', description: 'Warm and personable tone', preview: '/assets/templates/letter-friendly.jpg' },
-    ]
-  };
+  cvTemplates$!: Observable<DocumentTemplate[]>;
+  documents$!: Observable<DocumentTemplate[]>;
+
+  cvLoading: boolean = true;
+  letterLoading: boolean = true;
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.chatService.getLetterTemplates().subscribe();
-    this.chatService.getCVTemplates().subscribe();
-  }
-
-  getTemplates() {
-    return this.templates[this.selectedType];
+    this.cvTemplates$ = this.chatService.getCVTemplates().pipe(tap(() => this.cvLoading = false));
+    this.documents$ = this.chatService.getLetterTemplates().pipe(tap(() => this.letterLoading = false));
   }
 
   selectTemplate(template: any) {
     this.selectedTemplate = template;
+  }
+  
+  getTemplates(): Observable<DocumentTemplate[]>{
+    return this.selectedType === DocumentType.CV ? this.cvTemplates$ : this.documents$;
   }
 
   onSubmit() {

@@ -13,7 +13,10 @@
   <p-table 
     *ngIf="companies$|async as companies"
     [value]="mapToCompanyRow(companies)"
+    [paginator]="true"
     [rows]="10"
+    [scrollable]="true"
+    scrollHeight="500px"
     responsiveLayout="scroll"
     styleClass="p-datatable-striped">
     <ng-template pTemplate="header">

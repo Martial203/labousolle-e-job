@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChatGroupedByPeriod, ChatHeader } from '../../../../../core/models/chat/chat';
 
 @Component({
   selector: 'app-chat-history',
@@ -8,19 +9,24 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class ChatHistory {
 
+  @Input() chatHistory!: ChatGroupedByPeriod;
+
   @Output() newChat: EventEmitter<void> = new EventEmitter<void>();
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
-  @Output() select: EventEmitter<number> = new EventEmitter<number>();
+  @Output() delete: EventEmitter<string> = new EventEmitter<string>();
+  @Output() select: EventEmitter<string> = new EventEmitter<string>();
+
+  selectedChat!: string;
 
   onInit(): void{
     this.newChat.emit();
   }
 
-  onSelect(id: number): void{
+  onSelect(id: string): void{
+    this.selectedChat = id;
     this.select.emit(id);
   }
 
-  onDelete(id: number): void{
+  onDelete(id: string): void{
     this.delete.emit(id);
   }
 

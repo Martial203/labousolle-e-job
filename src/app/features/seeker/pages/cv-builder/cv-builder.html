@@ -1,6 +1,6 @@
 <div class="container flex flex-row w-full h-full px-16 pb-10 mx-auto">
-  <aside class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6">
-    <app-chat-history (newChat)="displayTemplatePicker = true" (delete)="deleteChat($event)" (select)="selectChat($event)"></app-chat-history>
+  <aside *ngIf="chatHistory$|async as chatHistory" class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6">
+    <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="displayTemplatePicker = true" (delete)="deleteChat($event)" (select)="selectChat($event)"></app-chat-history>
   </aside>
   <section class="w-full px-6 overflow-auto">
     <div class="h-[calc(100vh-15em)] overflow-y-auto mb-2">
@@ -9,7 +9,7 @@
           <ng-template #start>
             <div class="flex flex-row items-center justify-between gap-8 ml-1">
               <figure class="overflow-hidden rounded-full w-26"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
-              <h1 class="font-semibold">SAMBA</h1>
+              <h1 class="font-semibold capitalize">{{ user.name }}</h1>
             </div>
           </ng-template>
           <ng-template #end>
@@ -18,17 +18,31 @@
         </p-toolbar>
       </header>
       <main class="flex flex-col gap-16 px-8 py-12">
-        <div class="flex-1 overflow-y-auto">
-          <app-discussion></app-discussion>
+        <div #scrollContainer class="flex-1 overflow-y-auto">
+          <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
+            <app-discussion [typingState]="messageProcessing" [messages]="(discussion$|async)!"></app-discussion>
+          </ng-container>
+          <ng-template #noSelectedDiscussion>
+            <div class="flex flex-col items-center justify-center gap-6 h-96">
+              <div class="p-2 bg-gray-100 rounded-full">
+                <i class="block scale-[2] text-gray pi pi-inbox"></i>
+              </div>
+              <div class="text-center">
+              <p class="mb-2 text-xl font-bold text-gray">Aucune discussion sélectionnée</p>
+              <p class="text-sm text-gray">Sélectionnez une discussion pour découvrir les messages</p>
+              </div>
+              <button pButton label="Démarrer une discussion" icon="pi pi-plus" severity="info" class="mt-4" (click)="displayTemplatePicker = true"></button>
+            </div>
+          </ng-template>
         </div>
       </main>
     </div>
     <div>
-      <app-chat-message-input></app-chat-message-input>
+      <app-chat-message-input (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
 </div>
 
 <p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true">
-  <app-template-picker [selectedType]="documentType" (cancel)="displayTemplatePicker=false"></app-template-picker>
+  <app-template-picker [selectedType]="documentType" (cancel)="displayTemplatePicker=false" (result)="displayTemplatePicker=false"></app-template-picker>
 </p-dialog>
