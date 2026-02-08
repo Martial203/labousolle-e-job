@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MessageInput } from '../../../../../core/models/chat/chat';
 
 @Component({
   selector: 'app-chat-message-input',
@@ -12,7 +13,7 @@ export class ChatMessageInput {
   visible: boolean = false;
   attachment!: File;
 
-  @Output() message: EventEmitter<string> = new EventEmitter<string>();
+  @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
 
   constructor() {
     const SpeechRecognition =
@@ -37,7 +38,11 @@ export class ChatMessageInput {
   }
 
   onSend(): void{
-    this.message.emit(this.text);
+    const message : MessageInput = {
+      content: this.text,
+      file: this.attachment ? this.attachment : undefined
+    }
+    this.message.emit(message);
     this.text = '';
     this.attachment = null!;
   }

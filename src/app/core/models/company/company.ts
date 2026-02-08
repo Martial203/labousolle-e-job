@@ -1,14 +1,13 @@
-import { SocialNetworkType } from "../../enums/social-network-type/social-network-type";
-
 export class Company {
   id!: number;
   name!: string;
   email!: string;
   phone!: string;
-  logo!: string;
+  logo!: any;
   type!: string;
   size!: string;
-  creationDate!: Date;
+  creationYear!: number;
+  address!: string;
   website!: string;
   about!: string;
   vision!: string;

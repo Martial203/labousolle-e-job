@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-6 pb-4">
-  <div *ngFor="let message of messages" class="flex flex-row message w-[90%] {{ message.sender==='user' ? 'me' : '' }}">
+  <div *ngFor="let message of messages" class="flex flex-row message w-[98%] lg:w-[90%] {{ message.sender==='user' ? 'me' : '' }}">
     <div class="w-32 mr-2">
       <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal"></p-avatar>
     </div>
@@ -9,15 +9,15 @@
         <span class="ml-2 text-sm text-gray"> {{ message.date | date }}</span>
       </p>
       <div class="p-4 leading-relaxed whitespace-pre-line rounded-2xl content text-secondary" [innerHTML]="message.content"></div>
-      <ng-template #document>
-        <figure class="relative flex flex-row items-center justify-center w-2/3 overflow-hidden h-60 rounded-2xl content">
+      <ng-container *ngIf="message.document as attachment">
+        <figure class="relative flex flex-row items-center justify-center mt-4 overflow-hidden w-80 h-60 rounded-2xl content">
           <img class="object-cover w-full" src="/assets/images/home-banner.png" alt="">
           <div class="absolute bottom-0 flex flex-row justify-around w-full py-4 bg-primary">
-            <button pButton severity="info">Prévisualiser</button>
-            <button pButton severity="secondary">Télécharger</button>
+            <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
+            <a pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="download(attachment.url)">Télécharger</a>
           </div>
         </figure>
-      </ng-template>
+      </ng-container>
     </div>
   </div>
   <ng-container *ngIf="typingState===PROCESS_STATES.LOADING">
@@ -31,3 +31,19 @@
     <p-message severity="error" text="L'envoi de message a échoué, veuillez ressayer." class="w-full mb-4"></p-message>
   </ng-container>
 </div>
+
+<p-dialog header="Prévisualisation du document" [modal]="true" [(visible)]="displayDocumentPreview" [maximizable]="true">
+  <p *ngIf="processState===PROCESS_STATES.LOADING" class="text-2xl text-center text-primary"><i class="pi pi-spinner animate-spin"></i></p>
+  <pdf-viewer #pdfViewer
+    [src]="pdfSrc"
+    [render-text]="false"
+    [original-size]="false"
+    class="w-[60vh] h-[80vh] border-4"
+  ></pdf-viewer>
+  <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
+
+  <ng-template #footer>
+    <p-button label="Fermer" [text]="true" severity="secondary" (click)="displayDocumentPreview = false" />
+    <p-button label="Télécharger" [outlined]="true" severity="secondary" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
+  </ng-template>
+</p-dialog>

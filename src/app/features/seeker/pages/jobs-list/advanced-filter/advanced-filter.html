@@ -1,7 +1,7 @@
 <div>
   <app-search-bar (onFilterRequested)="onClose()" (onSearch)="onGetSearch($event)" [filtering]="true"></app-search-bar>
   <form #filterForm="ngForm" class="flex flex-row h-full mt-4 divide-x divide-divide-color">
-    <div class="flex-1 px-6 pb-4">
+    <div class="flex-1 px-4 pb-4 lg:px-6">
       <h2 class="mb-4 text-lg font-semibold">Experience</h2>
       <ul class="flex flex-col gap-4 text-sm">
         <li *ngFor="let experience of experiences">
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-    <div class="flex-1 px-8">
+    <div class="flex-1 px-6 lg:px-8">
       <h2 class="mb-4 text-lg font-semibold">Type de poste</h2>
       <ul class="flex flex-col gap-4 text-sm">
         <li class="flex items-center" *ngFor="let contract of contractTypes">
@@ -19,6 +19,6 @@
         </li>
       </ul>
     </div>
-    <div class="flex-[3]"></div>
+    <div class="hidden lg:flex-[3]"></div>
   </form>
 </div>

@@ -16,10 +16,16 @@ export class HeaderToolbar {
   user!: User|null;
   readonly DOCUMENT_TYPES = DocumentType;
 
+  displayDrawer: boolean = false;
+
   constructor(private authService: AuthService, private confirmationService: ConfirmationService, private router: Router) {}
 
   ngOnInit(): void {
     this.user = this.authService.user ?? null;
+  }
+
+  onToggleDrawer(): void{
+    this.displayDrawer = !this.displayDrawer;
   }
 
   getInitials(): string{

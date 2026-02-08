@@ -12,10 +12,23 @@ export class ChatMessage {
   content!: string;
   date!: Date;
   chatId!: string;
+  document?: Attachment;
 }
 
 export interface ChatGroupedByPeriod {
   today: ChatHeader[];
   lastWeek: ChatHeader[];
   lastMonth: ChatHeader[];
+}
+
+export interface MessageInput {
+  content: string;
+  file?: File;
+}
+
+export interface Attachment {
+  id: string;
+  type: DocumentType;
+  name: string;
+  url: string;
 }

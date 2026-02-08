@@ -3,14 +3,14 @@
   <p-accordion *ngIf="chatHistory" [value]="['0','1']" [multiple]="true">
     <p-accordion-panel value="0">
       <p-accordion-header>
-        <div class="flex flex-row items-center justify-between w-full px-2">
+        <div class="flex flex-row items-center justify-between w-full px-0 lg:px-2">
           <div class="text-lg">Aujourd'hui</div>
           <p class="mr-2 text-sm text-gray">{{ chatHistory.today.length }} au total</p>
         </div>
       </p-accordion-header>
       <p-accordion-content>
         <ul>
-          <li *ngFor="let discussion of chatHistory.today; let i = index" class="flex flex-row justify-between w-full px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
+          <li *ngFor="let discussion of chatHistory.today; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>
@@ -20,14 +20,14 @@
 
     <p-accordion-panel value="1">
       <p-accordion-header>
-        <div class="flex flex-row items-center justify-between w-full px-2">
+        <div class="flex flex-row items-center justify-between w-full px-0 lg:px-2">
           <div class="text-lg">Les 07 derniers jours</div>
           <p class="mr-2 text-sm text-gray">{{chatHistory.lastWeek.length }} au total</p>
         </div>
       </p-accordion-header>
       <p-accordion-content>
         <ul>
-          <li *ngFor="let discussion of chatHistory.lastWeek; let i = index" class="flex flex-row justify-between w-full px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
+          <li *ngFor="let discussion of chatHistory.lastWeek; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>
@@ -37,14 +37,14 @@
     
     <p-accordion-panel value="2">
       <p-accordion-header>
-        <div class="flex flex-row items-center justify-between w-full px-2">
+        <div class="flex flex-row items-center justify-between w-full px-0 lg:px-2">
           <div class="text-lg">Le mois dernier</div>
           <p class="mr-2 text-sm text-gray">{{chatHistory.lastMonth.length }} au total</p>
         </div>
       </p-accordion-header>
       <p-accordion-content>
         <ul>
-          <li *ngFor="let discussion of chatHistory.lastMonth; let i = index" class="flex flex-row justify-between w-full px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
+          <li *ngFor="let discussion of chatHistory.lastMonth; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>

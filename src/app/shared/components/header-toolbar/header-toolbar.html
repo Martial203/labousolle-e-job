@@ -1,13 +1,13 @@
 <header>
-  <nav class="container flex items-center justify-between px-16 py-8 mx-auto text-sm bg-white">
+  <nav class="container flex items-center justify-between px-4 py-8 mx-auto text-sm bg-white lg:px-16">
     <img src="/assets/images/logo-laboussole.png" alt="Laboussole Logo" class="block w-20" />
-    <ul class="flex flex-row justify-around text-center">
+    <ul class="flex-row justify-around hidden text-center lg:flex">
       <a class="border-none" routerLink="/"><li>Accueil</li></a>
       <a class="" routerLink="/jobs"><li>Trouver un emploi</li></a>
       <a class="" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.CV }"><li>Mon cv pro</li></a>
       <a class="" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.LETTER }"><li>Ma lettre de motivation</li></a>
     </ul>
-    <div class="flex flex-row gap-4">
+    <div class="flex-row hidden gap-4 lg:flex">
       <div class="flex flex-row items-center flex-1 w-40 px-4 py-2 rounded-full bg-input-background">
         <i class="block mr-2.5 align-middle pi pi-search"></i>
         <input class="bg-transparent outline-none" icon="pi pi-marker" type="text" name="search" id="search" placeholder="Recherche">
@@ -20,6 +20,9 @@
         <button class="px-6 py-4 rounded-full whitespace-nowrap bg-light-blue" routerLink="/auth/login">Login</button>
       </ng-template>
     </div>
+    <div class="block lg:hidden">
+      <p-button icon="pi pi-bars" severity="info" (click)="onToggleDrawer()"></p-button>
+    </div>
   </nav>
 </header>
 
@@ -27,7 +30,7 @@
   <ng-template pTemplate="content">
     <div class="flex flex-col gap-4 p-4">
       <div class="flex items-center gap-3">
-        <!-- <img src="https://primefaces.org/cdn/primeng/images/demo/avatar/" alt="Profile" class="object-cover w-12 h-12 rounded-full" /> -->
+        <!-- <img src="https ://primefaces.org/cdn/primeng/images/demo/avatar/" alt="Profile" class="object-cover w-12 h-12 rounded-full" /> -->
         <span class="flex flex-row items-center justify-center font-semibold rounded-full size-11 text-secondary bg-primary" (click)="userMenu.toggle($event)">{{ getInitials() }}</span>
         <div class="flex flex-col">
           <p class="font-semibold text-gray-900">{{ user?.name }}</p>
@@ -39,5 +42,17 @@
     </div>
   </ng-template>
 </p-popover>
+
+ <p-drawer [(visible)]="displayDrawer" header="Laboussolle" position="right">
+    <nav class="container flex flex-col px-0 py-8 mx-auto text-sm bg-white">
+      <ul class="flex flex-col justify-around gap-4 text-center">
+        <a class="border-none drawer" routerLink="/" (click)="onToggleDrawer()"><li>Accueil</li></a>
+        <a class="drawer" routerLink="/jobs" (click)="onToggleDrawer()"><li>Trouver un emploi</li></a>
+        <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.CV }" (click)="onToggleDrawer()"><li>Mon cv pro</li></a>
+        <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.LETTER }" (click)="onToggleDrawer()"><li>Ma lettre de motivation</li></a>
+        <button class="mt-4" pButton label="Me déconnecter" icon="pi pi-sign-out" severity="danger" (click)="onLogout()"></button>
+      </ul>
+    </nav>
+</p-drawer>
 
 <p-confirmdialog />

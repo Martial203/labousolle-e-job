@@ -1,20 +1,20 @@
-<form class="flex flex-col gap-4 p-0 py-4 lg:p-8">
-  <div>
+<form #contactForm="ngForm" class="flex flex-col gap-4 p-0 py-4 lg:p-8">
+  <!-- <div>
     <label for="">Emplacement sur la carte</label>
     <p-inputgroup>
       <p-inputgroup-addon>
         <i class="pi pi-map-marker"></i>
       </p-inputgroup-addon>
-      <input pInputText name="address" autocomplete="address-level1" type="text" placeholder="Adresse">
+      <input pInputText name="address" autocomplete="address-level1" type="text" placeholder="Adresse" ngModel>
     </p-inputgroup>
-  </div>
+  </div> -->
   <div>
     <label for="">Téléphone</label>
     <p-inputgroup>
       <p-inputgroup-addon>
           <i class="pi pi-phone"></i>
       </p-inputgroup-addon>
-      <input pInputText name="phone" type="tel" autocomplete="tel" placeholder="Numéro de téléphone" />
+      <input pInputText name="phone" type="tel" autocomplete="tel" placeholder="Numéro de téléphone" ngModel/>
     </p-inputgroup>
   </div>
   <div>
@@ -23,12 +23,15 @@
       <p-inputgroup-addon>
           <i class="pi pi-envelope"></i>
       </p-inputgroup-addon>
-      <input pInputText name="email" type="email" autocomplete="email" placeholder="Adresse e-mail" />
+      <input pInputText name="email" type="email" autocomplete="email" placeholder="Adresse e-mail" ngModel/>
     </p-inputgroup>
   </div>
+  
+  <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Contacts mis à jour avec succès !" class="w-full mb-4"></p-message>
+  <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer." class="w-full mb-4"></p-message>
 
   <div class="flex flex-row gap-4 mt-4">
-    <button pButton severity="secondary" label="Précédent"></button>
-    <button pButton severity="info" label="Terminer l'édition" icon="pi pi-arrow-right" iconPos="right"></button>
+    <button pButton severity="secondary" label="Précédent" (click)="onBack()"></button>
+    <button pButton severity="info" label="Terminer l'édition" icon="pi pi-arrow-right" iconPos="right" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="onSetContacts(contactForm.value)"></button>
   </div>
 </form>

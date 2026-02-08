@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { ChatHeader, ChatMessage } from '../../models/chat/chat';
+import { ChatHeader, ChatMessage, Attachment } from '../../models/chat/chat';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { DocumentTemplate } from '../../models/template/document-template';
@@ -14,7 +14,7 @@ export class ChatService {
   private _discussion$: BehaviorSubject<ChatMessage[]> = new BehaviorSubject<ChatMessage[]>([]);
 
   get history$() { return this._history$.asObservable() }
-  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable() }
+  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(tap(res => console.log(res))) }
 
   constructor(private http: HttpClient) {}
 
@@ -39,9 +39,9 @@ export class ChatService {
     const body: { [ key: string ]: any } = {
       content: message
     }
-    if(file) body['file'] = file
     const data = new FormData();
-    Object.keys(body).forEach(key => data.append(key, body[key]));
+    data.append('content', message);
+    if(file) data.append('file', file);
     this.addMessage({
       chatId: discussionId,
       content: message,
@@ -54,7 +54,8 @@ export class ChatService {
           chatId: discussionId,
           content: res.content,
           sender: "agent",
-          date: new Date(res.timestamp)
+          date: new Date(res.timestamp),
+          document: res.document ? this.mapDocument(res.document) : undefined
         } 
         this.addMessage(message);
       })
@@ -87,6 +88,10 @@ export class ChatService {
     return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body);
   }
 
+  fetchDocument(url: string): Observable<any> {
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   private mapToDocumentTemplate(documents: any[]): DocumentTemplate[]{
     return documents.map(document => ({
       id: document.id,
@@ -115,7 +120,8 @@ export class ChatService {
       chatId: message.session_id,
       content: message.content,
       sender: message.role==="assistant" ? "agent" : "user",
-      date: new Date(message.timestamp)
+      date: new Date(message.timestamp),
+      document: message.document ? this.mapDocument(message.document) : undefined
     }))
   }
 
@@ -123,6 +129,15 @@ export class ChatService {
     const messages = this._discussion$.value;
     messages.push(message)
     this._discussion$.next(messages)
+  }
+
+  private mapDocument(document: any): Attachment{
+    return {
+      id: document.id,
+      type: document.type,
+      name: document.file_name,
+      url: document.download_url
+    }
   }
 
 }

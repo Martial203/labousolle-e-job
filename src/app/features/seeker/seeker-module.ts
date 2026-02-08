@@ -17,6 +17,7 @@ import { SearchBar } from './pages/jobs-list/search-bar/search-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-message-input';
 import { TemplatePicker } from './pages/cv-builder/template-picker/template-picker';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { TemplatePicker } from './pages/cv-builder/template-picker/template-pick
     SeekerRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PdfViewerModule
   ]
 })
 export class SeekerModule { }

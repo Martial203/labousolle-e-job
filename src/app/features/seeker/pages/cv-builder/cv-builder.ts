@@ -6,6 +6,7 @@ import { ChatGroupedByPeriod, ChatHeader, ChatMessage } from '../../../../core/m
 import { DocumentType } from '../../../../core/enums/document-type/document-type';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { User } from '../../../../core/models/user/user';
+import { MessageInput } from '../../../../core/models/chat/chat';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 })
 export class CvBuilder {
   displayTemplatePicker: boolean = false;
+  displayChatHistory: boolean = false;
   chatHistory$!: Observable<ChatHeader[]>;
   documentType!: DocumentType;
   discussion$!: Observable<ChatMessage[]>;
@@ -42,6 +44,10 @@ export class CvBuilder {
     this.scrollToBottom();
   }
 
+  onToggleChatHistory(): void{
+    this.displayChatHistory = !this.displayChatHistory;
+  }
+
   deleteChat(id: string): void {
     this.chatService.deleteChat(id);
   }
@@ -51,10 +57,10 @@ export class CvBuilder {
     this.selectedDiscussion = id;
   }
 
-  sendMessage(message: string): void{
+  sendMessage(message: MessageInput): void{
     this.messageProcessing = ProcessState.LOADING;
-    this.scrollToBottom()
-    this.chatService.sendAMessage(this.selectedDiscussion, message).subscribe({
+    this.scrollToBottom();
+    this.chatService.sendAMessage(this.selectedDiscussion, message.content, message.file ? message.file : undefined).subscribe({
       next: () => this.messageProcessing = ProcessState.SUCCESS,
       error: (err) => this.messageProcessing = ProcessState.ERROR,
       complete: () => this.scrollToBottom()

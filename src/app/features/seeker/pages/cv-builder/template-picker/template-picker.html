@@ -7,7 +7,7 @@
     </div>
 
     <!-- CV/Motivation Letter Selector -->
-    <div class="flex flex-row gap-3 mb-10">
+    <div class="flex flex-col gap-3 mb-10 lg:flex-row">
       <button 
         pButton
         type="button" 
@@ -32,7 +32,7 @@
         <div (click)="selectTemplate(template)" class="relative cursor-pointer hover:scale-105 w-72 hover:brightness-105 hover:border-primary hover:border-[0.5px] {{ selectedTemplate===template ? 'shadow-2xl scale-[1.03] border-primary border-[0.5px] rounded-t-xl' : '' }}">
           <div class="relative overflow-hidden transition-transform duration-300 rounded-xl">
             <img [src]="template.previewImage" [alt]="template.name" onerror="this.src='/assets/images/home-banner.png'" class="object-cover w-full transition-all duration-300 max-h-60">
-            <div class="p-5">
+            <div class="p-2 lg:p-5">
               <h3 class="mb-2 text-lg font-semibold text-slate-600">{{ template.name }}</h3>
               <p class="text-sm text-slate-400">{{ template.description }}</p>
             </div>
