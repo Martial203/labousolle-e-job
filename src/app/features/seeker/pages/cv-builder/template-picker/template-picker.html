@@ -11,7 +11,7 @@
       <button 
         pButton
         type="button" 
-        label="CV" 
+        label="CV (1000 XAF)" 
         (click)="selectedType = DOCUMENT_TYPES.CV"
         [severity]="selectedTemplate===DOCUMENT_TYPES.CV ? 'info' : 'secondary'"
         class="block flex-1 px-8 py-3 font-semibold transition-all duration-300 rounded-lg {{ selectedType == DOCUMENT_TYPES.CV ? 'selected' : ''}}" [outlined]="selectedType!==DOCUMENT_TYPES.CV" [icon]="selectedType==DOCUMENT_TYPES.CV ? 'pi pi-check' : ''">
@@ -19,7 +19,7 @@
       <button 
         pButton
         type="button" 
-        label="Lettre de Motivation" 
+        label="Lettre de Motivation (1000 XAF)" 
         (click)="selectedType = DOCUMENT_TYPES.LETTER"
         [severity]="selectedTemplate===DOCUMENT_TYPES.LETTER ? 'info' : 'secondary'"
         class="block flex-1 px-8 py-3 font-semibold transition-all duration-300 rounded-lg {{ selectedType == DOCUMENT_TYPES.LETTER ? 'selected' : ''}}" [outlined]="selectedType!==DOCUMENT_TYPES.LETTER" [icon]="selectedType==DOCUMENT_TYPES.LETTER ? 'pi pi-check' : ''">
@@ -31,7 +31,8 @@
       <ng-container *ngFor="let template of getTemplates()|async">
         <div (click)="selectTemplate(template)" class="relative cursor-pointer hover:scale-105 w-72 hover:brightness-105 hover:border-primary hover:border-[0.5px] {{ selectedTemplate===template ? 'shadow-2xl scale-[1.03] border-primary border-[0.5px] rounded-t-xl' : '' }}">
           <div class="relative overflow-hidden transition-transform duration-300 rounded-xl">
-            <img [src]="template.previewImage" [alt]="template.name" onerror="this.src='/assets/images/home-banner.png'" class="object-cover w-full transition-all duration-300 max-h-60">
+            <!-- <img [src]="template.previewImage" [alt]="template.name" onerror="this.src='/assets/images/home-banner.png'" class="object-cover w-full transition-all duration-300 max-h-60"> -->
+            <p-image src="{{'https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg'}}" alt="Image" [preview]="true" appendTo="body" />
             <div class="p-2 lg:p-5">
               <h3 class="mb-2 text-lg font-semibold text-slate-600">{{ template.name }}</h3>
               <p class="text-sm text-slate-400">{{ template.description }}</p>

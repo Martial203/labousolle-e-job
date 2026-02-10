@@ -42,6 +42,7 @@ export class ChatMessageInput {
       content: this.text,
       file: this.attachment ? this.attachment : undefined
     }
+    console.log(message);
     this.message.emit(message);
     this.text = '';
     this.attachment = null!;
@@ -60,7 +61,8 @@ export class ChatMessageInput {
   }
 
   uploadAttachment(event: any): void{
-    const files = event.target.value;
+    const files = event.target.files;
     this.attachment = files[0]
+    console.log(this.attachment);
   }
 }

@@ -38,12 +38,14 @@
     [src]="pdfSrc"
     [render-text]="false"
     [original-size]="false"
-    class="w-[60vh] h-[80vh] border-4"
+    class="w-[60vh] h-[80vh]"
   ></pdf-viewer>
   <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
 
   <ng-template #footer>
-    <p-button label="Fermer" [text]="true" severity="secondary" (click)="displayDocumentPreview = false" />
-    <p-button label="Télécharger" [outlined]="true" severity="secondary" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
+    <div class="flex flex-row justify-center gap-4">
+      <p-button label="Fermer" [text]="true" severity="secondary" (click)="displayDocumentPreview = false" />
+      <p-button label="Télécharger" [outlined]="true" severity="info" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
+    </div>
   </ng-template>
 </p-dialog>

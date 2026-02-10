@@ -42,6 +42,7 @@ export class ChatService {
     const data = new FormData();
     data.append('content', message);
     if(file) data.append('file', file);
+    console.log(data);
     this.addMessage({
       chatId: discussionId,
       content: message,

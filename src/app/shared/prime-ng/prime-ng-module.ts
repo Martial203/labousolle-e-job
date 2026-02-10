@@ -33,6 +33,7 @@ import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { PopoverModule } from 'primeng/popover';
 import { DrawerModule } from 'primeng/drawer';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [],
@@ -72,7 +73,8 @@ import { DrawerModule } from 'primeng/drawer';
     ToastModule,
     DividerModule,
     PopoverModule,
-    DrawerModule
+    DrawerModule,
+    ImageModule
   ]
 })
 export class PrimeNgModule { }
