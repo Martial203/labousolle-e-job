@@ -37,7 +37,9 @@ export class JobsList {
   }
 
   onSearch(params: JobSearchParams): void{
+    console.log(params);
     this.jobs$ = this.jobService.searchJobs(params);
+    this.isFilterModalOpen = false;
   }
 
   onChangePage(page: number): void {

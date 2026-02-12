@@ -12,7 +12,7 @@
 
   <p-table 
     *ngIf="companies$|async as companies"
-    [value]="mapToCompanyRow(companies)"
+    [value]="companies"
     [paginator]="true"
     [rows]="10"
     [scrollable]="true"
@@ -57,7 +57,7 @@
               severity="danger"
               pTooltip="Delete"
               tooltipPosition="top"
-              (click)="confirmDeletion($event, enterprise.id)"
+              (click)="confirmDeletion(enterprise.id)"
               >
             </p-button>
           </div>
@@ -68,4 +68,3 @@
 </div>
 
 <p-toast />
-<p-confirmdialog />

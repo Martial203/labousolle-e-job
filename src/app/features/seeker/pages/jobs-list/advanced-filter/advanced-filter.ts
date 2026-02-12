@@ -2,6 +2,11 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { JobSearchParams } from '../../../../../core/models/job/job';
 import { NgForm } from '@angular/forms';
 
+interface SelectOption{
+  label: string;
+  value: number|string|null;
+}
+
 @Component({
   selector: 'app-advanced-filter',
   standalone: false,
@@ -14,8 +19,8 @@ export class AdvancedFilter {
   @Output() closeFilter: EventEmitter<void> = new EventEmitter<void>();
   @Output() filter: EventEmitter<JobSearchParams> = new EventEmitter<JobSearchParams>();
 
-  experiences!: String[];
-  contractTypes!: String[];
+  experiences!: SelectOption[];
+  contractTypes!: SelectOption[];
   params: JobSearchParams = new JobSearchParams();
 
   constructor() {}
@@ -29,12 +34,26 @@ export class AdvancedFilter {
   }
 
   onGetSearch(val: JobSearchParams): void{
-    this.params = { ...this.params, ...val, experience_max: this.filterForm.value.experience[0], job_type: this.filterForm.value.contract[0] }
+    this.params = { ...this.params, ...val, experience_max: this.filterForm.value.experience.length>0 ? Math.max(...this.filterForm.value.experience) : undefined, job_type: this.filterForm.value.contract }
+    console.log(this.filterForm.value);
     this.filter.emit(this.params);
   }
 
   private initData(): void {
-    this.experiences = ['Débutants', '1-2 ans', '2-4 ans', '4-6 ans', '6-8 ans', '8-10 ans', '10-15 ans', '15+ ans'];
-    this.contractTypes = ['Tous', 'Emploi', 'Stage'];
+    this.experiences = [
+      { label: 'Débutants', value: 1 },
+      { label: '1-2 ans', value: 2 },
+      { label: '2-4 ans', value: 4 },
+      { label: '4-6 ans', value: 6 },
+      { label: '6-8 ans', value: 8 },
+      { label: '8-10 ans', value: 10 },
+      { label: '10-15 ans', value: 15 },
+      { label: '15+ ans', value: 20 }
+    ];
+    this.contractTypes = [
+      { label: 'Tous', value: null },
+      { label: 'Emploi', value: 'permanent' },
+      { label: 'Stage', value: 'internship' }
+    ];
   }
 }

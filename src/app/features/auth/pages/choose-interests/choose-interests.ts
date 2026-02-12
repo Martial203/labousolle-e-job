@@ -45,6 +45,6 @@ export class ChooseInterests {
   }
 
   private initInterests(): void {
-    this.interests$ = this.jobService.getCategories();
+    this.interests$ = this.jobService.categories$;
   }
 }

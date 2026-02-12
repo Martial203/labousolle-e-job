@@ -5,8 +5,8 @@
       <h2 class="mb-4 text-lg font-semibold">Experience</h2>
       <ul class="flex flex-col gap-4 text-sm">
         <li *ngFor="let experience of experiences">
-          <p-checkbox name="experience" id="{{ experience }}" [binary]="true" ngModel></p-checkbox>
-          <label for="{{ experience }}" class="ml-2">{{ experience }}</label>
+          <p-checkbox name="experience" id="{{ experience.value }}" [value]="experience.value" ngModel></p-checkbox>
+          <label for="{{ experience.value }}" class="ml-2">{{ experience.label }}</label>
         </li>
       </ul>
     </div>
@@ -14,8 +14,8 @@
       <h2 class="mb-4 text-lg font-semibold">Type de poste</h2>
       <ul class="flex flex-col gap-4 text-sm">
         <li class="flex items-center" *ngFor="let contract of contractTypes">
-          <p-checkbox id="{{ contract }}" name="contract" [binary]="true" ngModel></p-checkbox>
-          <label for="{{ contract }}" class="ml-2"> {{ contract }} </label>
+          <p-radiobutton id="{{ contract.value }}" name="contract" [value]="contract.value" ngModel></p-radiobutton>
+          <label for="{{ contract.value }}" class="ml-2"> {{ contract.label }} </label>
         </li>
       </ul>
     </div>

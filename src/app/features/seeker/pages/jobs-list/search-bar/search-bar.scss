@@ -1,0 +1,21 @@
+/* Target the main container's border */
+:host ::ng-deep .p-select > .p-select-label,
+:host ::ng-deep .p-select > .p-select-trigger,
+:host ::ng-deep .p-select {
+  border: none !important;
+  box-shadow: none !important; /* Also remove any default shadows */
+}
+
+/* Target the input part if necessary */
+:host ::ng-deep .p-select-label.p-inputtext {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove the border on focus state */
+:host ::ng-deep .p-select:focus,
+:host ::ng-deep .p-select:enabled:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: initial !important;
+}

@@ -27,7 +27,7 @@ export class Home {
     this.recommendedJobs$ = this.jobService.getRecommendedJobs();
     this.trendingJobs$ = this.jobService.getFeaturedJobs();
     this.recentJobs$ = this.jobService.getRecentJobs();
-    this.categories$ = this.jobService.getCategories();
+    this.categories$ = this.jobService.categories$;
     this.userInterests$ = this.authService.getProfileInterests();
     
     this.responsiveOptions = [

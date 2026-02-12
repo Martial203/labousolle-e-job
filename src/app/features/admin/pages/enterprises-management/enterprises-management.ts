@@ -19,17 +19,16 @@ interface CompanyRow {
 })
 export class EnterprisesManagement {
 
-  companies$!: Observable<Company[]>;
+  companies$!: Observable<CompanyRow[]>;
 
   constructor(private companyService: CompanyService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.companies$ = this.companyService.getCompanies();
+    this.companies$ = this.companyService.getCompanies().pipe(map(companies => this.mapToCompanyRow(companies)));
   }
 
-  confirmDeletion(event: Event, enterpriseId: number): void {
+  confirmDeletion(enterpriseId: number): void {
     this.confirmationService.confirm({
-      target: event.target as EventTarget,
       message: 'Voulez vous vraiment supprimer cette entreprise ?',
       header: 'Confirmation',
       closable: true,
@@ -52,10 +51,10 @@ export class EnterprisesManagement {
   }
 
   deleteAnEnterprise(enterpriseId: number): void{
-    this.companyService.deleteCompany(enterpriseId);
+    this.companyService.deleteCompany(enterpriseId).subscribe();
   }
 
-  mapToCompanyRow(companies: Company[]): CompanyRow[] {
+  private mapToCompanyRow(companies: Company[]): CompanyRow[] {
     console.log(companies)
     return companies.map(company => ({
       id: company.id,

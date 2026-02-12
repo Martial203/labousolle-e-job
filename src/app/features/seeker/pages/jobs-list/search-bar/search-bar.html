@@ -7,9 +7,9 @@
     <i class="mr-4 text-primary pi pi-map-marker"></i>
     <input class="h-full border-none outline-none" type="text" name="location" id="location" placeholder="Emplacement" ngModel>
   </div>
-  <div class="flex-1 lg:pl-8 whitespace-nowrap">
+  <div class="flex-1 lg:pl-8 whitespace-nowrap" *ngIf="categories$ | async as categories">
     <i class="mr-4 text-primary pi pi-map-marker"></i>
-    <input class="h-full border-none outline-none" type="text" name="category" id="category" placeholder="Sélectionner une catégorie" ngModel>
+    <p-select class="h-full outline-none" type="text" name="category" id="category" placeholder="Sélectionner une catégorie" ngModel [options]="categories" optionLabel="name" optionValue="name"></p-select>
   </div>
   <div class="flex flex-row items-center flex-1 mr-4 ld:pl-8 whitespace-nowrap">
     <button class="block h-full {{ filtering ? 'text-primary' : '' }}" (click)="onShowFilterModal()">Filtre avancé  <i class="ml-2 align-middle pi {{ filtering ? 'pi-chevron-up' : 'pi-chevron-down' }} "></i></button>

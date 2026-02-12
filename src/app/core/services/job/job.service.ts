@@ -18,7 +18,9 @@ export class JobService {
   get categories$(): Observable<Category[]> { return this._categories$.asObservable() }
   get jobs$(): Observable<Job[]> { return this._jobs$.asObservable() }
 
-  constructor(private http: HttpClient){ }
+  constructor(private http: HttpClient){
+    this.getCategories().subscribe(categories => this._categories$.next(categories));
+  }
 
   createJob(jobData: Job): Observable<any> {
     console.log(jobData)
@@ -141,7 +143,7 @@ export class JobService {
     );
   }
 
-  getCategories(): Observable<Category[]> {
+  private getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${environment.apiUrl}/categories/`).pipe(
       map(categories => categories.map((category: any) => this.mapCategory(category)))
     );
@@ -172,11 +174,15 @@ export class JobService {
   }
 
   searchJobs(query: JobSearchParams): Observable<{ jobs: Job[], count: number, page: number, totalPage: number }> {
-    const params = new HttpParams();
-    
-    Object.keys(query).forEach((key: string) => {
-      params.set(key, query[key])
-    })
+    const params = new HttpParams({
+      fromObject: Object.fromEntries(
+        Object.entries(query).filter(
+          ([_, v]) => v !== undefined && v !== null && v !== ''
+        )
+      )
+    });   
+
+    console.log(params)
     return this.http.get<Job[]>(`${environment.apiUrl}/jobs/search/`, { params }).pipe(
       map((res: any) => {
         const jobs: Job[] = res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob));

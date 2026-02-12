@@ -13,10 +13,12 @@ export class ChatService {
   private _history$: BehaviorSubject<ChatHeader[]> = new BehaviorSubject<ChatHeader[]>([]);
   private _discussion$: BehaviorSubject<ChatMessage[]> = new BehaviorSubject<ChatMessage[]>([]);
 
-  get history$() { return this._history$.asObservable() }
-  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(tap(res => console.log(res))) }
+  get history$() { return this._history$.asObservable().pipe(map(chats => chats.sort((a, b) => b.date.getTime() - a.date.getTime()))) }
+  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(map(res => res.sort((a, b) => a.date.getTime() - b.date.getTime()))) }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.getChatHistory().subscribe(res => this._history$.next(res));
+  }
 
   getChatHistory(): Observable<ChatHeader[]> {
     return this.http.get<ChatHeader[]>(`${environment.apiUrl}/ai-agent/conversations/`).pipe(
@@ -86,7 +88,13 @@ export class ChatService {
       template_id: templateId,
       job_id: job_id
     };
-    return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body);
+    return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body).pipe(
+      tap(res => {
+        const chat = this.mapChatHistory([res])[0];
+        this._history$.next([...this._history$.value, chat]);
+        this._discussion$.next([])
+      })
+    );
   }
 
   fetchDocument(url: string): Observable<any> {
@@ -107,7 +115,7 @@ export class ChatService {
   private mapChatHistory(histories: any[]): ChatHeader[]{
     return histories.map(history => ({
       id: history.session_id,
-      date: new Date(history.updated_at),
+      date: history.updated_at ? new Date(history.updated_at) : new Date(),
       language: history.language,
       documentType: history.document_type,
       status: history.status,

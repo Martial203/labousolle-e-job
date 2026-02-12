@@ -46,7 +46,7 @@ export class NewJob {
         value: company.id
       })))
     );
-    this.categories$ = this.jobService.getCategories().pipe(
+    this.categories$ = this.jobService.categories$.pipe(
       map(categories => categories.map(category => ({
         label: category.name,
         value: category.id
