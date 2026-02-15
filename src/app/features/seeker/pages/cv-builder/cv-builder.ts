@@ -27,6 +27,9 @@ export class CvBuilder {
 
   user!: User;
 
+  readonly PROCESS_STATES = ProcessState;
+  processState: ProcessState = ProcessState.INACTIVE;
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
   constructor(private chatService: ChatService, private authService: AuthService, private route: ActivatedRoute) {}
@@ -53,7 +56,12 @@ export class CvBuilder {
   }
 
   selectChat(id: string): void {
-    this.chatService.getChatMessages(id).subscribe();
+    this.processState = ProcessState.LOADING;
+    this.chatService.getChatMessages(id).subscribe({
+      next: () => this.processState = ProcessState.SUCCESS,
+      error: () => this.processState = ProcessState.ERROR,
+      complete: () => this.scrollToBottom()
+    });
     this.selectedDiscussion = id;
   }
 

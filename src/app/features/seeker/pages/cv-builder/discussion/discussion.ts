@@ -16,6 +16,7 @@ export class Discussion {
 
   @Input() messages!: ChatMessage[]
   @Input() typingState: ProcessState = ProcessState.INACTIVE;
+  @Input() loadingMessages: boolean = false;
   @ViewChild('pdfViewer') pdfViewer!: any;
 
   displayDocumentPreview: boolean = false;
@@ -24,6 +25,7 @@ export class Discussion {
   constructor(private chatService: ChatService) { }
 
   download(url: string): void {
+    this.processState = ProcessState.LOADING;
     this.chatService.fetchDocument(url).subscribe({
       next: (res: any) => {
         const link = document.createElement('a');
