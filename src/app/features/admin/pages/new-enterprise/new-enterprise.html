@@ -7,17 +7,17 @@
     <p-tabpanels> 
         <p-tabpanel [value]="0">
             <div class="m-0">
-                <app-general-infos-form (value)="onValidateStep($event)"></app-general-infos-form>
+                <app-general-infos-form [company]="company" [editMode]="editMode" (value)="onValidateStep($event)"></app-general-infos-form>
             </div>
         </p-tabpanel>
         <p-tabpanel [value]="1">
             <div class="m-0">
-                <app-social-networks-form [company]="company" (value)="onValidateStep($event)" (back)="tab=0"></app-social-networks-form>
+                <app-social-networks-form [company]="company" [editMode]="editMode" (value)="onValidateStep($event)" (back)="tab=0"></app-social-networks-form>
             </div>
         </p-tabpanel>
         <p-tabpanel [value]="2">
             <div class="m-0">
-                <app-contacts-form [company]="company" (value)="onValidateStep($event)" (back)="tab=1"></app-contacts-form>
+                <app-contacts-form [company]="company" [editMode]="editMode" (value)="onValidateStep($event)" (back)="tab=1"></app-contacts-form>
             </div>
         </p-tabpanel>
     </p-tabpanels>

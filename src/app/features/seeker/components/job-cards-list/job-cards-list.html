@@ -1,11 +1,11 @@
-<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+<div *ngIf="jobs.length>0; else emptyList" class="grid grid-cols-1 gap-6 lg:grid-cols-3">
   <div *ngFor="let job of jobs" class="p-6 border rounded-lg border-input-border hover:shadow-lg hover:scale-[1.01] hover:border-primary hover:cursor-pointer group" (click)="onSelectJob(job.id)">
     <div class="flex flex-row justify-start gap-4 mb-5 items-around">
       <figure class="flex-row items-center justify-center w-16 h-16 overflow-hidden rounded-full bg-gray bg-opacity-10 flex-">
         <img [src]="job.companyLogo" class="block object-contain w-full h-full">
       </figure>
       <div class="flex flex-col justify-around">
-        <h3 class="font-semibold text-md">{{ job.companyName }} <span class="px-4 py-0.5 text-xs text-red-300 bg-red-50 rounded-full ml-6">En vedette</span></h3>
+        <h3 class="font-semibold text-md">{{ job.companyName }} <span class="px-4 py-0.5 text-xs text-red-300 bg-red-50 rounded-full ml-6">{{ job.isFeatured ? 'En vedette' : '' }}</span></h3>
         <p class="text-sm text-gray">
           <i class="pi pi-map-marker mr-0.5"></i> 
           {{ job.address }}
@@ -15,7 +15,7 @@
     <div>
       <h2 class="mb-2 text-lg font-semibold group-hover:text-primary">{{ job.title }}</h2>
       <div class="flex flex-row justify-between text-sm text-zinc-500">
-        <p>{{ job.jobType }} * 30k$-35k$</p>
+        <p>{{ job.jobType }}</p>
         <p>
           <i class="pi pi-calendar mr-0.5"></i>
           <!-- 4 jours restants -->
@@ -25,3 +25,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #emptyList>
+  <div class="flex flex-row items-center justify-center w-full h-full min-h-[60vh] text-center">
+    <p class="text-sm italic text-gray">La liste est vide...</p>
+  </div>
+</ng-template>

@@ -21,6 +21,8 @@ export class Home {
 
   responsiveOptions: any[] | undefined;
 
+  showAllCategories: boolean = false;
+
   constructor(private authService: AuthService, private jobService: JobService) {}
 
   ngOnInit(): void {

@@ -20,6 +20,7 @@ export class JobService {
 
   constructor(private http: HttpClient){
     this.getCategories().subscribe(categories => this._categories$.next(categories));
+    this.getJobs().subscribe(jobs => this._jobs$.next(jobs));
   }
 
   createJob(jobData: Job): Observable<any> {
@@ -31,12 +32,12 @@ export class JobService {
       expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
       city: jobData.address,
       country: 'null',
-      job_type: "permanent",
+      job_type: jobData.jobType,
       image: jobData.coverImage,
       about: "null",
       description: jobData.description,
       profile_required: jobData.profileRequired,
-      experience_required: '1',
+      experience_required: jobData.experience,
       salary_min: '0',
       salary_max: '0',
       education_level: 'none',
@@ -44,13 +45,16 @@ export class JobService {
     }
     const formData = new FormData()
     Object.keys(body).forEach(key => formData.append(key, body[key]))
-    return this.http.post(`${environment.apiUrl}/jobs/`, formData);
+    return this.http.post(`${environment.apiUrl}/jobs/`, formData).pipe(tap((res: any) => {
+      const jobs = this._jobs$.value;
+      jobs.push(jobData);
+      this._jobs$.next(jobs);
+    }));
   }  
 
-  getJobs(): Observable<Job[]> {
+  private getJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(`${environment.apiUrl}/jobs/`).pipe(
-      map((res: any) => res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob))),
-      tap(jobs => this._jobs$.next(jobs))
+      map((res: any) => res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob)))
     );
   }
 
@@ -150,14 +154,35 @@ export class JobService {
   }
 
   updateAJob(jobId: number, jobData: Job): Observable<any> {
-    const body = {
-
+    const body: { [key: string]: any } = {
+      title: jobData.title,
+      category: jobData.categoryId.toString(),
+      company: jobData.companyId.toString(),
+      expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
+      city: jobData.address,
+      country: 'null',
+      job_type: jobData.jobType,
+      image: jobData.coverImage,
+      about: "null",
+      description: jobData.description,
+      profile_required: jobData.profileRequired,
+      experience_required: jobData.experience,
+      salary_min: '0',
+      salary_max: '0',
+      education_level: 'none',
+      skills: JSON.stringify(["empty", "null"])
     }
-    return this.http.patch(`${environment.apiUrl}/jobs/${jobId}/`, jobData);
+    const formData = new FormData()
+    Object.keys(body).forEach(key => formData.append(key, body[key]))
+    return this.http.patch(`${environment.apiUrl}/jobs/${jobId}/`, formData);
   }
 
   deleteAJob(jobId: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/jobs/${jobId}/`);
+    return this.http.delete(`${environment.apiUrl}/jobs/${jobId}/`).pipe(tap(() => {
+      const jobs = this._jobs$.value;
+      const updatedJobs = jobs.filter(job => job.id !== jobId);
+      this._jobs$.next(updatedJobs);
+    }));
   }
 
   applyToJob(jobId: number): Observable<any> {
@@ -232,7 +257,7 @@ export class JobService {
       coverImage: tmpJob.image,
       creationDate: new Date(tmpJob.created_date),
       description: tmpJob.description,
-      experience: "1-2 ans",
+      experience: tmpJob.experience_required,
       expirationDate: new Date(tmpJob.expiration_date),
       isFeatured: true,
       jobType: tmpJob.job_type,

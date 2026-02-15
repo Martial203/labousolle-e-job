@@ -6,13 +6,15 @@ import { Footer } from './components/footer/footer';
 import { AdminRoutingModule } from "../features/admin/admin-routing-module";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DaysToPipe } from './pipes/days-to/days-to-pipe';
 
 
 
 @NgModule({
   declarations: [
     HeaderToolbar,
-    Footer
+    Footer,
+    DaysToPipe
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { RouterModule } from '@angular/router';
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
-    Footer
+    Footer,
+    DaysToPipe
   ]
 })
 export class SharedModule { }

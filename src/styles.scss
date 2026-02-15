@@ -15,3 +15,13 @@
 *{
   @apply transition-all duration-300;
 }
+
+:root {
+  --p-button-info-background: #0F70B7 !important;
+  --p-button-outlined-info-color: #0F70B7 !important;
+  --p-carousel-indicator-active-background: #0F70B7 !important;
+  --p-checkbox-checked-background: #0F70B7 !important;
+  --p-checkbox-checked-border-color: #0F70B7 !important;
+  --p-radiobutton-checked-border-color: #0F70B7 !important;
+  --p-radiobutton-checked-background: #0F70B7 !important;
+}

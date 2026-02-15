@@ -3,10 +3,10 @@
   <div>
     <div class="flex flex-row">
       <label for="">Télécharger le logo</label>
-      <button *ngIf="selectedFile" pButton class="relative z-10 top-6 left-32 scale-[70%]" icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onResetLogo()"></button>
+      <button *ngIf="selectedFile && editMode" pButton class="relative z-10 top-6 left-32 scale-[70%]" icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onResetLogo()"></button>
     </div>
-    <figure pRipple class="relative flex flex-row items-center justify-center w-full h-64 overflow-hidden text-center border border-dashed rounded-md cursor-pointer lg:w-72 ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="logoInputField.click()">
-      <ng-container *ngIf="selectedFile; else placeholder">
+    <figure pRipple class="relative flex flex-row items-center justify-center w-full h-64 overflow-hidden text-center border border-dashed rounded-md cursor-pointer lg:w-72 ripple-box border-input-border hover:shadow-lg hover:bg-input-background" (click)="editMode ? logoInputField.click() : undefined">
+      <ng-container *ngIf="selectedFile || !editMode; else placeholder">
         <img class="object-cover w-full h-full" [src]="preview" alt="">
       </ng-container>
       <ng-template #placeholder>
@@ -22,41 +22,41 @@
   <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
     <div>
       <label for="name">Nom de l'entreprise</label>
-      <input pInputText type="text" name="name" id="name" ngModel required>
+      <input pInputText type="text" name="name" id="name" [disabled]="!editMode" ngModel required>
     </div>
     <div>
       <label for="companyType">Type d'organisation</label>
-      <p-select type="text" name="type" id="companyType" [options]="companyTypes" optionLabel="label" optionValue="value" ngModel required></p-select>
+      <p-select type="text" name="type" id="companyType" [options]="companyTypes" optionLabel="label" optionValue="value" [disabled]="!editMode" ngModel required></p-select>
     </div>
     <div>
       <label for="companySize">Taille de l'équipe</label>
-      <p-select type="text" name="size" id="companySize" [options]="companySizes" optionLabel="label" optionValue="value" ngModel required></p-select>
+      <p-select type="text" name="size" id="companySize" [options]="companySizes" optionLabel="label" optionValue="value" [disabled]="!editMode" ngModel required></p-select>
     </div>
     <div>
       <label for="creationYear">Année de création</label>
-      <p-datepicker inputStyleClass="w-full" name="creationYear" id="creationYear" view="year" dateFormat="yy" ngModel required></p-datepicker>
+      <p-datepicker inputStyleClass="w-full" name="creationYear" id="creationYear" view="year" dateFormat="yy" [disabled]="!editMode" ngModel required></p-datepicker>
     </div>
     <div>
       <label for="wwebsite">Site web de l'entreprise</label>
-      <input pInputText type="url" name="website" id="wwebsite" autocapitalize="website" ngModel required>
+      <input pInputText type="url" name="website" id="wwebsite" autocapitalize="website" [disabled]="!editMode" ngModel required>
     </div>
     <div>
       <label for="address">Adresse</label>
-      <input pInputText type="text" name="address" id="address" autocomplete="address-line1" ngModel required>
+      <input pInputText type="text" name="address" id="address" autocomplete="address-line1" [disabled]="!editMode" ngModel required>
     </div>
   </div>
   <div>
     <label for="">A propos de nous</label>
-    <p-editor name="about" placeholder="Écrivez ici les informations sur votre entreprise. Faites savoir au candidat qui nous sommes..." ngModel required [style]="{ height: '180px' }" />
+    <p-editor name="about" placeholder="Écrivez ici les informations sur votre entreprise. Faites savoir au candidat qui nous sommes..." [disabled]="!editMode" ngModel required [style]="{ height: '180px' }" />
   </div>
   <div>
     <label for="">Vision de l'entreprise</label>
-    <p-editor name="vision" placeholder="Parlez-nous de la vision de votre entreprise..." ngModel required [style]="{ height: '180px' }" />
+    <p-editor name="vision" placeholder="Parlez-nous de la vision de votre entreprise..." [disabled]="!editMode" ngModel required [style]="{ height: '180px' }" />
   </div>
   <!-- <button class="px-6 py-3 rounded text-secondary bg-primary">Enregistrer et suivant <i class="ml-2 align-middle pi pi-arrow-right"></i></button> -->
   <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Opération réussie!" class="w-full mb-4"></p-message>
   <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer." class="w-full mb-4"></p-message>
         
-  <button pButton severity="info" class="mt-6" label="Enregistrer et suivant" icon="pi pi-arrow-right" iconPos="right" [disabled]="companyForm.invalid || processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="onSubmit(companyForm.value)"></button>
+  <button *ngIf="editMode" pButton severity="info" class="mt-6" label="Enregistrer et suivant" icon="pi pi-arrow-right" iconPos="right" [disabled]="companyForm.invalid || processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="onSubmit(companyForm.value)"></button>
 
 </form>

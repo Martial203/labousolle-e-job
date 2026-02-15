@@ -7,8 +7,8 @@ import { CompanyService } from '../../../../core/services/company/company.servic
 interface CompanyRow {
   id: number;
   name: string;
-  email: string;
-  phone: string;
+  type: string;
+  offers: number;
 }
 
 @Component({
@@ -22,9 +22,11 @@ export class EnterprisesManagement {
   companies$!: Observable<CompanyRow[]>;
 
   constructor(private companyService: CompanyService, private confirmationService: ConfirmationService, private messageService: MessageService) {}
-
+ 
   ngOnInit(): void {
-    this.companies$ = this.companyService.getCompanies().pipe(map(companies => this.mapToCompanyRow(companies)));
+    this.companies$ = this.companyService.companies$.pipe(
+      map(companies => this.mapToCompanyRow(companies))
+    );
   }
 
   confirmDeletion(enterpriseId: number): void {
@@ -59,8 +61,9 @@ export class EnterprisesManagement {
     return companies.map(company => ({
       id: company.id,
       name: company.name,
-      email: company.email,
-      phone: company.phone
+      type: company.type,
+      offers: company.jobsCount ?? 0,
+
     }))
   }
 

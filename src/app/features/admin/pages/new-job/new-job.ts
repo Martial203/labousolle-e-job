@@ -7,11 +7,11 @@ import { Job } from '../../../../core/models/job/job';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { NgForm } from '@angular/forms';
 import { ViewportScroller } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface SelectOption {
   label: string;
-  value: number;
+  value: number|string;
 }
 
 @Component({
@@ -24,23 +24,26 @@ export class NewJob {
 
   displayDialog: boolean = false;
 
-  experiences: string[] = ['Débutants', '1-2 ans', '2-4 ans', '4-6 ans', '6-8 ans', '8-10 ans', '10-15 ans', '15+ ans'];
-  contractTypes: string[] = ['Tous', 'Emploi', 'Stage'];
+  experiences!: SelectOption[];
+  contractTypes!: SelectOption[];
   companies$!: Observable<SelectOption[]>;  
   categories$!: Observable<SelectOption[]>;
 
   preview: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
 
+  activeJob: Job | null = null;
+
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
 
   @ViewChild("jobForm") jobForm!: NgForm;
 
-  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private route: ActivatedRoute) {}
+  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.companies$ = this.companyService.getCompanies().pipe(
+    this.initData();
+    this.companies$ = this.companyService.companies$.pipe(
       map(companies => companies.map(company => ({
         label: company.name,
         value: company.id
@@ -52,8 +55,33 @@ export class NewJob {
         value: category.id
       })))
     );
+  }
 
+  ngAfterViewInit(): void {
     const jobId = this.route.snapshot.params['id'];
+    if(jobId){
+      this.jobService.getJobDetails(+jobId).subscribe({
+        next: (res) => {
+          const job = res.job;
+          this.activeJob = job;
+          this.preview = job.coverImage;
+          this.selectedFile = new File([job.coverImage], 'cover.png', { type: 'image/png' });
+          this.jobForm.resetForm({
+            title: job.title,
+            email: res.company.email,
+            categoryId: job.categoryId,
+            companyId: job.companyId,
+            contractType: job.jobType,
+            experience: job.experience,
+            jobType: job.jobType,
+            expirationDate: new Date(job.expirationDate),
+            address: job.address,
+            description: job.description,
+            profileRequired: job.profileRequired
+          });
+        }
+      });
+    }
   }
 
   onCoverSelected(event: Event) {
@@ -81,7 +109,8 @@ export class NewJob {
     value.coverImage = this.selectedFile;
     value.categoryId = value.categoryId.value;
     value.companyId = value.companyId.value;
-    this.jobService.createJob(value).subscribe({
+    const request: Observable<any> = this.activeJob ? this.jobService.updateAJob(this.activeJob.id, value) : this.jobService.createJob(value);
+    request.subscribe({
       next: (job) => {
         console.log('Job created successfully:', job);
         this.processState = ProcessState.SUCCESS;
@@ -89,11 +118,31 @@ export class NewJob {
         this.selectedFile = null;
         this.preview = null;
         this.viewportScroller.scrollToPosition([0, 0]);
+        if(this.activeJob){
+          setTimeout(() => this.router.navigateByUrl('/admin/jobs'), 2000);
+        }
       },
       error: (error) => {
         console.error('Error creating job:', error);
         this.processState = ProcessState.ERROR;
       }
     });
+  }
+
+  private initData(): void {
+    this.experiences = [
+      { label: 'Débutants', value: 1 },
+      { label: '1-2 ans', value: 2 },
+      { label: '2-4 ans', value: 4 },
+      { label: '4-6 ans', value: 6 },
+      { label: '6-8 ans', value: 8 },
+      { label: '8-10 ans', value: 10 },
+      { label: '10-15 ans', value: 15 },
+      { label: '15+ ans', value: 20 }
+    ];
+    this.contractTypes = [
+      { label: 'Emploi', value: 'permanent' },
+      { label: 'Stage', value: 'internship' }
+    ];
   }
 }

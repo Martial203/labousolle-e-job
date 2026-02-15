@@ -14,7 +14,7 @@
       <p-inputgroup-addon>
           <i class="pi pi-phone"></i>
       </p-inputgroup-addon>
-      <input pInputText name="phone" type="tel" autocomplete="tel" placeholder="Numéro de téléphone" ngModel/>
+      <input pInputText name="phone" type="tel" autocomplete="tel" placeholder="Numéro de téléphone" [disabled]="!editMode" ngModel/>
     </p-inputgroup>
   </div>
   <div>
@@ -23,14 +23,14 @@
       <p-inputgroup-addon>
           <i class="pi pi-envelope"></i>
       </p-inputgroup-addon>
-      <input pInputText name="email" type="email" autocomplete="email" placeholder="Adresse e-mail" ngModel/>
+      <input pInputText name="email" type="email" autocomplete="email" placeholder="Adresse e-mail" [disabled]="!editMode" ngModel/>
     </p-inputgroup>
   </div>
   
   <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Contacts mis à jour avec succès !" class="w-full mb-4"></p-message>
   <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer." class="w-full mb-4"></p-message>
 
-  <div class="flex flex-row gap-4 mt-4">
+  <div *ngIf="editMode" class="flex flex-row gap-4 mt-4">
     <button pButton severity="secondary" label="Précédent" (click)="onBack()"></button>
     <button pButton severity="info" label="Terminer l'édition" icon="pi pi-arrow-right" iconPos="right" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="onSetContacts(contactForm.value)"></button>
   </div>

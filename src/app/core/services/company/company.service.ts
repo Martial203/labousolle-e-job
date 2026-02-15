@@ -12,10 +12,13 @@ export class CompanyService {
   private _companies$: BehaviorSubject<Company[]> = new BehaviorSubject<Company[]>([]);
   get companies$(): Observable<Company[]> { return this._companies$.asObservable() }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.getCompanies().subscribe();
+  }
 
-  getCompanies(): Observable<Company[]>{
+  private getCompanies(): Observable<Company[]>{
     return this.http.get<Company[]>(`${environment.apiUrl}/companies/`).pipe(
+      map(res => res.map(company => this.mapCompanyResToCompany(company))),
       tap(companies => this._companies$.next(companies))
     );
   }
@@ -45,7 +48,12 @@ export class CompanyService {
       data.append(key, body[key]);
     })
     return this.http.post(`${environment.apiUrl}/companies/`, data).pipe(
-      map(res => this.mapCompanyResToCompany(res))
+      map(res => this.mapCompanyResToCompany(res)),
+      tap(res => {
+        const companies = this._companies$.value;
+        companies.push(company)
+        this._companies$.next(companies)
+      })
     );
   }
 
@@ -87,7 +95,13 @@ export class CompanyService {
   }
 
   deleteCompany(companyId: number): Observable<any>{
-    return this.http.delete(`${environment.apiUrl}/companies/${companyId}/`);
+    return this.http.delete(`${environment.apiUrl}/companies/${companyId}/`).pipe(
+      tap(() => {
+        const currentCompanies = this._companies$.getValue();
+        const updatedCompanies = currentCompanies.filter(company => company.id !== companyId);
+        this._companies$.next(updatedCompanies);
+      })
+    );
   }
 
   private mapCompanyResToCompany(res: any): Company{
@@ -110,7 +124,8 @@ export class CompanyService {
         twitterUrl: '',
         instagramUrl: '',
         youtubeUrl: ''
-      }
+      },
+      jobsCount: res.jobs_count ?? 0
     }
   }
 }

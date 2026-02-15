@@ -1,3 +1,7 @@
+<div *ngIf="processState===PROCESS_STATES.LOADING" class="flex flex-row items-center justify-center w-full h-full min-h-[60vh]">
+  <p class="text-5xl text-center text-primary"><i class="pi pi-spinner animate-spin"></i></p>
+</div>
+
 <div *ngIf="jobs$|async as jobs">
   <div class="bg-light-blue">
     <div class="container px-6 py-8 mx-auto lg:px-16">

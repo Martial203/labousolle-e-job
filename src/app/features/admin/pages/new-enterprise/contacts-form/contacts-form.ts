@@ -16,6 +16,7 @@ export class ContactsForm {
   processState: ProcessState = ProcessState.INACTIVE;
   readonly PROCESS_STATES = ProcessState;
 
+  @Input() editMode: boolean = true;
   @Input() company!: Company|null;
   @Output() back: EventEmitter<void> = new EventEmitter<void>();
   @Output() value: EventEmitter<Company> = new EventEmitter<Company>();
@@ -39,6 +40,12 @@ export class ContactsForm {
       if(changes['company'].currentValue === null) {
         this.contactForm.resetForm();
         this.processState = ProcessState.INACTIVE;
+      }
+      if(this.company){
+        this.contactForm.resetForm({
+          phone: '+23765968596',
+          email: 'this.company.email',
+        });
       }
     }
   }

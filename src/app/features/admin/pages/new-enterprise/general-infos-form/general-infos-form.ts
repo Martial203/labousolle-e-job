@@ -3,6 +3,7 @@ import { CompanyService } from '../../../../../core/services/company/company.ser
 import { Company } from '../../../../../core/models/company/company';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 interface Option{
   value: string;
@@ -26,6 +27,7 @@ export class GeneralInfosForm {
   processState: ProcessState = ProcessState.INACTIVE;
   readonly PROCESS_STATES = ProcessState;
 
+  @Input() editMode: boolean = true;
   @Input() company!: Company|null;
   @Output() value: EventEmitter<Company> = new EventEmitter<Company>();
   @ViewChild('companyForm') companyForm!: NgForm;
@@ -41,6 +43,25 @@ export class GeneralInfosForm {
       if(changes['company'].currentValue === null) {
         this.companyForm.resetForm();
         this.processState = ProcessState.INACTIVE;
+      }
+      if(this.company){
+        console.log(this.company)
+        if(this.company.logo){
+          this.preview = this.company.logo;
+          this.selectedFile = new File([this.company.logo], 'logo.png', { type: 'image/png' });
+        }
+        const date = new Date();
+        date.setFullYear(this.company.creationYear)
+        this.companyForm.resetForm({
+          name: this.company.name,
+          type: this.company.type,
+          size: this.company.size,
+          creationYear: date,
+          website: this.company.website,
+          address: this.company.address,
+          about: this.company.about,
+          vision: this.company.vision
+        })
       }
     }
   }
@@ -64,11 +85,16 @@ export class GeneralInfosForm {
   }
 
   onSubmit(company: Company): void{
+    this.processState = ProcessState.LOADING;
     company.logo = this.selectedFile;
     company.creationYear = new Date(company.creationYear).getFullYear();
-    console.log(company);
-    this.processState = ProcessState.LOADING;
-    this.companyService.createCompany(company).subscribe({
+    let request!: Observable<any>;
+    if(this.company) {
+      request = this.companyService.updateCompany(this.company.id, company)
+    }else{
+      request = this.companyService.createCompany(company)
+    }
+    request.subscribe({
       next: (res) => {
         this.processState = ProcessState.SUCCESS;
         this.value.emit(res);

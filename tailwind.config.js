@@ -11,6 +11,7 @@ export default {
         "secondary": "#FFFFFF",
         "light-blue": "#F0F9FD",
         "gray": "#9199A3",
+        "light-gray": "#F1F2F4",
         "input-border": "#ACACAC",
         "input-background": "#F0F1F2",
         "divide-color": "#9199A360",

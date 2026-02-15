@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Company } from '../../../../core/models/company/company';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CompanyService } from '../../../../core/services/company/company.service';
 
 @Component({
   selector: 'app-new-enterprise',
@@ -14,9 +15,18 @@ export class NewEnterprise {
   tab: number = 0;
 
   @Input() isModal: boolean = false;
+  @Input() editMode: boolean = true;
   @Output() created: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private router: Router) { }
+  constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    const companyId = this.route.snapshot.params['id'];
+    if(companyId){
+      this.companyService.getCompanyDetails(+companyId).subscribe(res => this.company = res);
+    }
+    if(this.route.snapshot.queryParams['mode'] === 'view') this.editMode = false;
+  }
 
   onResetForm(): void{
     this.company = null!;

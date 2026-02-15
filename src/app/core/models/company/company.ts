@@ -13,6 +13,7 @@ export class Company {
   vision!: string;
   socialNetworks!: SocialNetwork;
   contacts!: string[];
+  jobsCount?: number;
 }
 
 export class SocialNetwork {

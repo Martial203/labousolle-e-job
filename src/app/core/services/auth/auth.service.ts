@@ -6,6 +6,7 @@ import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Category } from '../../models/category/category';
 import { User } from '../../models/user/user';
+import { Role } from '../../enums/role/role';
 
 @Injectable({
   providedIn: 'root',
@@ -101,7 +102,7 @@ export class AuthService {
       name: res.user.nom,
       firstName: res.user.prenom,
       email: res.user.email,
-      role: res.user.role,
+      role: res.user.role as Role,
       token: res.token
     };
     this.saveUserInfosLocally(userInfos);
