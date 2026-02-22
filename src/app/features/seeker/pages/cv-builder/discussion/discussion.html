@@ -3,7 +3,7 @@
     <ng-container *ngIf="messages.length>0; else emptyDiscussion">
       <div *ngFor="let message of messages" class="flex flex-row message w-[98%] lg:w-[90%] {{ message.sender==='user' ? 'me' : '' }}">
         <div class="w-32 mr-2">
-          <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal"></p-avatar>
+          <p-avatar image="assets/images/reddit.png" shape="circle" size="normal"></p-avatar>
         </div>
         <div>
           <p class="mb-2">
@@ -13,7 +13,7 @@
           <div class="p-4 leading-relaxed whitespace-pre-line rounded-2xl content text-secondary" [innerHTML]="message.content"></div>
           <ng-container *ngIf="message.document as attachment">
             <figure class="relative flex flex-row items-center justify-center mt-4 overflow-hidden w-80 h-60 rounded-2xl content">
-              <img class="object-cover w-full" src="/assets/images/home-banner.png" alt="">
+              <img class="object-cover w-full" src="assets/images/home-banner.png" alt="">
               <div class="absolute bottom-0 flex flex-row justify-around w-full py-4 bg-primary">
                 <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
                 <a pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="download(attachment.url)">Télécharger</a>

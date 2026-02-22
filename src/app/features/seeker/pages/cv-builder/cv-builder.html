@@ -14,12 +14,12 @@
           <ng-template #start>
             <p-button icon="pi pi-comments" severity="info" [rounded]="true" class="block mr-2 lg:hidden" (click)="onToggleChatHistory()"></p-button>
             <div class="flex flex-row items-center justify-between gap-8 ml-1">
-              <figure class="hidden overflow-hidden rounded-full w-26 lg:block"><img class="object-cover w-full" src="/assets/images/reddit.png" alt=""></figure>
+              <figure class="hidden overflow-hidden rounded-full w-26 lg:block"><img class="object-cover w-full" src="assets/images/reddit.png" alt=""></figure>
               <h1 class="font-semibold capitalize">{{ user.name }}</h1>
             </div>
           </ng-template>
           <ng-template #end>
-            <p-avatar image="/assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
+            <p-avatar image="assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
           </ng-template>
         </p-toolbar>
       </header>
@@ -49,6 +49,6 @@
   </section>
 </div>
 
-<p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true" styleClass="w-80 lg:w-fit">
+<p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <app-template-picker [selectedType]="documentType" (cancel)="displayTemplatePicker=false" (result)="displayTemplatePicker=false"></app-template-picker>
 </p-dialog>

@@ -14,7 +14,10 @@ export class ChatService {
   private _discussion$: BehaviorSubject<ChatMessage[]> = new BehaviorSubject<ChatMessage[]>([]);
 
   get history$() { return this._history$.asObservable().pipe(map(chats => chats.sort((a, b) => b.date.getTime() - a.date.getTime()))) }
-  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(map(res => res.sort((a, b) => a.date.getTime() - b.date.getTime()))) }
+  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(
+    // map(res => res.sort((a, b) => a.date.getTime() - b.date.getTime())),
+    tap(res => console.log('discussion updated:', res))
+  ) }
 
   constructor(private http: HttpClient) {
     this.getChatHistory().subscribe(res => this._history$.next(res));

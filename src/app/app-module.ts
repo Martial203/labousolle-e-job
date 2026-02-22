@@ -29,7 +29,10 @@ import { authInterceptor } from './core/interceptors/auth/auth-interceptor';
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          darkModeSelector: 'false'
+        }
       }
     }),
     provideHttpClient(

@@ -20,15 +20,15 @@
       </div>
       <div class="relative">
         <div class="absolute flex flex-row items-center gap-4 p-4 rounded shadow-xl top-10 lg:-left-10 bg-secondary w-fit">
-          <figure class="p-4 bg-primary"><img src="/assets/icons/briefcase-duotone2.png" alt=""></figure>
+          <figure class="p-4 bg-primary"><img src="assets/icons/briefcase-duotone2.png" alt=""></figure>
           <div>
             <strong>175 354</strong>
             <p>Emploi en direct</p>
           </div>
         </div>
-        <figure class="p-4 banner"><img src="/assets/images/home-banner.png" alt=""></figure>
+        <figure class="p-4 banner"><img src="assets/images/home-banner.png" alt=""></figure>
         <div class="absolute flex flex-row items-center gap-4 p-4 rounded shadow-xl lg:-right-10 -bottom-8 justify-self-end bg-secondary w-fit">
-          <figure class="p-4 bg-muted-icon-background"><img src="/assets/icons/briefcase-duotone1.png" alt=""></figure>
+          <figure class="p-4 bg-muted-icon-background"><img src="assets/icons/briefcase-duotone1.png" alt=""></figure>
           <div>
             <strong>7 354</strong>
             <p>Emploi récents</p>
@@ -82,7 +82,7 @@
     <div *ngIf="categories$|async as categories" class="grid grid-cols-1 lg:grid-cols-4 gap-x-6 gap-y-8">
       <div *ngFor="let category of categories|slice:0:(showAllCategories ? categories.length : 4)" class="flex flex-row items-center justify-start gap-4 p-4 rounded hover:scale-[1.01] hover:shadow-xl hover:cursor-pointer group">
         <figure class="p-4 rounded bg-primary bg-opacity-15 w-fit group-hover:bg-opacity-100">
-          <img class="group-hover:brightness-200 group-hover:contrast-200" src="/assets/icons/pen-nib-duotone.png" alt="">
+          <img class="group-hover:brightness-200 group-hover:contrast-200" src="assets/icons/pen-nib-duotone.png" alt="">
         </figure>
         <div>
           <h2>{{ category.name }}</h2>
