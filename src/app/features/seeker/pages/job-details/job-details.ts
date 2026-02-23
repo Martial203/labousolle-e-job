@@ -46,8 +46,10 @@ export class JobDetails {
     this.onShowDocUploadModal(false);
   }
 
-  onAdjustCV() {
-    this.router.navigateByUrl('/cv-builder')
+  onAdjustCV(title: string, companyName: string) {
+    this.router.navigate([`/cv-builder/${this.jobId}`], {
+      queryParams: { title: title, company: companyName }
+    })
   }
 
   apply(): void{

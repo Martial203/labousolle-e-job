@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-message-input';
 import { TemplatePicker } from './pages/cv-builder/template-picker/template-picker';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PaymentCallback } from './pages/payment-callback/payment-callback';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     Testimony,
     SearchBar,
     ChatMessageInput,
-    TemplatePicker
+    TemplatePicker,
+    PaymentCallback
   ],
   imports: [
     CommonModule,

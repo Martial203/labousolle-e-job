@@ -1,7 +1,7 @@
 <div class="flex flex-row items-center w-full h-20 gap-4 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl h-fit">
   <p-button icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentInput.click()" (mouseover)="op.toggle($event)"></p-button>
   <input #attachmentInput class="hidden" type="file" accept=".pdf, .png, .jpg" (change)="uploadAttachment($event)">
-  <textarea pTextarea class="flex-1 py-1 bg-transparent" style="border: none; box-shadow: 0;" rows="1"  name="" id="" [(ngModel)]="text"></textarea>
+  <textarea pTextarea class="flex-1 py-1 bg-transparent" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text"></textarea>
   <div class="flex flex-row items-center gap-4 p-2">
     <button pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
     <p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [showHeader]="false">
@@ -15,7 +15,7 @@
           <button pButton type="button" icon="pi pi-stop" [rounded]="true" severity="info" label="Stop talking" (click)="stopSpeech(); visible = false"></button>
       </div>
     </p-dialog>
-    <button pButton [rounded]="true" severity="info" icon="pi pi-arrow-up" (click)="onSend()"></button>
+    <button pButton [rounded]="true" [disabled]="text.length<minLength" severity="info" icon="pi pi-arrow-up" (click)="onSend()"></button>
   </div>
 </div>
 

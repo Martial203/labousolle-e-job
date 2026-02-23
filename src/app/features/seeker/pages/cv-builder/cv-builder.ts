@@ -22,6 +22,9 @@ export class CvBuilder {
   documentType!: DocumentType;
   discussion$!: Observable<ChatMessage[]>;
 
+  jobId!: number;
+  jobDetails!: { title: string, company: string };
+
   selectedDiscussion!: string;
   messageProcessing: ProcessState = ProcessState.INACTIVE;
 
@@ -37,10 +40,14 @@ export class CvBuilder {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.documentType = params['document'];
+      this.jobDetails = { title: params['title'], company: params['company'] }
+      console.log(this.jobDetails);
     });
     this.chatHistory$ = this.chatService.history$.pipe(tap(a => console.log(a)));
     this.user = this.authService.user;
     this.discussion$ = this.chatService.discussion$;
+    const jobId = this.route.snapshot.params['jobId'];
+    if(jobId) this.jobId = +jobId;
   }
 
   ngAfterViewInit(): void {
@@ -73,6 +80,11 @@ export class CvBuilder {
       error: (err) => this.messageProcessing = ProcessState.ERROR,
       complete: () => this.scrollToBottom()
     });
+  }
+
+  onDiscussionCreated(discussionId: string): void{
+    this.displayTemplatePicker = false;
+    this.selectChat(discussionId);
   }
 
   groupChatsByDate(chats: ChatHeader[]): ChatGroupedByPeriod {
@@ -112,6 +124,6 @@ export class CvBuilder {
     setTimeout(() => {
       const el = this.scrollContainer.nativeElement;
       el.scrollTop = el.scrollHeight;
-    });
+    }, 50);
   }
 }

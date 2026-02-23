@@ -4,6 +4,7 @@ import { Home } from './pages/home/home';
 import { JobsList } from './pages/jobs-list/jobs-list';
 import { JobDetails } from './pages/job-details/job-details';
 import { CvBuilder } from './pages/cv-builder/cv-builder';
+import { PaymentCallback } from './pages/payment-callback/payment-callback';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'jobs/:id', component: JobDetails },
   { path: 'cv-builder', component: CvBuilder },
   { path: 'cv-builder/:jobId', component: CvBuilder },
+  { path: 'payment-callback', component: PaymentCallback }
 ];
 
 @NgModule({

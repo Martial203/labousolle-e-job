@@ -76,7 +76,7 @@ export class ChatService {
     );
   }
 
-  getCVTemplates(): Observable<any[]> {
+  getCVTemplates(): Observable<DocumentTemplate[]> {
     const params = new HttpParams();
     params.set('language', 'fr');
     return this.http.get<any[]>(`${environment.apiUrl}/ai-agent/cv-templates/`, { params }).pipe(
@@ -84,16 +84,16 @@ export class ChatService {
     );
   }
 
-  initChat(documentType: 'CV'|'LETTER', templateId: number, job_id?: number): Observable<any> {
-    const body = {
+  initChat(documentType: 'CV'|'LETTER', templateId: number, jobId?: number): Observable<ChatHeader> {
+    const body: { [key: string]: string|number } = {
       language: "fr",
       document_type: documentType,
-      template_id: templateId,
-      job_id: job_id
+      template_id: templateId
     };
+    if(jobId) body['job_id'] = jobId;
     return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body).pipe(
-      tap(res => {
-        const chat = this.mapChatHistory([res])[0];
+      map(res => this.mapChatHistory([res])[0]),
+      tap(chat => {
         this._history$.next([...this._history$.value, chat]);
         this._discussion$.next([])
       })

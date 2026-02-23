@@ -8,6 +8,7 @@ import { Observable, tap } from 'rxjs';
 interface Template {
   type: DocumentType;
   templateId: number;
+  createdDiscussionId: string;
 }
 
 @Component({
@@ -21,7 +22,7 @@ export class TemplatePicker {
   @Input() jobId!: number|undefined;
   @Input() selectedType: DocumentType = DocumentType.CV;
 
-  @Output() result: EventEmitter<Template> = new EventEmitter<Template>();
+  @Output() result: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   selectedTemplate: any;
@@ -42,6 +43,7 @@ export class TemplatePicker {
   ngOnInit(): void {
     this.cvTemplates$ = this.chatService.getCVTemplates().pipe(tap(() => this.cvLoading = false));
     this.documents$ = this.chatService.getLetterTemplates().pipe(tap(() => this.letterLoading = false));
+    this.selectedType = DocumentType.CV;
   }
 
   selectTemplate(template: any) {
@@ -53,12 +55,13 @@ export class TemplatePicker {
   }
 
   onSubmit() {
-    if (this.selectedTemplate) {
+    if(this.selectedTemplate) {
       this.processState = ProcessState.LOADING;
       this.chatService.initChat(this.selectedType, this.selectedTemplate.id, this.jobId).subscribe({
         next: (res) => {
           this.processState = ProcessState.SUCCESS;
-          setTimeout(() => this.result.emit({ type: this.selectedType, templateId: this.selectedTemplate.id }), 2000);          
+          // setTimeout(() => this.result.emit({ type: this.selectedType, templateId: this.selectedTemplate.id, createdDiscussionId: res.id }), 2000);
+          setTimeout(() => this.result.emit(res.id), 2000);
         },
         error: (err) => {
           this.processState = ProcessState.ERROR;

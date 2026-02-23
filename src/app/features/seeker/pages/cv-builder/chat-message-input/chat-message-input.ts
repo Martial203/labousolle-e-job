@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageInput } from '../../../../../core/models/chat/chat';
 
 @Component({
@@ -13,6 +13,7 @@ export class ChatMessageInput {
   visible: boolean = false;
   attachment!: File;
 
+  @Input() minLength: number = 10;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
 
   constructor() {

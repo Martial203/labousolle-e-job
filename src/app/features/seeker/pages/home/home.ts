@@ -4,6 +4,7 @@ import { JobService } from '../../../../core/services/job/job.service';
 import { Category } from '../../../../core/models/category/category';
 import { Job } from '../../../../core/models/job/job';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,7 @@ export class Home {
 
   showAllCategories: boolean = false;
 
-  constructor(private authService: AuthService, private jobService: JobService) {}
+  constructor(private authService: AuthService, private jobService: JobService, private router: Router) { }
 
   ngOnInit(): void {
     this.recommendedJobs$ = this.jobService.getRecommendedJobs();
@@ -31,7 +32,7 @@ export class Home {
     this.recentJobs$ = this.jobService.getRecentJobs();
     this.categories$ = this.jobService.categories$;
     this.userInterests$ = this.authService.getProfileInterests();
-    
+
     this.responsiveOptions = [
       {
         breakpoint: '1400px',
@@ -53,8 +54,12 @@ export class Home {
         numVisible: 1,
         numScroll: 1
       }
-  ]
-}
+    ]
+  }
+
+  onSearch(): void {
+    this.router.navigateByUrl('/jobs')
+  }
 
 
 }

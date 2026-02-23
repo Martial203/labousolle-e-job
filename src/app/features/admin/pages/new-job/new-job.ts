@@ -107,8 +107,6 @@ export class NewJob {
     console.log(value)
     if (!this.selectedFile) return;
     value.coverImage = this.selectedFile;
-    value.categoryId = value.categoryId.value;
-    value.companyId = value.companyId.value;
     const request: Observable<any> = this.activeJob ? this.jobService.updateAJob(this.activeJob.id, value) : this.jobService.createJob(value);
     request.subscribe({
       next: (job) => {

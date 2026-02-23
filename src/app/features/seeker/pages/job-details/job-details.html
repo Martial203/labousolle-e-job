@@ -109,7 +109,7 @@
       <ng-template #closeicon>
         <i class="relative pi pi-times-circle bottom-2.5"></i>
       </ng-template>
-      <p-button class="relative mb-2 text-secondary" icon="pi pi-arrow-right" severity="info" iconPos="bottom" label="Adapter mon cv et ma lettre de motivation à cette offre" (click)="onAdjustCV()"></p-button>
+      <p-button class="relative mb-2 text-secondary" icon="pi pi-arrow-right" severity="info" iconPos="bottom" label="Adapter mon cv et ma lettre de motivation à cette offre" (click)="onAdjustCV(job.job.title, job.company.name)"></p-button>
       <div class="mt-2">
         <p-message *ngIf="state===PROCESS_STATES.SUCCESS" severity="success" text="Vous pouvez postuler !" class="w-full mb-4"></p-message>
         <p-message *ngIf="state===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer ultérieurement." class="w-full mb-4"></p-message>

@@ -13,7 +13,7 @@
               <i class="mr-4 text-primary pi pi-map-marker"></i>
               <input class="h-full text-sm border-none outline-none" type="text" name="search-job" id="search-job" placeholder="Votre emplacement">
             </div>
-            <p-button class="mx-auto border-none lg:mx-0" severity="info">Rechercher</p-button>
+            <p-button class="mx-auto border-none lg:mx-0" severity="info" (click)="onSearch()">Rechercher</p-button>
           </div>
           <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest.name }}, </a> etc</p>
         </div>
