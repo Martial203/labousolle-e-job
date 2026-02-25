@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../../../core/services/payment/payment.service';
 
 export interface Payment {
@@ -29,7 +29,7 @@ export class PaymentCallback {
   paymentMethodDisplay!: string;
   formattedDate!: string;
 
-  constructor(private paymentService: PaymentService, private route: ActivatedRoute) {}
+  constructor(private paymentService: PaymentService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const reference = this.route.snapshot.queryParams['reference'];
@@ -41,6 +41,7 @@ export class PaymentCallback {
         this.processState = ProcessState.SUCCESS;
         this.formatPaymentMethod();
         this.formatDate();
+        setTimeout(() => this.router.navigate(['/cv-builder']), 5000);
       },
       error: (err) => {
         console.error(err);

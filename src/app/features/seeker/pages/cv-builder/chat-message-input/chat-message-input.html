@@ -1,5 +1,8 @@
 <div class="flex flex-row items-center w-full h-20 gap-4 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl h-fit">
-  <p-button icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentInput.click()" (mouseover)="op.toggle($event)"></p-button>
+  <div class="relative {{ this.attachment ? 'rounded-full bg-primary bg-opacity-10' : '' }}">
+    <p-button icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentInput.click()" (mouseover)="op.toggle($event)"></p-button>
+    <p-badge *ngIf="this.attachment" class="absolute bottom-0.5 right-0.5" severity="success"></p-badge>
+  </div>
   <input #attachmentInput class="hidden" type="file" accept=".pdf, .png, .jpg" (change)="uploadAttachment($event)">
   <textarea pTextarea class="flex-1 py-1 bg-transparent" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text"></textarea>
   <div class="flex flex-row items-center gap-4 p-2">

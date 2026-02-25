@@ -34,6 +34,8 @@ import { DividerModule } from 'primeng/divider';
 import { PopoverModule } from 'primeng/popover';
 import { DrawerModule } from 'primeng/drawer';
 import { ImageModule } from 'primeng/image';
+import { BadgeModule } from 'primeng/badge';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 
 @NgModule({
   declarations: [],
@@ -74,7 +76,9 @@ import { ImageModule } from 'primeng/image';
     DividerModule,
     PopoverModule,
     DrawerModule,
-    ImageModule
+    ImageModule,
+    BadgeModule,
+    OverlayBadgeModule
   ]
 })
 export class PrimeNgModule { }
