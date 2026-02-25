@@ -193,7 +193,6 @@ export class JobService {
         const body = encodeURIComponent(res.body);
         const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
         const mail = window.open(mailtoUrl, '_blank');
-        console.log(mail)
       })
     )
   }

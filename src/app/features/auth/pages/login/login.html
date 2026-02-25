@@ -2,8 +2,9 @@
   <!-- Left Panel -->
   <div class="items-center justify-center hidden w-full p-8 text-white lg:w-5/12 bg-primary md:flex">
     <div class="text-center">
-      <h1 class="mb-4 text-4xl font-bold lg:text-5xl">hao ! tu es là</h1>
+      <h1 class="mb-4 text-4xl font-bold lg:text-5xl">{{ jobId ? 'Helloo !' : 'hao ! tu es là'}}</h1>
       <p class="text-lg lg:text-xl opacity-90">Nous sommes ravis de te revoir</p>
+      <p *ngIf="jobId" class="mt-2 text-lg lg:text-xl opacity-90">Connectes toi afin de pouvoir consulter les détails des offres d'emplois.</p>
     </div>
   </div>
   

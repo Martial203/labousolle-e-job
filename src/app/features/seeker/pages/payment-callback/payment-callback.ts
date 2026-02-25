@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../../../core/services/payment/payment.service';
+import { ChatService } from '../../../../core/services/chat/chat.service';
 
 export interface Payment {
   id: string;
@@ -29,7 +30,7 @@ export class PaymentCallback {
   paymentMethodDisplay!: string;
   formattedDate!: string;
 
-  constructor(private paymentService: PaymentService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private paymentService: PaymentService, private chatService: ChatService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const reference = this.route.snapshot.queryParams['reference'];
@@ -41,7 +42,7 @@ export class PaymentCallback {
         this.processState = ProcessState.SUCCESS;
         this.formatPaymentMethod();
         this.formatDate();
-        setTimeout(() => this.router.navigate(['/cv-builder']), 5000);
+        setTimeout(() => this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatService.getLastDiscussionId() } }), 3000);
       },
       error: (err) => {
         console.error(err);

@@ -3,13 +3,13 @@
     <p class="container px-16 mx-auto text-xl font-bold">Détails du poste</p>
   </div>
 
-  <main *ngIf="job$|async as job" class="container flex flex-col gap-12 px-16 pt-12 pb-16 mx-auto">
-    <div class="flex flex-row items-center justify-between">
-      <div class="flex flex-row items-center justify-start gap-4">
-        <figure class="overflow-hidden rounded-full size-24">
+  <main *ngIf="job$|async as job" class="container flex flex-col gap-12 px-4 pt-12 pb-16 mx-auto lg:px-16">
+    <div class="flex flex-col items-center justify-between lg:flex-row">
+      <div class="flex flex-col items-center justify-start gap-4 lg:flex-row">
+        <figure class="flex flex-row items-center justify-center overflow-hidden border rounded-full lg:border-none border-light-gray size-24">
           <img [src]="job.company.logo" class="object-cover w-full" [alt]="job.company.name">
         </figure>
-        <h1 class="text-3xl font-semibold">
+        <h1 class="mb-8 text-3xl font-semibold whitespace-nowrap lg:mb-0">
           {{ job.job.title }} 
           <span *ngIf="job.job.isFeatured" class="px-4 py-1 ml-6 text-sm text-red-300 bg-red-100 rounded-full">En vedette</span>
         </h1>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="flex flex-row gap-6">
+    <div class="flex flex-col gap-6 lg:flex-row">
       <div class="flex-1">
         <figure class="flex flex-row items-center justify-center w-full mb-12 overflow-hidden max-h-[35em] rounded-md">
           <img [src]="job.job.coverImage" class="object-cover w-full" [alt]="job.job.title">
@@ -94,9 +94,9 @@
 
   <section class="pb-20">
     <div>
-      <h1 class="container px-16 pb-2 mx-auto text-3xl font-semibold">Emplois connexes</h1>
+      <h1 class="container px-4 pb-2 mx-auto text-3xl font-semibold lg:px-16">Emplois connexes</h1>
     </div>
-    <div class="container px-16 py-16 mx-auto">
+    <div class="container px-4 py-16 mx-auto lg:px-16">
       <app-job-cards-list [jobs]="job.similarJobs"></app-job-cards-list>
     </div>
     

@@ -16,7 +16,6 @@ export class ChatService {
 
   get history$() { return this._history$.asObservable().pipe(map(chats => chats.sort((a, b) => b.date.getTime() - a.date.getTime()))) }
   get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(
-    // map(res => res.sort((a, b) => a.date.getTime() - b.date.getTime())),
     tap(res => console.log('discussion updated:', res))
   ) }
 
@@ -33,7 +32,10 @@ export class ChatService {
   getChatMessages(chatId: string): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(`${environment.apiUrl}/ai-agent/conversations/${chatId}/`).pipe(
       map((messages: any) => this.mapChatMessages(messages.messages)),
-      tap(messages => this._discussion$.next(messages))
+      tap(messages => {
+        this._discussion$.next(messages);
+        this.setLastDiscussionId(chatId);
+      })
     );
   }
 
@@ -42,9 +44,6 @@ export class ChatService {
   }
 
   sendAMessage(discussionId: string, message: string, file?: File): Observable<ChatMessage>{
-    const body: { [ key: string ]: any } = {
-      content: message
-    }
     const data = new FormData();
     data.append('content', message);
     if(file) data.append('file', file);
@@ -57,37 +56,9 @@ export class ChatService {
     })
     return this.http.post<ChatMessage>(`${environment.apiUrl}/ai-agent/conversations/${discussionId}/messages/`, data).pipe(
       tap((res: any) => {
-
-        const paymentMessage = `
-          <div class="ai-message payment max-w-[280px] sm:max-w-xs my-2 rounded-2xl overflow-hidden border border-indigo-100 bg-white shadow-md">
-            <div class="bg-indigo-50 px-4 py-2 flex items-center border-b border-indigo-100">
-              <span class="text-indigo-600 text-sm italic">✨ Document prêt</span>
-            </div>
-
-            <div class="p-4">
-              <p class="text-gray-700 text-[13px] leading-snug mb-3">
-                Votre CV est finalisé ! Pour le télécharger, un petit café de <span class="font-bold text-indigo-600">500 XAF</span> est demandé.
-              </p>
-              
-              <a href="${res.payment_url ?? ''}" 
-                target="_self" 
-                class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-sm">
-                💳 Payer & Télécharger
-              </a>
-              
-              <div class="mt-2 flex items-center justify-center space-x-1 opacity-60">
-                <svg class="h-3 w-3 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="text-[10px] text-gray-500">Paiement sécurisé via NotchPay</span>
-              </div>
-            </div>
-          </div>
-          `;
-
         const message: ChatMessage = {
           chatId: discussionId,
-          content: !res.payment_required ? res.content : paymentMessage,
+          content: !res.payment_required ? res.content : this.buildPaymentMessage(res.payment_url ?? ''),
           sender: "agent",
           date: new Date(res.timestamp),
           document: res.document ? this.mapDocument(res.document) : undefined
@@ -135,6 +106,15 @@ export class ChatService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
+  getLastDiscussionId(): string{
+    return localStorage.getItem('last-chat') ?? '';
+  }
+
+
+  private setLastDiscussionId(chatId: string): void{
+    localStorage.setItem('last-chat', chatId);
+  }
+
   private mapToDocumentTemplate(documents: any[]): DocumentTemplate[]{
     return documents.map(document => ({
       id: document.id,
@@ -161,7 +141,7 @@ export class ChatService {
     messages = messages.filter(message => message.role !== "system");
     return messages.map(message => ({
       chatId: message.session_id,
-      content: message.content,
+      content: !message.payment_required ? message.content : this.buildPaymentMessage(message.payment_url ?? ''),
       sender: message.role==="assistant" ? "agent" : "user",
       date: new Date(message.timestamp),
       document: message.document ? this.mapDocument(message.document) : undefined
@@ -181,6 +161,44 @@ export class ChatService {
       name: document.file_name,
       url: document.download_url
     }
+  }
+
+  private buildPaymentMessage(paymentUrl: string): string{
+    return `
+      <div class="ai-message payment max-w-[280px] my-3 rounded-2xl 
+                  border border-blue-100 bg-white shadow-sm">
+
+        <div class="p-4 space-y-3">
+
+          <p class="text-sm text-gray-800 font-medium">
+            ✅ Votre document est prêt !
+          </p>
+
+          <p class="text-sm text-gray-600">
+            Pour le recevoir, un paiement de 
+            <span class="font-semibold text-blue-600">500 XAF</span> est requis.
+          </p>
+
+          <a 
+            id="payment"
+            href="${paymentUrl}" 
+            target="_self"
+            class="block w-full text-center px-4 py-2.5 
+                  rounded-xl text-sm font-semibold 
+                  text-white bg-blue-600 
+                  hover:bg-blue-700 
+                  transition-colors duration-200"
+          >
+            💳 Payer 500 XAF
+          </a>
+
+          <p class="text-xs text-gray-400 text-center">
+            Après le paiement, votre document sera automatiquement envoyé dans cette conversation.
+          </p>
+
+        </div>
+      </div>
+    `;
   }
 
 }

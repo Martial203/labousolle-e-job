@@ -14,6 +14,7 @@ export class ChatMessageInput {
   attachment!: File;
 
   @Input() minLength: number = 10;
+  @Input() isChatSelected: boolean = false;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
 
   constructor() {

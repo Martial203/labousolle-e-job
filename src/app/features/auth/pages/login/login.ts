@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { LoginCredentials } from '../../models/login-credentials/login-credentials';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
@@ -12,18 +12,26 @@ import { ProcessState } from '../../../../core/enums/process-state/process-state
 })
 export class Login {
 
-  readonly PROCESS_STATES = ProcessState;
+  jobId!: string;
 
+  readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
   
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const val = this.route.snapshot.queryParams['jobId'];
+    if(val) this.jobId = val;
+  }
 
   onSubmit(credentials: LoginCredentials): void {
     this.processState = ProcessState.LOADING;
     this.authService.login(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
-        setTimeout(() => this.router.navigateByUrl('/'), 2000);
+        setTimeout(() => {
+          this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
+        }, 2000);
       },
       error: (err) => {
         console.log(err);

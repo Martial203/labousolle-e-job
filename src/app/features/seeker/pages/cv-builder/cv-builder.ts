@@ -8,6 +8,7 @@ import { ProcessState } from '../../../../core/enums/process-state/process-state
 import { User } from '../../../../core/models/user/user';
 import { MessageInput } from '../../../../core/models/chat/chat';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { JobService } from '../../../../core/services/job/job.service';
 
 @Component({
   selector: 'app-cv-builder',
@@ -33,17 +34,21 @@ export class CvBuilder {
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
 
+  loadingApplication: boolean = false;
+  isChatSelected: boolean = false;
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(private chatService: ChatService, private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(private chatService: ChatService, private jobService: JobService, private authService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.documentType = params['document'];
       this.jobDetails = { title: params['title'], company: params['company'] }
-      console.log(this.jobDetails);
+      const chatId = params['chatId'];
+      this.selectChat(chatId);
     });
-    this.chatHistory$ = this.chatService.history$.pipe(tap(a => console.log(a)));
+    this.chatHistory$ = this.chatService.history$;
     this.user = this.authService.user;
     this.discussion$ = this.chatService.discussion$;
     const jobId = this.route.snapshot.params['jobId'];
@@ -65,7 +70,10 @@ export class CvBuilder {
   selectChat(id: string): void {
     this.processState = ProcessState.LOADING;
     this.chatService.getChatMessages(id).subscribe({
-      next: () => this.processState = ProcessState.SUCCESS,
+      next: () => {
+        this.processState = ProcessState.SUCCESS;
+        this.isChatSelected = true;
+      },
       error: () => this.processState = ProcessState.ERROR,
       complete: () => this.scrollToBottom()
     });
@@ -117,6 +125,23 @@ export class CvBuilder {
     });
 
     return grouped;
+  }
+
+  onApply(): void{
+    this.loadingApplication = true;
+    this.jobService.applyToJob(this.jobId).subscribe({
+      error: () => alert('Une erreur est survenue, veuillez ressayer'),
+      complete: () => this.loadingApplication = false
+    });
+  }
+
+  isCreatedDocument(messages: ChatMessage[]): boolean{
+    for(let message of messages){
+      if(message.document){
+        return true;
+      }
+    }
+    return false;
   }
 
   private scrollToBottom(): void {
