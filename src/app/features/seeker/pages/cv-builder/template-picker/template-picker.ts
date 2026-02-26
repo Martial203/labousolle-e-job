@@ -21,6 +21,8 @@ export class TemplatePicker {
 
   @Input() jobId!: number|undefined;
   @Input() selectedType: DocumentType = DocumentType.CV;
+  @Input() change!: DocumentType;
+  @Input() chatId!: string;
 
   @Output() result: EventEmitter<string> = new EventEmitter<string>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
@@ -43,7 +45,7 @@ export class TemplatePicker {
   ngOnInit(): void {
     this.cvTemplates$ = this.chatService.getCVTemplates().pipe(tap(() => this.cvLoading = false));
     this.documents$ = this.chatService.getLetterTemplates().pipe(tap(() => this.letterLoading = false));
-    this.selectedType = DocumentType.CV;
+    this.selectedType = this.change ?? DocumentType.CV;
   }
 
   selectTemplate(template: any) {
@@ -57,16 +59,27 @@ export class TemplatePicker {
   onSubmit() {
     if(this.selectedTemplate) {
       this.processState = ProcessState.LOADING;
-      this.chatService.initChat(this.selectedType, this.selectedTemplate.id, this.jobId).subscribe({
-        next: (res) => {
-          this.processState = ProcessState.SUCCESS;
-          // setTimeout(() => this.result.emit({ type: this.selectedType, templateId: this.selectedTemplate.id, createdDiscussionId: res.id }), 2000);
-          setTimeout(() => this.result.emit(res.id), 2000);
-        },
-        error: (err) => {
-          this.processState = ProcessState.ERROR;
-        }
-      })
+      if(this.chatId){
+        this.chatService.changeTemplate(this.chatId, this.selectedTemplate.id).subscribe({
+          next: () => {
+            this.processState = ProcessState.SUCCESS;
+            setTimeout(() => this.result.emit(), 2000);
+          },
+          error: (err) => {
+            this.processState = ProcessState.ERROR;
+          }
+        })
+      }else{
+        this.chatService.initChat(this.selectedType, this.selectedTemplate.id, this.jobId).subscribe({
+          next: (res) => {
+            this.processState = ProcessState.SUCCESS;
+            setTimeout(() => this.result.emit(res.id), 2000);
+          },
+          error: (err) => {
+            this.processState = ProcessState.ERROR;
+          }
+        })
+      }
     }
   }
 

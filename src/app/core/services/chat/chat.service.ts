@@ -47,10 +47,12 @@ export class ChatService {
     const data = new FormData();
     data.append('content', message);
     if(file) data.append('file', file);
-    console.log(data);
+    console.log(message)
+    let additionnalMessage = ''
+    if(file) additionnalMessage = '\n\n📎 [Fichier joint: '+file.name+']';
     this.addMessage({
       chatId: discussionId,
-      content: message,
+      content: `${message} ${additionnalMessage}`,
       sender: "user",
       date: new Date()
     })
@@ -100,6 +102,13 @@ export class ChatService {
         this._discussion$.next([])
       })
     );
+  }
+
+  changeTemplate(chatId: string, templateId: string): Observable<void>{
+    const body = {
+      template_id: templateId
+    }
+    return this.http.patch<any>(`${environment.apiUrl}/ai-agent/conversations/${chatId}/`, body)
   }
 
   fetchDocument(url: string): Observable<any> {

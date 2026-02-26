@@ -1,12 +1,12 @@
 <div class="container flex flex-row w-full h-full px-6 pb-10 mx-auto lg:px-16">
   <ng-container *ngIf="chatHistory$|async as chatHistory">
     <aside class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6 hidden lg:block">
-      <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="displayTemplatePicker = true"
-        (delete)="deleteChat($event)" (select)="selectChat($event)"></app-chat-history>
+      <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="onNewChat()"
+        (delete)="deleteChat($event)" (select)="selectChat($event)" (changeTemplate)="onSetChangeTemplateMode($event)"></app-chat-history>
     </aside>
     <p-drawer [(visible)]="displayChatHistory" header=" ">
-      <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="displayTemplatePicker = true"
-        (delete)="deleteChat($event)" (select)="selectChat($event)"></app-chat-history>
+      <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="onNewChat()"
+        (delete)="deleteChat($event)" (select)="selectChat($event)" (changeTemplate)="onSetChangeTemplateMode($event)"></app-chat-history>
     </p-drawer>
   </ng-container>
   <section class="w-full px-2 overflow-auto lg:px-6">
@@ -88,7 +88,7 @@
 </div>
 
 <p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true"
-  styleClass="w-[90%] lg:!w-1/2">
-  <app-template-picker [selectedType]="documentType" [jobId]="jobId" (cancel)="displayTemplatePicker=false"
+  styleClass="w-[90%] lg:!w-1/2" (onShow)="templatePicker.selectedType = toChangeDocumentType ? toChangeDocumentType : DOCUMENT_TYPES.CV" (onHide)="onClearChangeSelection()">
+  <app-template-picker #templatePicker [selectedType]="documentType" [jobId]="jobId" (cancel)="displayTemplatePicker=false" [chatId]="chatId" [change]="toChangeDocumentType"
     (result)="onDiscussionCreated($event)"></app-template-picker>
 </p-dialog>

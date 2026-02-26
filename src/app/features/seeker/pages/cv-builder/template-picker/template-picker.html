@@ -9,6 +9,7 @@
     <!-- CV/Motivation Letter Selector -->
     <div class="flex flex-col gap-3 mb-10 lg:flex-row">
       <button 
+        *ngIf="change===undefined || change === DOCUMENT_TYPES.CV"
         pButton
         type="button" 
         label="CV (1000 XAF)" 
@@ -17,6 +18,7 @@
         class="block flex-1 px-8 py-3 font-semibold transition-all duration-300 rounded-lg {{ selectedType == DOCUMENT_TYPES.CV ? 'selected' : ''}}" [outlined]="selectedType!==DOCUMENT_TYPES.CV" [icon]="selectedType==DOCUMENT_TYPES.CV ? 'pi pi-check' : ''">
       </button>
       <button 
+        *ngIf="change===undefined || change === DOCUMENT_TYPES.LETTER"
         pButton
         type="button" 
         label="Lettre de Motivation (1000 XAF)" 
@@ -45,8 +47,8 @@
     </div>
 
     <div class="mt-6">
-      <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Conversation initialisée avec succès!" class="w-full mb-4"></p-message>
-      <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue lors de l'initialisation de la conversation. Veuillez ressayer." class="w-full mb-4"></p-message>
+      <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" [text]="chatId ? 'Modèle de document mis à jour avec succès !' : 'Conversation initialisée avec succès!'" class="w-full mb-4"></p-message>
+      <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" [text]="chatId ? 'Une erreur est survenue lors de la mise à jour du modèle, veuillez ressayer...' : 'Une erreur est survenue lors de l\'initialisation de la conversation. Veuillez ressayer.'" class="w-full mb-4"></p-message>
     </div>
 
     <!-- Action Buttons -->

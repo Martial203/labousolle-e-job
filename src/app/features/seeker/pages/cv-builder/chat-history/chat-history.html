@@ -12,6 +12,7 @@
         <ul>
           <li *ngFor="let discussion of chatHistory.today; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
+            <button class="hidden group-hover:block" pTooltip="Changer de template" (click)="onChangeTemplate(discussion.id, discussion.documentType)"><i class="pi pi-sync"></i></button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>
         </ul>
@@ -29,6 +30,7 @@
         <ul>
           <li *ngFor="let discussion of chatHistory.lastWeek; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
+            <button class="hidden group-hover:block" pTooltip="Changer de template" (click)="onChangeTemplate(discussion.id, discussion.documentType)"><i class="pi pi-sync"></i></button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>
         </ul>
@@ -46,6 +48,7 @@
         <ul>
           <li *ngFor="let discussion of chatHistory.lastMonth; let i = index" class="flex flex-row justify-between w-full px-0 lg:px-2 py-1 hover:bg-light-blue group {{ selectedChat === discussion.id ? 'selected' : '' }}">
             <button class="truncate" (click)="onSelect(discussion.id)">{{ discussion.title }} ({{ discussion.documentType }})</button>
+            <button class="hidden group-hover:block" pTooltip="Changer de template" (click)="onChangeTemplate(discussion.id, discussion.documentType)"><i class="pi pi-sync"></i></button>
             <button class="hidden group-hover:block" (click)="onDelete(discussion.id)"><i class="pi pi-times"></i></button>
           </li>
         </ul>

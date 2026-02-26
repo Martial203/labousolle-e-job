@@ -18,6 +18,7 @@
           <button pButton type="button" icon="pi pi-stop" [rounded]="true" severity="info" label="Stop talking" (click)="stopSpeech(); visible = false"></button>
       </div>
     </p-dialog>
+        
     <button pButton [rounded]="true" [disabled]="text.length<minLength" severity="info" icon="pi pi-arrow-up" (click)="onSend()"></button>
   </div>
 </div>

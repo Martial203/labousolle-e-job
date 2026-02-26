@@ -1,3 +1,5 @@
+import { DocumentType } from "../../enums/document-type/document-type";
+
 export class ChatHeader {
   id!: string;
   title!: string;

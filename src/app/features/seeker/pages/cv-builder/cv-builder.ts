@@ -34,8 +34,13 @@ export class CvBuilder {
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
 
+  readonly DOCUMENT_TYPES = DocumentType;
+
   loadingApplication: boolean = false;
   isChatSelected: boolean = false;
+
+  chatId!: string;
+  toChangeDocumentType!: DocumentType;
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
@@ -63,11 +68,29 @@ export class CvBuilder {
     this.displayChatHistory = !this.displayChatHistory;
   }
 
+  onSetChangeTemplateMode(value: { chatId: string, documentType: DocumentType }): void{
+    this.chatId = value.chatId;
+    this.toChangeDocumentType = value.documentType;
+    this.displayTemplatePicker = true;
+  }
+
+  onNewChat(): void{
+    this.displayTemplatePicker = true;
+    this.onClearChangeSelection();
+  }
+
+  onClearChangeSelection(): void{
+    console.log('Hided')
+    this.chatId = undefined!;
+    this.toChangeDocumentType = undefined!;
+  }
+
   deleteChat(id: string): void {
     this.chatService.deleteChat(id);
   }
 
   selectChat(id: string): void {
+    if(id===undefined || id===null || this.selectedDiscussion===id) return;
     this.processState = ProcessState.LOADING;
     this.chatService.getChatMessages(id).subscribe({
       next: () => {
@@ -78,6 +101,7 @@ export class CvBuilder {
       complete: () => this.scrollToBottom()
     });
     this.selectedDiscussion = id;
+    this.onClearChangeSelection();
   }
 
   sendMessage(message: MessageInput): void{
