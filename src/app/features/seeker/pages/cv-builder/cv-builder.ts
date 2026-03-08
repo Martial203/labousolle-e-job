@@ -18,6 +18,8 @@ import { JobService } from '../../../../core/services/job/job.service';
 })
 export class CvBuilder {
   displayTemplatePicker: boolean = false;
+  displayTestimonialDialog: boolean = false;
+  displayCvUploadDialog: boolean = false;
   displayChatHistory: boolean = false;
   chatHistory$!: Observable<ChatHeader[]>;
   documentType!: DocumentType;
@@ -37,10 +39,14 @@ export class CvBuilder {
   readonly DOCUMENT_TYPES = DocumentType;
 
   loadingApplication: boolean = false;
+  loadingAudit: boolean = false;
   isChatSelected: boolean = false;
 
   chatId!: string;
   toChangeDocumentType!: DocumentType;
+
+  tmpUploadedCvToAudit!: File|null;
+  tmpUploadedCvToPreview!: any;
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
@@ -48,7 +54,7 @@ export class CvBuilder {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.documentType = params['document'];
+      this.documentType = params['document'] ?? DocumentType.CV;
       this.jobDetails = { title: params['title'], company: params['company'] }
       const chatId = params['chatId'];
       this.selectChat(chatId);
@@ -151,9 +157,33 @@ export class CvBuilder {
     return grouped;
   }
 
+  onUploadCV(event: any): void{
+    this.tmpUploadedCvToAudit = event.target.files[0];
+    this.tmpUploadedCvToPreview = URL.createObjectURL(this.tmpUploadedCvToAudit!);
+  }
+
+  initCvAudit(): void{
+    this.loadingAudit = true;
+    if(this.tmpUploadedCvToAudit === undefined) return;
+    this.chatService.initCVAudit(this.tmpUploadedCvToAudit!, this.jobId).subscribe({
+      next: (res) => {
+        this.tmpUploadedCvToAudit = null;
+        this.tmpUploadedCvToPreview = null;
+        this.displayCvUploadDialog = false;
+        console.log(res)
+        this.selectChat(res.chatId);
+        console.log(this.selectedDiscussion)
+      },
+      error: err => alert(err),
+      complete: () => this.loadingAudit = false
+    })
+  }
+
   onApply(): void{
+    if(this.jobId==null) return;
     this.loadingApplication = true;
     this.jobService.applyToJob(this.jobId).subscribe({
+      next: () => setTimeout(() => this.displayTestimonialDialog = true, 10000),
       error: () => alert('Une erreur est survenue, veuillez ressayer'),
       complete: () => this.loadingApplication = false
     });

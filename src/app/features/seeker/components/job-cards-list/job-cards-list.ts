@@ -18,11 +18,7 @@ export class JobCardsList {
   ngOnInit(): void { }
 
   onSelectJob(jobId: number): void {
-    if(this.authService.user){
-      this.router.navigateByUrl(`/jobs/${jobId}`);
-    }else{
-      this.router.navigate(['/auth/login'], { queryParams: { jobId: jobId } })
-    }
+    this.router.navigateByUrl(`/jobs/${jobId}`);
   }
 
 }

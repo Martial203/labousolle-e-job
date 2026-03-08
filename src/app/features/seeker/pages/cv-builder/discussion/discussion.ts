@@ -1,7 +1,9 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ChatMessage } from '../../../../../core/models/chat/chat';
 import { ChatService } from '../../../../../core/services/chat/chat.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
+import { AuthService } from '../../../../../core/services/auth/auth.service';
+import { DocumentType } from '../../../../../core/enums/document-type/document-type';
 
 @Component({
   selector: 'app-discussion',
@@ -16,13 +18,24 @@ export class Discussion {
 
   @Input() messages!: ChatMessage[]
   @Input() typingState: ProcessState = ProcessState.INACTIVE;
+  @Input() documentType!: DocumentType;
   @Input() loadingMessages: boolean = false;
+  @Input() jobSelected: boolean = false;
+
+  @Output() apply: EventEmitter<void> = new EventEmitter<void>();
+
   @ViewChild('pdfViewer') pdfViewer!: any;
 
   displayDocumentPreview: boolean = false;
   pdfSrc!: any;
 
-  constructor(private chatService: ChatService) { }
+  get isPreview(): boolean { return this.messages.filter(message => message.document ? message.document.isPreview : false).length>0 }
+
+  constructor(private authService: AuthService, private chatService: ChatService) { }
+
+  ngOnInit(): void {
+    console.log(this.messages)
+  }
 
   download(url: string): void {
     this.processState = ProcessState.LOADING;
@@ -30,7 +43,7 @@ export class Discussion {
       next: (res: any) => {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(res);
-        link.download = 'document';
+        link.download = `${this.documentType}_${this.authService.user.firstName} ${this.authService.user.name}_${new Date().toLocaleDateString()}`;
         link.click();
         this.processState = ProcessState.SUCCESS;
       },
@@ -55,5 +68,9 @@ export class Discussion {
         console.error(err);
       }
     });
+  }
+
+  onApply(): void {
+    this.apply.emit();
   }
 }

@@ -2,7 +2,7 @@
   <div *ngFor="let job of jobs" class="p-6 border rounded-lg border-input-border hover:shadow-lg hover:scale-[1.01] hover:border-primary hover:cursor-pointer group" (click)="onSelectJob(job.id)">
     <div class="flex flex-row justify-start gap-4 mb-5 items-around">
       <figure class="flex-row items-center justify-center w-16 h-16 overflow-hidden rounded-full bg-gray bg-opacity-10 flex-">
-        <img [src]="job.companyLogo" class="block object-contain w-full h-full">
+        <img [src]="job.companyLogo" class="block object-cover w-full h-full">
       </figure>
       <div class="flex flex-col justify-around">
         <h3 class="font-semibold text-md">{{ job.companyName }} <span class="px-4 py-0.5 text-xs text-red-300 bg-red-50 rounded-full ml-6">{{ job.isFeatured ? 'En vedette' : '' }}</span></h3>
@@ -13,12 +13,11 @@
       </div>
     </div>
     <div>
-      <h2 class="mb-2 text-lg font-semibold group-hover:text-primary">{{ job.title }}</h2>
+      <h2 class="mb-2 text-lg font-semibold group-hover:text-primary">{{ job.title | titlecase }}</h2>
       <div class="flex flex-row justify-between text-sm text-zinc-500">
-        <p>{{ job.jobType }}</p>
+        <p>{{ job.jobType | titlecase }}</p>
         <p>
           <i class="pi pi-calendar mr-0.5"></i>
-          <!-- 4 jours restants -->
            {{ job.expirationDate | date }}
         </p>
       </div>

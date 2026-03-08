@@ -3,15 +3,15 @@
     <p class="container px-16 mx-auto text-xl font-bold">Détails du poste</p>
   </div>
 
-  <main *ngIf="job$|async as job" class="container flex flex-col gap-12 px-4 pt-12 pb-16 mx-auto lg:px-16">
+  <main *ngIf="job$|async as job" class="container flex flex-col gap-12 px-4 pt-12 pb-16 mx-auto lg:px-16 {{ isUserAuth ? '' : 'blur pointer-events-none select-none' }}">
     <div class="flex flex-col items-center justify-between lg:flex-row">
       <div class="flex flex-col items-center justify-start gap-4 lg:flex-row">
         <figure class="flex flex-row items-center justify-center overflow-hidden border rounded-full lg:border-none border-light-gray size-24">
           <img [src]="job.company.logo" class="object-cover w-full" [alt]="job.company.name">
         </figure>
-        <h1 class="mb-8 text-3xl font-semibold whitespace-nowrap lg:mb-0">
+        <h1 class="mb-8 text-3xl font-semibold lg:mb-0">
           {{ job.job.title }} 
-          <span *ngIf="job.job.isFeatured" class="px-4 py-1 ml-6 text-sm text-red-300 bg-red-100 rounded-full">En vedette</span>
+          <span *ngIf="job.job.isFeatured" class="px-4 py-1 ml-6 text-sm text-red-300 bg-red-100 rounded-full whitespace-nowrap">En vedette</span>
         </h1>
       </div>
       <div>
@@ -144,14 +144,19 @@
     </div>
   </p-dialog>
 
-  <p-dialog [modal]="true" [(visible)]="isSuccessfullySubmittedModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">
+  <p-dialog #restrictedAccessDialog [modal]="true" [visible]="!isUserAuth" [style]="{ width: '27rem', background: '#ffffff' }">
     <ng-template #closeIcon>
       <i class="pi-times-circle"></i>
     </ng-template>
-    <div class="flex flex-col items-center gap-6 px-8 pb-8 text-center">
-      <img class="block w-20 mx-auto" src="assets/icons/check.png" alt="">
-      <h2 class="text-xl font-semibold">🎉 Bonne chance, vous avez postulé !!</h2>
-      <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio adipisci laudantium pariatur, maiores facere rem aspernatur molestias impedit ducimus laboriosam nisi libero dicta repudiandae ullam expedita distinctio iste molestiae autem.</p>
+    <div class="flex flex-col items-center gap-6 pb-8 text-center">
+      <i class="text-4xl text-primary pi pi-lock"></i>
+      <h2 class="text-2xl font-semibold">Accès restreint</h2>
+      <p class="text-gray">Connectes-toi pour accéder aux détails de cette offre d'emploi.</p>
+      <div class="flex w-full gap-4">
+        <button pButton class="flex-1" severity="secondary" label="Retour" (click)="goBack()"></button>
+        <button pButton class="flex-1" severity="info" label="Se connecter" (click)="goToLogin()"></button>
+      </div>
     </div>  
   </p-dialog>
+  
 </div>

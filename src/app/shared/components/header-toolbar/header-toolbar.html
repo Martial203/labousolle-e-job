@@ -43,14 +43,17 @@
   </ng-template>
 </p-popover>
 
- <p-drawer [(visible)]="displayDrawer" header="Laboussolle" position="right">
+ <p-drawer [(visible)]="displayDrawer" header="Laboussole" position="right">
     <nav class="container flex flex-col px-0 py-8 mx-auto text-sm bg-white">
       <ul class="flex flex-col justify-around gap-4 text-center">
         <a class="border-none drawer" routerLink="/" (click)="onToggleDrawer()"><li>Accueil</li></a>
         <a class="drawer" routerLink="/jobs" (click)="onToggleDrawer()"><li>Trouver un emploi</li></a>
         <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.CV }" (click)="onToggleDrawer()"><li>Mon cv pro</li></a>
         <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.LETTER }" (click)="onToggleDrawer()"><li>Ma lettre de motivation</li></a>
-        <button class="mt-4" pButton label="Me déconnecter" icon="pi pi-sign-out" severity="danger" (click)="onLogout()"></button>
+        <a class="drawer" routerLink="/auth/sign-up" (click)="onToggleDrawer()"><li>Créer mon compte</li></a>
+        <a class="drawer" href="https://laboussole-edu.com/profil/0" (click)="onToggleDrawer()"><li>Mes informations</li></a>
+        <button *ngIf="user" class="mt-4" pButton label="Me déconnecter" icon="pi pi-sign-out" severity="danger" (click)="onLogout()"></button>
+        <button *ngIf="!user" class="mt-4" pButton label="Me connecter" icon="pi pi-sign-out" severity="info" (click)="onLogout()"></button>
       </ul>
     </nav>
 </p-drawer>

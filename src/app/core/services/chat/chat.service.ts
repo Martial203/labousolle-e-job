@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { ChatHeader, ChatMessage, Attachment } from '../../models/chat/chat';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { DocumentTemplate } from '../../models/template/document-template';
 import { Cacheable } from 'ts-cacheable';
+import { DocumentType } from '../../enums/document-type/document-type';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +14,10 @@ export class ChatService {
   
   private _history$: BehaviorSubject<ChatHeader[]> = new BehaviorSubject<ChatHeader[]>([]);
   private _discussion$: BehaviorSubject<ChatMessage[]> = new BehaviorSubject<ChatMessage[]>([]);
+  private _cvTemplates: DocumentTemplate[] = [];
 
   get history$() { return this._history$.asObservable().pipe(map(chats => chats.sort((a, b) => b.date.getTime() - a.date.getTime()))) }
-  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable().pipe(
-    tap(res => console.log('discussion updated:', res))
-  ) }
+  get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable() }
 
   constructor(private http: HttpClient) {
     this.getChatHistory().subscribe(res => this._history$.next(res));
@@ -49,7 +49,12 @@ export class ChatService {
     if(file) data.append('file', file);
     console.log(message)
     let additionnalMessage = ''
-    if(file) additionnalMessage = '\n\n📎 [Fichier joint: '+file.name+']';
+    if(file) additionnalMessage = 
+    `
+      <div class="flex flex-col gap-2 py-3 rounded-lg bg-gray-50 mt-4 italic">
+        <p class="text-sm font-medium text-gray-700"> <span class="font-bold">Fichier joint:</span> ${file.name}</p>
+      </div>`
+    // '\n\n📎 [Fichier joint: '+file.name+']';
     this.addMessage({
       chatId: discussionId,
       content: `${message} ${additionnalMessage}`,
@@ -57,14 +62,19 @@ export class ChatService {
       date: new Date()
     })
     return this.http.post<ChatMessage>(`${environment.apiUrl}/ai-agent/conversations/${discussionId}/messages/`, data).pipe(
-      tap((res: any) => {
+      map((res: any) => {
         const message: ChatMessage = {
           chatId: discussionId,
-          content: !res.payment_required ? res.content : this.buildPaymentMessage(res.payment_url ?? ''),
+          // content: !res.payment_required ? res.content : this.buildPaymentMessage(res.payment_url ?? ''),
+          content: res.content,
           sender: "agent",
+          paymentUrl: res.payment_required ? res.payment_url : undefined,
           date: new Date(res.timestamp),
           document: res.document ? this.mapDocument(res.document) : undefined
-        } 
+        }
+        return message;
+      }),
+      tap(message => { 
         this.addMessage(message);
       })
     );
@@ -84,11 +94,12 @@ export class ChatService {
     const params = new HttpParams();
     params.set('language', 'fr');
     return this.http.get<any[]>(`${environment.apiUrl}/ai-agent/cv-templates/`, { params }).pipe(
-      map(documents => this.mapToDocumentTemplate(documents))
+      map(documents => this.mapToDocumentTemplate(documents)),
+      tap(res => this._cvTemplates = res)
     );
   }
 
-  initChat(documentType: 'CV'|'LETTER', templateId: number, jobId?: number): Observable<ChatHeader> {
+  initChat(documentType: 'CV'|'LETTER', templateId: string, jobId?: number): Observable<ChatHeader> {
     const body: { [key: string]: string|number } = {
       language: "fr",
       document_type: documentType,
@@ -102,6 +113,12 @@ export class ChatService {
         this._discussion$.next([])
       })
     );
+  }
+
+  initCVAudit(file: File, jobId?: number): Observable<ChatMessage> {
+    return this.initChat(DocumentType.CV, this._cvTemplates[0].id, jobId).pipe(
+      switchMap(chat => this.sendAMessage(chat.id, jobId ? "Fais moi un audit de ce CV pour l'offre d'emploi sélectionnée et optimisons le ensemble." : "Fais moi stp un audit de ce CV et optimisons le ensemble.", file))
+    )
   }
 
   changeTemplate(chatId: string, templateId: string): Observable<void>{
@@ -118,7 +135,6 @@ export class ChatService {
   getLastDiscussionId(): string{
     return localStorage.getItem('last-chat') ?? '';
   }
-
 
   private setLastDiscussionId(chatId: string): void{
     localStorage.setItem('last-chat', chatId);
@@ -150,7 +166,9 @@ export class ChatService {
     messages = messages.filter(message => message.role !== "system");
     return messages.map(message => ({
       chatId: message.session_id,
-      content: !message.payment_required ? message.content : this.buildPaymentMessage(message.payment_url ?? ''),
+      // content: !message.payment_required ? message.content : this.buildPaymentMessage(message.payment_url ?? ''),
+      content: message.content,
+      paymentUrl: message.payment_required ? message.payment_url : undefined,
       sender: message.role==="assistant" ? "agent" : "user",
       date: new Date(message.timestamp),
       document: message.document ? this.mapDocument(message.document) : undefined
@@ -168,7 +186,8 @@ export class ChatService {
       id: document.id,
       type: document.type,
       name: document.file_name,
-      url: document.download_url
+      url: document.download_url,
+      isPreview: document.is_preview
     }
   }
 

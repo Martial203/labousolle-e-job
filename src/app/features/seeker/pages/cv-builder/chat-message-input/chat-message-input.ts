@@ -11,11 +11,15 @@ export class ChatMessageInput {
   private recognition: any;
   text = '';
   visible: boolean = false;
-  attachment!: File;
+  attachment!: File|null;
+  attachmentPreview!: any;
 
-  @Input() minLength: number = 10;
+  @Input() minLength: number = 1;
   @Input() isChatSelected: boolean = false;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
+  @Output() uploadedFile: EventEmitter<File> = new EventEmitter<File>();
+
+  isOpen: boolean = true;
 
   constructor() {
     const SpeechRecognition =
@@ -44,10 +48,10 @@ export class ChatMessageInput {
       content: this.text,
       file: this.attachment ? this.attachment : undefined
     }
-    console.log(message);
     this.message.emit(message);
     this.text = '';
     this.attachment = null!;
+    this.attachmentPreview = null;
   }
 
   stop() {
@@ -64,7 +68,14 @@ export class ChatMessageInput {
 
   uploadAttachment(event: any): void{
     const files = event.target.files;
-    this.attachment = files[0]
-    console.log(this.attachment);
+    if(files.length===0) return;
+    this.attachment = files[0];
+    this.attachmentPreview = URL.createObjectURL(this.attachment!);
+    this.uploadedFile.emit(this.attachment!);
+  }
+
+  onRemoveAttachment(): void{
+    this.attachment = null;
+    this.attachmentPreview = null;
   }
 }

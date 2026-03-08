@@ -36,6 +36,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { ImageModule } from 'primeng/image';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [],
@@ -78,7 +79,8 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
     DrawerModule,
     ImageModule,
     BadgeModule,
-    OverlayBadgeModule
+    OverlayBadgeModule,
+    RatingModule
   ]
 })
 export class PrimeNgModule { }

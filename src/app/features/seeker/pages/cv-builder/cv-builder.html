@@ -6,7 +6,7 @@
     </aside>
     <p-drawer [(visible)]="displayChatHistory" header=" ">
       <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="onNewChat()"
-        (delete)="deleteChat($event)" (select)="selectChat($event)" (changeTemplate)="onSetChangeTemplateMode($event)"></app-chat-history>
+        (delete)="deleteChat($event)" (select)="selectChat($event); displayChatHistory = false" (changeTemplate)="onSetChangeTemplateMode($event)"></app-chat-history>
     </p-drawer>
   </ng-container>
   <section class="w-full px-2 overflow-auto lg:px-6">
@@ -23,7 +23,6 @@
             </div>
           </ng-template>
           <ng-template #end>
-            <p-button *ngIf="jobId && isCreatedDocument((discussion$|async)!)" label="Postuler maintenant" severity="info" [rounded]="true" class="mr-6" [loading]="loadingApplication" [disabled]="loadingApplication" (click)="onApply()"></p-button>
             <p-avatar image="assets/images/reddit.png" shape="circle" size="normal" class="mr-1"></p-avatar>
           </ng-template>
         </p-toolbar>
@@ -31,8 +30,8 @@
       <main #scrollContainer class="flex flex-col flex-1 gap-16 px-4 py-12 overflow-y-auto lg:px-8">
         <div class="flex-1">
           <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
-            <app-discussion [typingState]="messageProcessing" [loadingMessages]="processState===PROCESS_STATES.LOADING"
-              [messages]="(discussion$|async)!"></app-discussion>
+            <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING"
+              [messages]="(discussion$|async)!" [jobSelected]="jobDetails.title!==undefined" (apply)="onApply()"></app-discussion>
           </ng-container>
           <ng-template #noSelectedDiscussion>
             <ng-container *ngIf="jobDetails.title; else noSelectedJob">
@@ -44,23 +43,27 @@
 
                 <div class="text-center">
                   <p class="mb-2 text-xl font-bold text-gray">
-                    Préparons votre candidature 🚀
+                    Préparons ta candidature 🚀
                   </p>
 
                   <p class="text-sm text-gray">
-                    Vous souhaitez postuler au poste
+                    Tu souhaites postuler au poste de 
                     <span class="font-semibold">{{ jobDetails.title }}</span>
                     chez
                     <span class="font-semibold">{{ jobDetails.company }}</span>.
                   </p>
 
                   <p class="mt-2 text-sm text-gray">
-                    Je peux vous aider à rédiger ou optimiser votre CV pour maximiser vos chances.
+                    Je peux t'aider à rédiger ou améliorer ton CV pour maximiser tes chances d'attirer l'attention des recruteurs.
                   </p>
                 </div>
 
-                <button pButton label="Démarrer la discussion" icon="pi pi-plus" severity="info" class="mt-4"
-                  (click)="displayTemplatePicker = true"></button>
+                <div class="flex flex-row flex-wrap gap-x-4 gap-y-2">
+                  <button pButton label="Auditer mon CV actuel" icon="pi pi-plus" severity="info" class="mt-4"
+                    [loading]="loadingAudit" [disabled]="loadingAudit" (click)="displayCvUploadDialog = true"></button>
+                  <button pButton label="Commercer à faire mon CV" icon="pi pi-plus" severity="info" class="mt-4"
+                    (click)="displayTemplatePicker = true"></button>
+                </div>
               </div>
             </ng-container>
 
@@ -70,18 +73,24 @@
                   <i class="block scale-[2] text-gray pi pi-inbox"></i>
                 </div>
                 <div class="px-12 text-center">
-                  <p class="mb-2 text-xl font-bold text-gray">Aucune discussion sélectionnée</p>
-                  <p class="text-sm text-gray">Sélectionnez une discussion pour découvrir les messages ou alors débutez une nouvelles discussion pour la redaction de ton CV/Lettre de motivation sue mésure.</p>
+                  <p class="mb-2 text-xl font-bold text-gray">Prêt à créer un CV/Lettre de motivation qui font la différence ?</p>
+                  <p class="text-sm text-gray">
+                    Sélectionne une discussion pour retrouver tes messages ou lance une nouvelle conversation dès maintenant. 
+                    Je peux t'aider à rédiger un CV et une lettre de motivation sur mesure, pensés pour attirer l’attention des recruteurs et augmenter tes chances de décrocher le poste que tu veux.
+                  </p>
                 </div>
-                <button pButton label="Choisir un modèle et débuter" icon="pi pi-plus" severity="info" class="mt-4"
-                  (click)="displayTemplatePicker = true"></button>
+                <div class="flex flex-row flex-wrap gap-x-4 gap-y-2">
+                  <button pButton label="Fais un audit de ton CV actuel" icon="pi pi-plus" severity="info" class="mt-4" [loading]="loadingAudit" [disabled]="loadingAudit" (click)="displayCvUploadDialog = true"></button>
+                  <button pButton label="Choisis un modèle et commence" icon="pi pi-plus" severity="info" class="mt-4"
+                    (click)="displayTemplatePicker = true"></button>
+                </div>
               </div>
             </ng-template>
           </ng-template>
         </div>
       </main>
     </div>
-    <div>
+    <div *ngIf="selectedDiscussion">
       <app-chat-message-input [isChatSelected]="isChatSelected" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
@@ -91,4 +100,27 @@
   styleClass="w-[90%] lg:!w-1/2" (onShow)="templatePicker.selectedType = toChangeDocumentType ? toChangeDocumentType : DOCUMENT_TYPES.CV" (onHide)="onClearChangeSelection()">
   <app-template-picker #templatePicker [selectedType]="documentType" [jobId]="jobId" (cancel)="displayTemplatePicker=false" [chatId]="chatId" [change]="toChangeDocumentType"
     (result)="onDiscussionCreated($event)"></app-template-picker>
+</p-dialog>
+
+<p-dialog [(visible)]="displayTestimonialDialog" header="Quelle est ton appréciation ?" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
+  <app-add-testimony (cancel)="displayTestimonialDialog = false"></app-add-testimony>
+</p-dialog>
+
+<p-dialog #uploadCvDialog [(visible)]="displayCvUploadDialog" header="Rajoutes ton CV" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
+  <div class="flex flex-col gap-8 p-4">
+
+    <figure *ngIf="tmpUploadedCvToPreview" class="h-60 border-light-gray p-0.5 border rounded overflow-hidden">
+      <img [src]="tmpUploadedCvToPreview" class="w-full h-full object-cover" alt="" onerror="this.src='assets/images/pdf.png'">
+    </figure>
+
+    <div>
+      <button class="block w-full" pButton label="{{ tmpUploadedCvToAudit ? 'Remplacer' : 'Ajouter' }}" severity="info" [disabled]="loadingAudit" (click)="fileInput.click()"></button>
+      <input #fileInput type="file" accept=".png, .jpg, .jpeg, .pdf" class="hidden" (change)="onUploadCV($event)">
+    </div>
+
+    <div class="flex justify-center gap-2">
+      <button pButton class="block flex-1" label="Annuler" severity="secondary" (click)="displayCvUploadDialog = false"></button>
+      <button pButton class="block flex-1" label="Confirmer" severity="info" [disabled]="loadingAudit" [loading]="loadingAudit" (click)="initCvAudit()"></button>
+    </div>
+  </div>
 </p-dialog>

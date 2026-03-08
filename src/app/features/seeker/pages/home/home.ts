@@ -5,6 +5,8 @@ import { Category } from '../../../../core/models/category/category';
 import { Job } from '../../../../core/models/job/job';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { TestimonyService } from '../../../../core/services/testimony/testimony.service';
+import { Testimonial } from '../../../../core/models/testimonial/testimonial';
 
 @Component({
   selector: 'app-home',
@@ -19,12 +21,16 @@ export class Home {
   recentJobs$!: Observable<Job[]>;
   categories$!: Observable<Category[]>;
   userInterests$!: Observable<Category[]>;
+  testimonials$!: Observable<Testimonial[]>;
+
+  totalJobs$!: Observable<number>;
+  recentJobsTotal$!: Observable<number>;
 
   responsiveOptions: any[] | undefined;
 
   showAllCategories: boolean = false;
 
-  constructor(private authService: AuthService, private jobService: JobService, private router: Router) { }
+  constructor(private authService: AuthService, private jobService: JobService, private testimonyService: TestimonyService, private router: Router) { }
 
   ngOnInit(): void {
     this.recommendedJobs$ = this.jobService.getRecommendedJobs();
@@ -32,6 +38,9 @@ export class Home {
     this.recentJobs$ = this.jobService.getRecentJobs();
     this.categories$ = this.jobService.categories$;
     this.userInterests$ = this.authService.getProfileInterests();
+    this.testimonials$ = this.testimonyService.getTestimonies();
+    this.totalJobs$ = this.jobService.totalJobs$;
+    this.recentJobsTotal$ = this.jobService.totalRecentJobs$;
 
     this.responsiveOptions = [
       {

@@ -16,9 +16,14 @@
                 <img class="object-cover w-full" src="assets/images/home-banner.png" alt="">
                 <div class="absolute bottom-0 flex flex-row justify-around w-full py-4 bg-primary">
                   <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
-                  <a pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="download(attachment.url)">Télécharger</a>
+                  <!-- <a *ngIf="message.paymentUrl" pButton class="w-32" severity="secondary" [href]="message.paymentUrl">Acheter</a> -->
+                  <a *ngIf="!isPreview" pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="download(attachment.url)">Télécharger</a>
                 </div>
               </figure>
+              <button *ngIf="jobSelected" pButton class="mt-2" severity="info" [outlined]="true" label="Postuler maintenant" (click)="onApply()"></button>
+            </ng-container>
+            <ng-container *ngIf="message.paymentUrl">
+              <a pButton severity="info" class="mt-2" [outlined]="true" label="Proceder au paiement maintenant" [href]="message.paymentUrl"></a>
             </ng-container>
           </div>
         </div>
@@ -28,7 +33,7 @@
         <i class="scale-[2] p-2 text-gray pi pi-comments italic"></i>
         <p class="text-lg italic font-semibold text-gray">Aucun message pour le moment.</p>
         <p class="max-w-md text-sm italic text-gray">
-          Commencez une discussion avec l'assistant pour construire votre CV ou téléchargez votre dernière version de CV pour extraire les informations essentielles et les modifier pour votre nouveau CV.
+          Lance une discussion avec l’assistant pour commencer à construire ton CV, ou télécharge simplement ton dernier CV. Je pourrai en extraire les informations essentielles et t’aider à les améliorer pour créer une version encore plus efficace.
         </p>
       </div>
     </ng-template>
@@ -53,19 +58,22 @@
 </div>
 
 <p-dialog header="Prévisualisation du document" [modal]="true" [(visible)]="displayDocumentPreview" [maximizable]="true">
-  <p *ngIf="processState===PROCESS_STATES.LOADING" class="text-2xl text-center text-primary"><i class="pi pi-spinner animate-spin"></i></p>
-  <pdf-viewer #pdfViewer
-    [src]="pdfSrc"
-    [render-text]="false"
-    [original-size]="false"
-    class="w-[60vh] h-[80vh]"
-  ></pdf-viewer>
-  <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
+  <div class="relative">
+    <p *ngIf="processState===PROCESS_STATES.LOADING" class="text-2xl text-center text-primary"><i class="pi pi-spinner animate-spin"></i></p>
+    <pdf-viewer #pdfViewer
+      [src]="pdfSrc"
+      [render-text]="false"
+      [original-size]="false"
+      class="w-[60vh] h-[80vh] {{ isPreview ? 'blur-[1px]' : '' }}"
+    ></pdf-viewer>
+    <p-message *ngIf="isPreview" severity="info" class="w-full absolute inset-y-1/2 scale-75" text="Procèdes au paiement pour obtenir le document complet, sans filligrane ni floutage."></p-message>
+    <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
+  </div>
 
   <ng-template #footer>
     <div class="flex flex-row justify-center gap-4">
       <p-button label="Fermer" [text]="true" severity="secondary" (click)="displayDocumentPreview = false" />
-      <p-button label="Télécharger" [outlined]="true" severity="info" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
+      <p-button *ngIf="!isPreview" label="Télécharger" [outlined]="true" severity="info" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
     </div>
   </ng-template>
 </p-dialog>

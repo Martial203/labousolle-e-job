@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: Home },
   { path: 'jobs', component: JobsList },
-  { path: 'jobs/:id', component: JobDetails, canActivate: [AuthGuard] },
+  { path: 'jobs/:id', component: JobDetails },
   { path: 'cv-builder', component: CvBuilder, canActivate: [AuthGuard] },
   { path: 'cv-builder/:jobId', component: CvBuilder, canActivate: [AuthGuard] },
   { path: 'payment-callback', component: PaymentCallback, canActivate: [AuthGuard] }

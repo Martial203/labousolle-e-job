@@ -15,6 +15,7 @@ export class ChatMessage {
   date!: Date;
   chatId!: string;
   document?: Attachment;
+  paymentUrl?: string;
 }
 
 export interface ChatGroupedByPeriod {
@@ -33,4 +34,5 @@ export interface Attachment {
   type: DocumentType;
   name: string;
   url: string;
+  isPreview: boolean;
 }

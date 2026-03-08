@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../core/services/auth/auth.service';
 import { Company } from './../../../../core/models/company/company';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,12 +25,14 @@ export class JobDetails {
   state: ProcessState = ProcessState.INACTIVE;
   readonly PROCESS_STATES = ProcessState;
 
+  isUserAuth: boolean = false;
 
-  constructor(private jobService: JobService, private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private jobService: JobService, private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void{
     this.jobId = Number(this.route.snapshot.paramMap.get('id'));
     this.job$ = this.jobService.getJobDetails(this.jobId);
+    if(this.authService.user) this.isUserAuth = true;
   }
 
   onShowSubmitModal(open: boolean) {
@@ -64,5 +67,13 @@ export class JobDetails {
         this.state = ProcessState.ERROR
       }}
     );
+  }
+
+  goToLogin(): void{
+    this.router.navigate(['/auth/login'], { queryParams: { jobId: this.jobId } })
+  }
+
+  goBack(): void{
+    this.router.navigateByUrl('/jobs');
   }
 }

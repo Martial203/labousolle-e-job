@@ -1,0 +1,57 @@
+<div>
+  <form #commentForm="ngForm" (ngSubmit)="sendComment(commentForm.value)" class="space-y-6">
+
+    <p class="italic text-gray">Comment as-tu trouvé ton expérience dans ce processus de candidature ?</p>
+    <!-- Rating avec étoiles -->
+    <div class="text-center">
+      <label class="block mb-2 text-sm font-medium">Note</label>
+      <p-rating 
+        name="rate"
+        iconCancelClass="pi pi-times"
+        iconOnClass="pi pi-star-fill"
+        iconOffClass="pi pi-star"
+        ngModel
+        required>
+      </p-rating>
+    </div>
+
+    <!-- Commentaire -->
+    <div>
+      <label class="block mb-2 text-sm font-medium">Commentaire</label>
+      <textarea 
+        pInputTextarea 
+        name="comment"
+        rows="5"
+        class="w-full"
+        placeholder="Entrez votre témoignage..."
+        ngModel
+        required>
+      </textarea>
+    </div>
+
+    <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Témoignage soumis avec succès !" class="w-full mb-4"></p-message>
+    <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur lors de la soumission du témoignage, veuillez ressayer." class="w-full mb-4"></p-message>
+
+
+    <!-- Boutons -->
+    <div class="flex flex-row justify-center w-full gap-3">
+      <button
+        pButton
+        class="flex-1 block border"
+        type="button" 
+        severity="secondary"
+        label="Annuler"
+        (click)="onCancel()">
+      </button>
+      <button
+        pButton
+        class="flex-1 block border"
+        type="submit" 
+        severity="info"
+        [disabled]="processState === PROCESS_STATES.LOADING || commentForm.invalid"
+        [loading]="processState === PROCESS_STATES.LOADING"
+        label="Ajouter">
+      </button>
+    </div>
+  </form>
+</div>

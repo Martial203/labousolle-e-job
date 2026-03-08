@@ -14,9 +14,13 @@ export class JobService {
   
   private _categories$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>([]);
   private _jobs$: BehaviorSubject<Job[]> = new BehaviorSubject<Job[]>([]);
+  private _totalJobs$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private _totalRecentJobs$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   get categories$(): Observable<Category[]> { return this._categories$.asObservable() }
   get jobs$(): Observable<Job[]> { return this._jobs$.asObservable() }
+  get totalJobs$(): Observable<number> { return this._totalJobs$.asObservable() }
+  get totalRecentJobs$(): Observable<number> { return this._totalRecentJobs$.asObservable() }
 
   constructor(private http: HttpClient){
     this.getCategories().subscribe(categories => this._categories$.next(categories));
@@ -54,6 +58,7 @@ export class JobService {
 
   private getJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(`${environment.apiUrl}/jobs/`).pipe(
+      tap((res: any) => this._totalJobs$.next(res.total)),
       map((res: any) => res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob)))
     );
   }
@@ -137,6 +142,7 @@ export class JobService {
 
   getRecentJobs(): Observable<Job[]> {
     return this.http.get<Job[]>(`${environment.apiUrl}/jobs/recent/`).pipe(
+      tap((res: any) => this._totalRecentJobs$.next(res.total)),
       map((res: any) => res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob)))
     );
   }

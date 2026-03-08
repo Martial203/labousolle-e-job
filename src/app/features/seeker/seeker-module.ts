@@ -19,6 +19,7 @@ import { ChatMessageInput } from './pages/cv-builder/chat-message-input/chat-mes
 import { TemplatePicker } from './pages/cv-builder/template-picker/template-picker';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PaymentCallback } from './pages/payment-callback/payment-callback';
+import { AddTestimony } from './pages/cv-builder/add-testimony/add-testimony';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { PaymentCallback } from './pages/payment-callback/payment-callback';
     SearchBar,
     ChatMessageInput,
     TemplatePicker,
-    PaymentCallback
+    PaymentCallback,
+    AddTestimony
   ],
   imports: [
     CommonModule,

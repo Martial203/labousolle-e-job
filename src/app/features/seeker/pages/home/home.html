@@ -22,7 +22,7 @@
         <div class="absolute flex flex-row items-center gap-4 p-4 rounded shadow-xl top-10 lg:-left-10 bg-secondary w-fit">
           <figure class="p-4 bg-primary"><img src="assets/icons/briefcase-duotone2.png" alt=""></figure>
           <div>
-            <strong>175 354</strong>
+            <strong>{{ totalJobs$|async }}</strong>
             <p>Emploi en direct</p>
           </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="absolute flex flex-row items-center gap-4 p-4 rounded shadow-xl lg:-right-10 -bottom-8 justify-self-end bg-secondary w-fit">
           <figure class="p-4 bg-muted-icon-background"><img src="assets/icons/briefcase-duotone1.png" alt=""></figure>
           <div>
-            <strong>7 354</strong>
+            <strong>{{ recentJobsTotal$|async }}</strong>
             <p>Emploi récents</p>
           </div>
         </div>
@@ -95,11 +95,13 @@
   <section class="bg-light-gray">
     <div class="container px-4 pt-20 mx-auto pb-28 lg:px-14">
       <h1 class="mb-12 text-center">Témoignages des clients</h1>
-      <p-carousel [value]="[0,1,2,3,4,5,6,7,8]" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
-        <ng-template let-product #item>
-          <div class="mx-4 mb-4"><app-testimony></app-testimony></div>
-        </ng-template>
-      </p-carousel>
+      <ng-container *ngIf="testimonials$|async as testimonials">
+        <p-carousel [value]="testimonials" [numVisible]="3" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="5000">
+          <ng-template let-testimonial #item>
+            <div class="mx-4 mb-4"><app-testimony [testimonial]="testimonial"></app-testimony></div>
+          </ng-template>
+        </p-carousel>
+      </ng-container>
     </div>
   </section>
 
