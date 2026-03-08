@@ -21,7 +21,7 @@
         
         <div *ngIf="[PROCESS_STATES.SUCCESS, PROCESS_STATES.ERROR].includes(processState)" class="mb-4">
           <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Centres d'intérêts définis avec succès !" class="w-full mb-4"></p-message>
-          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer." class="w-full mb-4"></p-message>
+          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" [text]="error" class="w-full mb-4"></p-message>
         </div>
         <!-- Submit Button -->
         <div class="flex flex-row gap-8 mt-4 text-center">

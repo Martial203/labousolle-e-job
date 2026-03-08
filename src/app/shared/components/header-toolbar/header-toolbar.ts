@@ -28,6 +28,10 @@ export class HeaderToolbar {
     this.displayDrawer = !this.displayDrawer;
   }
 
+  modifyInfos(): void{
+    window.location.href = "https://laboussole-edu.com/profil/0";
+  }
+
   getInitials(): string{
     if(this.user){
       return (this.user.name+" "+this.user.firstName).split(" ").map(word => word.charAt(0)).join("").toUpperCase() ?? "";

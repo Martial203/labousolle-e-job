@@ -21,7 +21,7 @@
     </div>
 
     <div class="flex flex-col gap-6 lg:flex-row">
-      <div class="flex-1">
+      <div class="flex-1 lg:w-2/3">
         <figure class="flex flex-row items-center justify-center w-full mb-12 overflow-hidden max-h-[35em] rounded-md">
           <img [src]="job.job.coverImage" class="object-cover w-full" [alt]="job.job.title">
         </figure>
@@ -29,23 +29,23 @@
           <p-accordion-panel value="0">
             <p-accordion-header>Qui sont-ils ?</p-accordion-header>
             <p-accordion-content>
-              <div class="m-0" [innerHtml]="job.company.about"></div>
+              <div class="max-w-full m-0 overflow-hidden break-words" [innerHtml]="job.company.about"></div>
             </p-accordion-content>
           </p-accordion-panel>
 
           <p-accordion-panel value="1">
             <p-accordion-header>Descriptif du poste</p-accordion-header>
             <p-accordion-content>
-              <div class="m-0" [innerHtml]="job.job.description"></div>
+              <div class="max-w-full m-0 overflow-hidden break-words" [innerHtml]="job.job.description"></div>
             </p-accordion-content>
           </p-accordion-panel>
 
-          <p-accordion-panel value="2">
+          <!-- <p-accordion-panel value="2">
             <p-accordion-header>Profil recherché</p-accordion-header>
             <p-accordion-content>
-              <div class="m-0" [innerHtml]="job.job.profileRequired"></div>
+              <div class="max-w-full m-0 overflow-hidden break-words whitespace-pre-wrap" [innerHtml]="job.job.profileRequired">{{ job.job.profileRequired }}</div>
             </p-accordion-content>
-          </p-accordion-panel>
+          </p-accordion-panel> -->
         </p-accordion>
 
         <div class="mx-auto mt-10 w-fit">
@@ -112,7 +112,7 @@
       <p-button class="relative mb-2 text-secondary" icon="pi pi-arrow-right" severity="info" iconPos="bottom" label="Adapter mon cv et ma lettre de motivation à cette offre" (click)="onAdjustCV(job.job.title, job.company.name)"></p-button>
       <div class="mt-2">
         <p-message *ngIf="state===PROCESS_STATES.SUCCESS" severity="success" text="Vous pouvez postuler !" class="w-full mb-4"></p-message>
-        <p-message *ngIf="state===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue, veuillez ressayer ultérieurement." class="w-full mb-4"></p-message>
+        <p-message *ngIf="state===PROCESS_STATES.ERROR" severity="error" [text]="error" class="w-full mb-4"></p-message>
       </div>
       <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="apply()">Je dispose déjà de tout le necessaire</button></p>
   </p-dialog>
@@ -123,7 +123,7 @@
     </ng-template>
     <ng-template #closeicon>
       <i class="relative pi pi-times-circle"></i>
-    </ng-template>      
+    </ng-template>
     <div class="flex flex-col gap-4">
       <div>
         <label class="block mb-1" for="">Choisir un CV</label>
@@ -144,16 +144,18 @@
     </div>
   </p-dialog>
 
-  <p-dialog #restrictedAccessDialog [modal]="true" [visible]="!isUserAuth" [style]="{ width: '27rem', background: '#ffffff' }">
-    <ng-template #closeIcon>
-      <i class="pi-times-circle"></i>
+  <p-dialog #restrictedAccessDialog [modal]="true" [visible]="!isUserAuth" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+    <ng-template #header>
+      <div class="w-full text-end">
+        <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="goBack()"></p-button>
+      </div>
     </ng-template>
-    <div class="flex flex-col items-center gap-6 pb-8 text-center">
+    <div class="relative flex flex-col items-center gap-6 pb-8 text-center">
       <i class="text-4xl text-primary pi pi-lock"></i>
       <h2 class="text-2xl font-semibold">Accès restreint</h2>
       <p class="text-gray">Connectes-toi pour accéder aux détails de cette offre d'emploi.</p>
       <div class="flex w-full gap-4">
-        <button pButton class="flex-1" severity="secondary" label="Retour" (click)="goBack()"></button>
+        <button pButton class="flex-1" severity="info" label="Créer un compte" (click)="goToSignUp()"></button>
         <button pButton class="flex-1" severity="info" label="Se connecter" (click)="goToLogin()"></button>
       </div>
     </div>  

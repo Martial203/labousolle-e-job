@@ -40,7 +40,7 @@
         </div>
         
         <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Connexion réussie!" class="w-full mb-4"></p-message>
-        <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de connexion. Veuillez vérifier vos identifiants." class="w-full mb-4"></p-message>
+        <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" [text]="loginError" class="w-full mb-4"></p-message>
         
         <!-- Submit Button -->
         <button type="submit" pButton severity="info" [disabled]="loginForm.invalid || processState===PROCESS_STATES.LOADING" class="w-full" [loading]="processState===PROCESS_STATES.LOADING">Se connecter</button>

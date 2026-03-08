@@ -2,6 +2,7 @@ import { AuthService } from './../../../../core/services/auth/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-forgotten-password',
@@ -15,7 +16,7 @@ export class ForgottenPassword {
   
   processState: ProcessState = ProcessState.INACTIVE;
   emailSent: string|null = null;
-
+  error!: string;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -28,6 +29,7 @@ export class ForgottenPassword {
       },
       error: (err) => {
         console.log(err);
+        this.error = mapObservableError(err)
         this.processState = ProcessState.ERROR;
       }
     });

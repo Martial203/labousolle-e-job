@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Category } from '../../../../core/models/category/category';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-choose-interests',
@@ -19,6 +20,7 @@ export class ChooseInterests {
 
   selectedInterestsIds: Set<number> = new Set<number>();
   interests$!: Observable<Category[]>;
+  error!: string;
 
   constructor(private authService: AuthService, private jobService: JobService, private router: Router) {}
 
@@ -39,6 +41,7 @@ export class ChooseInterests {
       },
       error: (err) => {
         console.log(err)
+        this.error = mapObservableError(err)
         this.processState = ProcessState.ERROR;
       }
     })

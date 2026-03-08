@@ -30,7 +30,7 @@
     </div>
 
     <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Témoignage soumis avec succès !" class="w-full mb-4"></p-message>
-    <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur lors de la soumission du témoignage, veuillez ressayer." class="w-full mb-4"></p-message>
+    <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" [text]="error" class="w-full mb-4"></p-message>
 
 
     <!-- Boutons -->

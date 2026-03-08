@@ -64,10 +64,10 @@
         <label for="">Description</label>
         <p-editor name="description" placeholder="Ajoutez votre description de poste..." required ngModel [style]="{ height: '180px' }" />
       </div>
-      <div>
+      <!-- <div>
         <label for="">Responsabilités</label>
         <p-editor name="profileRequired" placeholder="Ajoutez vos responsabilités..." required ngModel [style]="{ height: '180px' }" />
-      </div>
+      </div> -->
     </div>
   </div>
   <button pButton class="w-full lg:w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right" [disabled]="processState === PROCESS_STATES.LOADING" [loading]="processState === PROCESS_STATES.LOADING"></button>

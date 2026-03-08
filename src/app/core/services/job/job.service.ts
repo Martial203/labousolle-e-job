@@ -35,12 +35,12 @@ export class JobService {
       company: jobData.companyId.toString(),
       expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
       city: jobData.address,
-      country: 'null',
+      country: jobData.email,
       job_type: jobData.jobType,
       image: jobData.coverImage,
       about: "null",
       description: jobData.description,
-      profile_required: jobData.profileRequired,
+      profile_required: ' ',
       experience_required: jobData.experience,
       salary_min: '0',
       salary_max: '0',
@@ -69,6 +69,7 @@ export class JobService {
         const job: Job = {
           id: res.id,
           title: res.title,
+          email: res.country,
           address: res.city,
           coverImage: res.image,
           companyId: res.company,
@@ -166,12 +167,12 @@ export class JobService {
       company: jobData.companyId.toString(),
       expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
       city: jobData.address,
-      country: 'null',
+      country: jobData.email,
       job_type: jobData.jobType,
       image: jobData.coverImage,
       about: "null",
       description: jobData.description,
-      profile_required: jobData.profileRequired,
+      profile_required: ' ',
       experience_required: jobData.experience,
       salary_min: '0',
       salary_max: '0',
@@ -194,7 +195,7 @@ export class JobService {
   applyToJob(jobId: number): Observable<any> {
     return this.http.get(`${environment.apiUrl}/jobs/${jobId}/generate_application_email/`).pipe(
       tap((res: any) => {
-        const email = res.recipient_email;
+        const email = this._jobs$.value.filter(job => job.id)[0].email;
         const subject = encodeURIComponent(res.subject);
         const body = encodeURIComponent(res.body);
         const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
@@ -232,6 +233,7 @@ export class JobService {
       title: tmpJob.title,
       description: tmpJob.description,
       about: ' ',
+      email: tmpJob.country,
       address: tmpJob.city,
       categoryId: tmpJob.category,
       categoryName: tmpJob.category_name,
@@ -254,6 +256,7 @@ export class JobService {
       id: tmpJob.id,
       about: tmpJob.about,
       address: tmpJob.city,
+      email: tmpJob.country,
       categoryId: tmpJob.category,
       categoryName: tmpJob.category_details.name,
       companyId: tmpJob.company,

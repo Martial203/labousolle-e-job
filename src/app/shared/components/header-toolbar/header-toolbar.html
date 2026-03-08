@@ -29,7 +29,7 @@
 <p-popover #userMenu>
   <ng-template pTemplate="content">
     <div class="flex flex-col gap-4 p-4">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 hover:cursor-pointer" (click)="modifyInfos()">
         <!-- <img src="https ://primefaces.org/cdn/primeng/images/demo/avatar/" alt="Profile" class="object-cover w-12 h-12 rounded-full" /> -->
         <span class="flex flex-row items-center justify-center font-semibold rounded-full size-11 text-secondary bg-primary" (click)="userMenu.toggle($event)">{{ getInitials() }}</span>
         <div class="flex flex-col">
@@ -50,10 +50,10 @@
         <a class="drawer" routerLink="/jobs" (click)="onToggleDrawer()"><li>Trouver un emploi</li></a>
         <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.CV }" (click)="onToggleDrawer()"><li>Mon cv pro</li></a>
         <a class="drawer" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.LETTER }" (click)="onToggleDrawer()"><li>Ma lettre de motivation</li></a>
-        <a class="drawer" routerLink="/auth/sign-up" (click)="onToggleDrawer()"><li>Créer mon compte</li></a>
-        <a class="drawer" href="https://laboussole-edu.com/profil/0" (click)="onToggleDrawer()"><li>Mes informations</li></a>
+        <a *ngIf="user" class="drawer" href="https://laboussole-edu.com/profil/0" (click)="onToggleDrawer()"><li>Mon compte</li></a>
         <button *ngIf="user" class="mt-4" pButton label="Me déconnecter" icon="pi pi-sign-out" severity="danger" (click)="onLogout()"></button>
-        <button *ngIf="!user" class="mt-4" pButton label="Me connecter" icon="pi pi-sign-out" severity="info" (click)="onLogout()"></button>
+        <button *ngIf="!user" class="mt-8" pButton label="Se connecter" routerLink="/auth/login" icon="pi pi-sign-out" severity="info"></button>
+        <button *ngIf="!user" class="mt-2" pButton label="Créer un compte" routerLink="/auth/sign-up" icon="pi pi-sign-out" severity="info"></button>
       </ul>
     </nav>
 </p-drawer>

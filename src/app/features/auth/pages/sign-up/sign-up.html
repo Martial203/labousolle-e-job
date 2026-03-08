@@ -1,6 +1,6 @@
 <div class="flex min-h-screen">
   <!-- Left Panel -->
-  <div class="items-center justify-center hidden w-full p-16 text-white  lg:w-5/12 bg-primary lg:flex">
+  <div class="items-center justify-center hidden w-full p-16 text-white lg:w-5/12 bg-primary lg:flex">
     <div>
       <h1 class="mb-8 text-4xl font-bold lg:text-5xl">Ma personne, nous sommes ravi de t’accueillir parmi nous...</h1>
       <p class="text-lg lg:text-xl opacity-90">Nous comprenons que choisir une orientation académique et professionnelle est une etape
@@ -86,7 +86,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           <!-- Success Message -->
           <p-message *ngIf="processState===PROCESS_STATES.SUCCESS" severity="success" text="Compte crée avec succès !" class="w-full mb-4"></p-message>
           <!-- Error Message -->
-          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Une erreur est survenue lors de la création du compte." class="w-full mb-4"></p-message>
+          <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" [text]="error" class="w-full mb-4"></p-message>
           
           <!-- Submit Button -->
           <button pButton type="submit" class="w-full bg-primary" severity="info" [disabled]="signUpForm.invalid || !acceptTerms.checked || processState===PROCESS_STATES.LOADING || (signUpForm.value.password!==signUpForm.value.confirmPassword)" [loading]="processState === PROCESS_STATES.LOADING">Créer</button>

@@ -38,10 +38,9 @@ export class NewEnterprise {
       if(this.isModal){
         this.created.emit();
       }else{
-        this.tab = (this.tab+1)%3;
         this.router.navigateByUrl(`/admin/enterprises`);
       }
     }
-
+    this.tab = (this.tab+1)%3;
   }
 }

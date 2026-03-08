@@ -76,6 +76,15 @@ export class ChatService {
       }),
       tap(message => { 
         this.addMessage(message);
+        if(message.document && !message.document?.isPreview){
+          const mess: ChatMessage = {
+            chatId: message.chatId,
+            content: 'Si tu désires également un lettre de motivation, fais le moi savoir dans ton prochain message.',
+            date: new Date(),
+            sender: "agent"   
+          }
+          this.addMessage(mess);
+        }
       })
     );
   }

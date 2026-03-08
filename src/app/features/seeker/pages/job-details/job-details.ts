@@ -7,6 +7,7 @@ import { Observable, tap } from 'rxjs';
 import { Job } from '../../../../core/models/job/job';
 import { CompanyService } from '../../../../core/services/company/company.service';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-job-details',
@@ -24,6 +25,7 @@ export class JobDetails {
   job$!: Observable<{ job: Job, company: Company, similarJobs: Job[] }>;
   state: ProcessState = ProcessState.INACTIVE;
   readonly PROCESS_STATES = ProcessState;
+  error!: string;
 
   isUserAuth: boolean = false;
 
@@ -31,7 +33,7 @@ export class JobDetails {
 
   ngOnInit(): void{
     this.jobId = Number(this.route.snapshot.paramMap.get('id'));
-    this.job$ = this.jobService.getJobDetails(this.jobId);
+    this.job$ = this.jobService.getJobDetails(this.jobId).pipe(tap(res => console.log(res)));
     if(this.authService.user) this.isUserAuth = true;
   }
 
@@ -64,9 +66,14 @@ export class JobDetails {
       },
       error: (err) => {
         console.log(err)
+        this.error = mapObservableError(err);
         this.state = ProcessState.ERROR
       }}
     );
+  }
+
+  goToSignUp(): void{
+    this.router.navigate(['/auth/sign-up'], { queryParams: { jobId: this.jobId } })
   }
 
   goToLogin(): void{
@@ -74,6 +81,7 @@ export class JobDetails {
   }
 
   goBack(): void{
+    console.log('Go')
     this.router.navigateByUrl('/jobs');
   }
 }

@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { SignUpCredentials } from '../../models/sign-up-credentials/sign-up-credentials';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { AuthService } from '../../../../core/services/auth/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { confirmPasswordValidator } from '../../../../shared/validators/confirm-password';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,6 +17,7 @@ export class SignUp {
   readonly PROCESS_STATES = ProcessState;
 
   processState: ProcessState = ProcessState.INACTIVE;
+  error!: string;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -33,6 +33,7 @@ export class SignUp {
       },
       error: (err) => {
         console.log(err)
+        this.error = mapObservableError(err);
         this.processState = ProcessState.ERROR;
       }
     });

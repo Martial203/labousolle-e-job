@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TestimonyService } from '../../../../../core/services/testimony/testimony.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../../core/utils/utils';
 
 @Component({
   selector: 'app-add-testimony',
@@ -12,6 +13,7 @@ export class AddTestimony {
 
   processState: ProcessState = ProcessState.INACTIVE;
   readonly PROCESS_STATES = ProcessState;
+  error!: string;
 
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
@@ -26,6 +28,7 @@ export class AddTestimony {
       },
       error: (err) => {
         console.log(err)
+        this.error = mapObservableError(err);
         this.processState = ProcessState.ERROR;
       }
     })

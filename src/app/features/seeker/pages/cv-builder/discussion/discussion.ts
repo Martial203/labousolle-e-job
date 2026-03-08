@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ChatMessage } from '../../../../../core/models/chat/chat';
+import { Attachment, ChatMessage } from '../../../../../core/models/chat/chat';
 import { ChatService } from '../../../../../core/services/chat/chat.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
 import { AuthService } from '../../../../../core/services/auth/auth.service';
 import { DocumentType } from '../../../../../core/enums/document-type/document-type';
+import { mapObservableError } from '../../../../../core/utils/utils';
 
 @Component({
   selector: 'app-discussion',
@@ -37,18 +38,19 @@ export class Discussion {
     console.log(this.messages)
   }
 
-  download(url: string): void {
+  download(doc: Attachment): void {
     this.processState = ProcessState.LOADING;
-    this.chatService.fetchDocument(url).subscribe({
+    this.chatService.fetchDocument(doc.url).subscribe({
       next: (res: any) => {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(res);
-        link.download = `${this.documentType}_${this.authService.user.firstName} ${this.authService.user.name}_${new Date().toLocaleDateString()}`;
+        link.download = `${doc.type === 'LETTER' ? 'LM' : 'CV'}_${this.authService.user.firstName} ${this.authService.user.name}_${new Date().toLocaleDateString()}`;
         link.click();
         this.processState = ProcessState.SUCCESS;
       },
       error: (err) => {
         this.processState = ProcessState.ERROR;
+        // alert(mapObservableError(err))
         console.error(err);
       }
     });
@@ -65,6 +67,7 @@ export class Discussion {
       },
       error: (err) => {
         this.processState = ProcessState.ERROR;
+        // alert(mapObservableError(err))
         console.error(err);
       }
     });

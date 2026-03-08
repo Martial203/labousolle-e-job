@@ -9,6 +9,7 @@ import { User } from '../../../../core/models/user/user';
 import { MessageInput } from '../../../../core/models/chat/chat';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { JobService } from '../../../../core/services/job/job.service';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-cv-builder',
@@ -103,7 +104,10 @@ export class CvBuilder {
         this.processState = ProcessState.SUCCESS;
         this.isChatSelected = true;
       },
-      error: () => this.processState = ProcessState.ERROR,
+      error: (err) => {
+        this.processState = ProcessState.ERROR;
+        alert(mapObservableError(err))
+      },
       complete: () => this.scrollToBottom()
     });
     this.selectedDiscussion = id;
@@ -115,7 +119,9 @@ export class CvBuilder {
     this.scrollToBottom();
     this.chatService.sendAMessage(this.selectedDiscussion, message.content, message.file ? message.file : undefined).subscribe({
       next: () => this.messageProcessing = ProcessState.SUCCESS,
-      error: (err) => this.messageProcessing = ProcessState.ERROR,
+      error: (err) => {
+        this.messageProcessing = ProcessState.ERROR
+      },
       complete: () => this.scrollToBottom()
     });
   }
@@ -174,7 +180,7 @@ export class CvBuilder {
         this.selectChat(res.chatId);
         console.log(this.selectedDiscussion)
       },
-      error: err => alert(err),
+      error: err => alert(mapObservableError(err)),
       complete: () => this.loadingAudit = false
     })
   }
@@ -184,7 +190,7 @@ export class CvBuilder {
     this.loadingApplication = true;
     this.jobService.applyToJob(this.jobId).subscribe({
       next: () => setTimeout(() => this.displayTestimonialDialog = true, 10000),
-      error: () => alert('Une erreur est survenue, veuillez ressayer'),
+      error: (err) => alert(mapObservableError(err)),
       complete: () => this.loadingApplication = false
     });
   }

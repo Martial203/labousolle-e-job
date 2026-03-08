@@ -10,7 +10,7 @@
       <p-badge *ngIf="this.attachment" class="absolute bottom-0.5 right-0.5" severity="success"></p-badge>
     </div>
     <input #attachmentInput class="hidden" type="file" accept=".pdf, .png, .jpg" (change)="uploadAttachment($event)">
-    <textarea pTextarea (keyup.enter)="onSend()" class="flex-1 py-1 text-sm bg-transparent lg:text-md" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text" [disabled]="!isChatSelected"></textarea>
+    <textarea pTextarea class="flex-1 py-1 text-sm bg-transparent lg:text-md" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text" [disabled]="!isChatSelected"></textarea>
     <div class="flex flex-row items-center gap-0.5 pl-0.5 lg:pl-2 p-2 lg:gap-4">
       <button *ngIf="text.length===0" pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
       <p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [showHeader]="false">
@@ -20,8 +20,8 @@
               <span class="block"><i class="text-2xl pi pi-microphone"></i></span>
             </div>
           </div>
-          <p class="text-lg font-semibold text-center">Microphone is recording...</p>
-            <button pButton type="button" icon="pi pi-stop" [rounded]="true" severity="info" label="Stop talking" (click)="stopSpeech(); visible = false"></button>
+          <p class="text-lg font-semibold text-center">Microphone en écoute...</p>
+            <button pButton type="button" icon="pi pi-stop" [rounded]="true" severity="info" label="Terminer de parler" (click)="stopSpeech(); visible = false"></button>
         </div>
       </p-dialog>
           

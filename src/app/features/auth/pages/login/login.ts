@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { LoginCredentials } from '../../models/login-credentials/login-credentials';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { ProcessState } from '../../../../core/enums/process-state/process-state
 export class Login {
 
   jobId!: string;
+  loginError!: string;
 
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
@@ -33,8 +35,9 @@ export class Login {
           this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
         }, 2000);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log(err);
+        this.loginError = mapObservableError(err);
         this.processState = this.PROCESS_STATES.ERROR;
       }
     });

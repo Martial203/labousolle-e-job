@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { mapObservableError } from '../../../../core/utils/utils';
 
 @Component({
   selector: 'app-new-password',
@@ -15,6 +16,7 @@ export class NewPassword {
 
   processState: ProcessState = ProcessState.INACTIVE; 
   resetToken?: string;
+  error!: string;
 
   constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
 
@@ -36,6 +38,7 @@ export class NewPassword {
       },
       error: (err) => {
         console.log(err);
+        this.error = mapObservableError(err)
         this.processState = ProcessState.ERROR;
       }
     })

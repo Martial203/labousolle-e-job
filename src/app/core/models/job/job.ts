@@ -2,6 +2,7 @@ export class Job {
   id!: number;
   title!: string;
   address!: string;
+  email!: string;
   coverImage!: any;
   companyId!: number;
   companyName!: string;
