@@ -4,6 +4,7 @@ import { User } from '../../../core/models/user/user';
 import { Router } from '@angular/router';
 import { DocumentType } from '../../../core/enums/document-type/document-type';
 import { ConfirmationService } from 'primeng/api';
+import { Role } from '../../../core/enums/role/role';
 
 @Component({
   selector: 'app-header-toolbar',
@@ -17,6 +18,8 @@ export class HeaderToolbar {
   readonly DOCUMENT_TYPES = DocumentType;
 
   displayDrawer: boolean = false;
+
+  get isAdmin(): boolean { return this.user ? this.user.role === Role.ADMIN : false }
 
   constructor(private authService: AuthService, private confirmationService: ConfirmationService, private router: Router) {}
 

@@ -15,6 +15,7 @@ export class Login {
 
   jobId!: string;
   loginError!: string;
+  private returnUrl!: string;
 
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
@@ -23,6 +24,8 @@ export class Login {
 
   ngOnInit(): void {
     const val = this.route.snapshot.queryParams['jobId'];
+    const _returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    if(_returnUrl) this.returnUrl = _returnUrl;
     if(val) this.jobId = val;
   }
 
@@ -32,7 +35,11 @@ export class Login {
       next: () => {
         this.processState = ProcessState.SUCCESS;
         setTimeout(() => {
-          this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
+          if(this.returnUrl){
+            this.router.navigateByUrl(this.returnUrl);
+          }else{
+            this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
+          }
         }, 2000);
       },
       error: (err: any) => {

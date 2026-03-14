@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { JobService } from '../../../../core/services/job/job.service';
 import { Category } from '../../../../core/models/category/category';
@@ -36,7 +36,7 @@ export class Home {
     this.recommendedJobs$ = this.jobService.getRecommendedJobs();
     this.trendingJobs$ = this.jobService.getFeaturedJobs();
     this.recentJobs$ = this.jobService.getRecentJobs();
-    this.categories$ = this.jobService.categories$;
+    this.categories$ = this.jobService.categories$.pipe(map(categories => categories.filter(category => category.jobsCount !== 0)));
     this.userInterests$ = this.authService.getProfileInterests();
     this.testimonials$ = this.testimonyService.getTestimonies();
     this.totalJobs$ = this.jobService.totalJobs$;

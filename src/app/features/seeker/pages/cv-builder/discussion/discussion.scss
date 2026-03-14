@@ -1,6 +1,9 @@
 div.message{
   div.content{
     @apply text-gray shadow;
+    p, div{
+      @apply mb-2;
+    }
   }
 }
 div.me{
@@ -8,4 +11,7 @@ div.me{
   div.content{
     @apply bg-primary text-secondary;
   }
+}
+div.content{
+
 }
