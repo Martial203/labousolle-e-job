@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ChatService } from '../../../../core/services/chat/chat.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ChatGroupedByPeriod, ChatHeader, ChatMessage } from '../../../../core/models/chat/chat';
 import { DocumentType } from '../../../../core/enums/document-type/document-type';
@@ -49,14 +49,19 @@ export class CvBuilder {
   tmpUploadedCvToAudit!: File|null;
   tmpUploadedCvToPreview!: any;
 
+  isPreviewMode: boolean = false;
+
+  get isAnonymMode(): boolean { return this.user == undefined || this.user ==null }
+  get shouldPromptLogin(): boolean { return (this.user == null || this.user == undefined) && this.isPreviewMode }
+
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(private chatService: ChatService, private jobService: JobService, private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(private chatService: ChatService, private jobService: JobService, private authService: AuthService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.documentType = params['document'] ?? DocumentType.CV;
-      this.jobDetails = { title: params['title'], company: params['company'] }
+      this.jobDetails = { title: params['title'], company: params['company'] };
       const chatId = params['chatId'];
       this.selectChat(chatId);
     });
@@ -87,7 +92,6 @@ export class CvBuilder {
   }
 
   onClearChangeSelection(): void{
-    console.log('Hided')
     this.chatId = undefined!;
     this.toChangeDocumentType = undefined!;
   }
@@ -106,7 +110,13 @@ export class CvBuilder {
       },
       error: (err) => {
         this.processState = ProcessState.ERROR;
-        alert(mapObservableError(err))
+        const errorMessage = mapObservableError(err);
+        if(errorMessage.toLowerCase().includes("conversation non trouvée") && this.isAnonymMode){
+          this.processState = ProcessState.SUCCESS;
+          return;
+        }else{
+          console.log(mapObservableError(err))
+        }
       },
       complete: () => this.scrollToBottom()
     });
@@ -202,6 +212,23 @@ export class CvBuilder {
       }
     }
     return false;
+  }
+
+  onTurnPreviewMode(): void{
+    this.isPreviewMode = true;
+  }
+
+  goToSignUp(): void{
+    this.router.navigate(['/auth/sign-up'])
+  }
+
+  goToLogin(): void{
+    this.router.navigate(['/auth/login'])
+  }
+
+  goBack(): void{
+    console.log('Go')
+    this.router.navigateByUrl('/home');
   }
 
   private scrollToBottom(): void {

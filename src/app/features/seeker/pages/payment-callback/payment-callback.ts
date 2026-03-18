@@ -42,13 +42,16 @@ export class PaymentCallback {
         this.processState = ProcessState.SUCCESS;
         this.formatPaymentMethod();
         this.formatDate();
-        setTimeout(() => this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatService.getLastDiscussionId() } }), 3000);
       },
       error: (err) => {
         console.error(err);
         this.processState = ProcessState.ERROR;
       }
     });
+  }
+
+  goNext(): void{
+    this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatService.getLastDiscussionId() } })
   }
 
   private formatPaymentMethod() {

@@ -4,6 +4,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 import { LoginCredentials } from '../../models/login-credentials/login-credentials';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { mapObservableError } from '../../../../core/utils/utils';
+import { ChatService } from '../../../../core/services/chat/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class Login {
   readonly PROCESS_STATES = ProcessState;
   processState: ProcessState = ProcessState.INACTIVE;
   
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private authService: AuthService, private chatService: ChatService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const val = this.route.snapshot.queryParams['jobId'];
@@ -34,13 +35,18 @@ export class Login {
     this.authService.login(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
-        setTimeout(() => {
-          if(this.returnUrl){
-            this.router.navigateByUrl(this.returnUrl);
-          }else{
-            this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
-          }
-        }, 2000);
+        const migration = this.chatService.migrateChatSession();
+        if(migration){
+          migration.subscribe(() => setTimeout(() => this.router.navigateByUrl('/cv-builder'), 2000))
+        }else{
+          setTimeout(() => {
+            if(this.returnUrl){
+              this.router.navigateByUrl(this.returnUrl);
+            }else{
+              this.router.navigateByUrl(this.jobId ? `/jobs/${this.jobId}` : '/');
+            }
+          }, 2000);
+        }
       },
       error: (err: any) => {
         console.log(err);

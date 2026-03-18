@@ -17,7 +17,7 @@
                 <div class="absolute bottom-0 flex flex-row justify-around w-full py-4 bg-primary">
                   <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
                   <!-- <a *ngIf="message.paymentUrl" pButton class="w-32" severity="secondary" [href]="message.paymentUrl">Acheter</a> -->
-                  <a *ngIf="!isPreview" pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="download(attachment)">Télécharger</a>
+                  <a *ngIf="!isPreview" pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="onInitDownload(attachment)">Télécharger</a>
                 </div>
               </figure>
               <button *ngIf="jobSelected && !isPreview" pButton class="mt-2" severity="info" [outlined]="true" label="Postuler maintenant" (click)="onApply()"></button>
@@ -76,4 +76,19 @@
       <p-button *ngIf="!isPreview" label="Télécharger" [outlined]="true" severity="info" [disabled]="processState===PROCESS_STATES.LOADING" [loading]="processState===PROCESS_STATES.LOADING" (click)="download(pdfSrc)" />
     </div>
   </ng-template>
+</p-dialog>
+
+<p-dialog [visible]="displayFileNameDialog" header="Télécharger {{ docToDownload ? (docToDownload.type === DOCUMENT_TYPES.CV ? 'le CV' : 'la lettre de motivation') : '' }}" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
+  <div class="flex flex-col gap-8 py-2">
+
+    <p-floatlabel variant="on">
+      <input #filename pInputText type="text" [value]="buildFileName()" class="w-full">
+      <label for="on_label">Nom du fichier</label>
+    </p-floatlabel>
+
+    <div class="flex justify-center gap-2">
+      <button pButton class="flex-1 block" label="Annuler" severity="secondary" (click)="displayFileNameDialog = false"></button>
+      <button pButton class="flex-1 block" label="Confirmer" severity="info" [disabled]="filename.value.length===0" (click)="download(filename.value)"></button>
+    </div>
+  </div>
 </p-dialog>

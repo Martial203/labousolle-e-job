@@ -1,4 +1,4 @@
-<div class="container flex flex-row w-full h-full px-6 pb-10 mx-auto lg:px-16">
+<div class="container flex flex-row w-full h-full px-6 pb-10 mx-auto lg:px-16 {{ shouldPromptLogin ? 'blur pointer-events-none select-none' : '' }}">
   <ng-container *ngIf="chatHistory$|async as chatHistory">
     <aside class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6 hidden lg:block">
       <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="onNewChat()"
@@ -31,7 +31,7 @@
         <div class="flex-1">
           <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
             <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING"
-              [messages]="(discussion$|async)!" [jobSelected]="jobDetails.title!==undefined" (apply)="onApply()"></app-discussion>
+              [messages]="(discussion$|async)!" [jobSelected]="jobDetails.title!==undefined" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()"></app-discussion>
           </ng-container>
           <ng-template #noSelectedDiscussion>
             <ng-container *ngIf="jobDetails.title; else noSelectedJob">
@@ -90,7 +90,7 @@
       </main>
     </div>
     <div *ngIf="selectedDiscussion">
-      <app-chat-message-input [isChatSelected]="isChatSelected" (message)="sendMessage($event)"></app-chat-message-input>
+      <app-chat-message-input [isChatSelected]="isChatSelected || isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
 </div>
@@ -122,4 +122,21 @@
       <button pButton class="flex-1 block" label="Confirmer" severity="info" [disabled]="loadingAudit" [loading]="loadingAudit" (click)="initCvAudit()"></button>
     </div>
   </div>
+</p-dialog>
+
+<p-dialog #restrictedAccessDialog [modal]="true" [visible]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+  <ng-template #header>
+    <div class="w-full text-end">
+      <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="goBack()"></p-button>
+    </div>
+  </ng-template>
+  <div class="relative flex flex-col items-center gap-6 pb-8 text-center">
+    <i class="text-4xl text-primary pi pi-lock"></i>
+    <h2 class="text-2xl font-semibold">Accès restreint</h2>
+    <p class="text-gray">Connecte-toi ou crée un compte pour prévisualiser le resultat, le téléchager ou l'adjuster.</p>
+    <div class="flex w-full gap-4">
+      <button pButton class="flex-1" severity="info" label="Créer un compte" (click)="goToSignUp()"></button>
+      <button pButton class="flex-1" severity="info" label="Se connecter" (click)="goToLogin()"></button>
+    </div>
+  </div>  
 </p-dialog>

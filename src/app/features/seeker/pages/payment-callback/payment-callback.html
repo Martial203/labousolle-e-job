@@ -1,82 +1,95 @@
 <div class="max-w-md mx-auto mt-10 space-y-4 h-96">
 
-    <!-- Carte statut + détails du paiement -->
-    <div *ngIf="payment"
-        class="bg-white shadow-xl rounded-2xl border border-gray-200 overflow-hidden transform transition-all hover:scale-105 duration-300">
+  <!-- Carte statut + détails du paiement -->
+  <div *ngIf="payment"
+    class="bg-white shadow-xl rounded-2xl border border-gray-200 overflow-hidden transform transition-all hover:scale-105 duration-300">
 
-        <!-- Statut avec badge flottant -->
-        <div class="relative p-4 flex items-center justify-between border-b border-gray-200 bg-gradient-to-r" [ngClass]="{
-           'from-green-100 to-green-200': payment.status === 'complete',
-           'from-yellow-100 to-yellow-200': payment.status === 'pending',
-           'from-red-100 to-red-200': payment.status === 'failed',
-           'from-gray-100 to-gray-200': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
-         }">
-            <div class="flex items-center gap-3">
-                <i class="text-2xl" [ngClass]="{
-            'pi pi-check-circle text-green-600 animate-pulse': payment.status === 'complete',
-            'pi pi-clock text-yellow-600 animate-pulse': payment.status === 'pending',
-            'pi pi-times-circle text-red-600 animate-pulse': payment.status === 'failed',
-            'pi pi-info-circle text-gray-600': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
-          }"></i>
-                <span class="text-lg font-bold" [ngClass]="{
-            'text-green-800': payment.status === 'complete',
-            'text-yellow-800': payment.status === 'pending',
-            'text-red-800': payment.status === 'failed',
-            'text-gray-800': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
-          }">
-                    {{ payment.status_display }}
-                </span>
-            </div>
+    <!-- Statut -->
+    <div class="relative p-4 flex items-center justify-between border-b border-gray-200 bg-gradient-to-r"
+      [ngClass]="{
+        'from-green-100 to-green-200': payment.status === 'complete',
+        'from-blue-50 to-blue-100': payment.status === 'pending',
+        'from-red-100 to-red-200': payment.status === 'failed',
+        'from-gray-100 to-gray-200': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
+      }">
 
-            <!-- Badge flottant -->
-            <span class="absolute top-2 right-2 px-3 py-1 rounded-full text-xs font-bold ring-1 ring-opacity-50"
-                [ngClass]="{
+      <div class="flex items-center gap-3">
+        <i class="text-2xl" [ngClass]="{
+          'pi pi-check-circle text-green-600 animate-pulse': payment.status === 'complete',
+          'pi pi-clock text-blue-500 animate-pulse': payment.status === 'pending',
+          'pi pi-times-circle text-red-600 animate-pulse': payment.status === 'failed',
+          'pi pi-info-circle text-gray-600': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
+        }"></i>
+
+        <span class="text-lg font-bold" [ngClass]="{
+          'text-green-800': payment.status === 'complete',
+          'text-blue-700': payment.status === 'pending',
+          'text-red-800': payment.status === 'failed',
+          'text-gray-800': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
+        }">
+          {{ payment.status_display }}
+        </span>
+      </div>
+
+      <!-- Badge -->
+      <span
+        class="absolute top-2 right-2 px-3 py-1 rounded-full text-xs font-bold ring-1 ring-opacity-50"
+        [ngClass]="{
           'bg-green-600 text-white ring-green-300': payment.status === 'complete',
-          'bg-yellow-500 text-white ring-yellow-300': payment.status === 'pending',
+          'bg-blue-400 text-white ring-blue-200': payment.status === 'pending',
           'bg-red-600 text-white ring-red-300': payment.status === 'failed',
           'bg-gray-400 text-white ring-gray-300': payment.status !== 'complete' && payment.status !== 'pending' && payment.status !== 'failed'
         }">
-                {{ payment.status | uppercase }}
-            </span>
-        </div>
-
-        <!-- Détails -->
-        <div class="p-4 space-y-3">
-            <div class="flex justify-between">
-                <span class="font-medium text-gray-500">Référence Notch Pay:</span>
-                <span class="font-semibold text-gray-900">{{ payment.reference }}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="font-medium text-gray-500">Référence commerçant:</span>
-                <span class="font-semibold text-gray-900">{{ payment.merchant_reference }}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="font-medium text-gray-500">Montant:</span>
-                <span class="font-semibold text-gray-900">{{ payment.amount }} {{ payment.currency }}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="font-medium text-gray-500">Méthode de paiement:</span>
-                <span class="font-semibold text-gray-900">{{ paymentMethodDisplay }}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="font-medium text-gray-500">Date de paiement:</span>
-                <span class="font-semibold text-gray-900">{{ formattedDate }}</span>
-            </div>
-        </div>
+        {{ payment.status | uppercase }}
+      </span>
     </div>
 
-    <!-- État loading -->
-    <div *ngIf="processState === PROCESS_STATES.LOADING"
-        class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 shadow-md animate-pulse">
-        <i class="pi pi-spin pi-spinner text-2xl"></i>
-        <span class="font-semibold">Vérification du paiement...</span>
+    <!-- Détails -->
+    <div class="p-4 space-y-3">
+      <div class="flex justify-between">
+        <span class="font-medium text-gray-500">Référence Notch Pay:</span>
+        <span class="font-semibold text-gray-900">{{ payment.reference }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-medium text-gray-500">Référence commerçant:</span>
+        <span class="font-semibold text-gray-900">{{ payment.merchant_reference }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-medium text-gray-500">Montant:</span>
+        <span class="font-semibold text-gray-900">{{ payment.amount }} {{ payment.currency }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-medium text-gray-500">Méthode de paiement:</span>
+        <span class="font-semibold text-gray-900">{{ paymentMethodDisplay }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-medium text-gray-500">Date de paiement:</span>
+        <span class="font-semibold text-gray-900">{{ formattedDate }}</span>
+      </div>
     </div>
+  </div>
 
-    <!-- État erreur -->
-    <div *ngIf="processState === PROCESS_STATES.ERROR"
-        class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-red-100 to-red-200 text-red-700 shadow-md">
-        <i class="pi pi-times-circle text-2xl"></i>
-        <span class="font-semibold">Erreur lors de la vérification du paiement</span>
-    </div>
+  <!-- Loading -->
+  <div *ngIf="processState === PROCESS_STATES.LOADING"
+    class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 shadow-md animate-pulse">
+    <i class="pi pi-spin pi-spinner text-2xl"></i>
+    <span class="font-semibold">Vérification du paiement...</span>
+  </div>
+
+  <!-- Erreur -->
+  <div *ngIf="processState === PROCESS_STATES.ERROR"
+    class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-red-100 to-red-200 text-red-700 shadow-md">
+    <i class="pi pi-times-circle text-2xl"></i>
+    <span class="font-semibold">Erreur lors de la vérification du paiement</span>
+  </div>
+
+  <!-- Bouton Continuer -->
+  <div *ngIf="processState === PROCESS_STATES.SUCCESS" class="flex justify-center mt-4">
+    <button
+      (click)="goNext()"
+      class="px-6 py-3 rounded-xl font-semibold text-white shadow-lg transition-all duration-300 transform hover:scale-105 bg-green-600 hover:bg-green-700 active:scale-95">
+      Continuer
+    </button>
+  </div>
 
 </div>

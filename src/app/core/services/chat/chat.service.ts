@@ -19,8 +19,23 @@ export class ChatService {
   get history$() { return this._history$.asObservable().pipe(map(chats => chats.sort((a, b) => b.date.getTime() - a.date.getTime()))) }
   get discussion$(): Observable<ChatMessage[]> { return this._discussion$.asObservable() }
 
+  private readonly LAST_CHAT_ID = 'last-chat-id';
+
   constructor(private http: HttpClient) {
     this.getChatHistory().subscribe(res => this._history$.next(res));
+  }
+
+  private getLastChatId(): string{
+    return sessionStorage.getItem(this.LAST_CHAT_ID) ?? "";
+  }
+
+  migrateChatSession(): Observable<void>|null{
+    const lastChatId = this.getLastChatId();
+    if(lastChatId.length>0){
+      const body = { session_id: lastChatId }
+      return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/migrate/`, body).pipe(tap(() => sessionStorage.removeItem(this.LAST_CHAT_ID)));
+    }
+    return null;
   }
 
   getChatHistory(): Observable<ChatHeader[]> {
@@ -46,7 +61,9 @@ export class ChatService {
   sendAMessage(discussionId: string, message: string, file?: File): Observable<ChatMessage>{
     const data = new FormData();
     data.append('content', message);
-    if(file) data.append('file', file);
+    if(file) {
+      data.append(file.type.startsWith('image/') ? 'profile_file' : 'old_cvfile', file);
+    }
     console.log(message)
     let additionnalMessage = ''
     if(file) additionnalMessage = 
@@ -118,6 +135,7 @@ export class ChatService {
     return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/`, body).pipe(
       map(res => this.mapChatHistory([res])[0]),
       tap(chat => {
+        sessionStorage.setItem(this.LAST_CHAT_ID, chat.id);
         this._history$.next([...this._history$.value, chat]);
         this._discussion$.next([])
       })
@@ -195,8 +213,8 @@ export class ChatService {
       id: document.id,
       type: document.type,
       name: document.file_name,
-      url: document.download_url,
-      isPreview: document.is_preview
+      url: document.download_url ?? document.pdf_base64,
+      isPreview: document.is_preview ?? true
     }
   }
 
