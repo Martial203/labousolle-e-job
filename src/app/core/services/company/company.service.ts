@@ -51,7 +51,7 @@ export class CompanyService {
       map(res => this.mapCompanyResToCompany(res)),
       tap(res => {
         const companies = this._companies$.value;
-        companies.push(company)
+        companies.push(res)
         this._companies$.next(companies)
       })
     );

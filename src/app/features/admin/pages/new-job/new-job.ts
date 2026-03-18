@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Company } from '../../../../core/models/company/company';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { JobService } from '../../../../core/services/job/job.service';
 import { CompanyService } from '../../../../core/services/company/company.service';
 import { Job } from '../../../../core/models/job/job';
@@ -38,12 +38,14 @@ export class NewJob {
   processState: ProcessState = ProcessState.INACTIVE;
 
   @ViewChild("jobForm") jobForm!: NgForm;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
   constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.initData();
     this.companies$ = this.companyService.companies$.pipe(
+      tap(res => console.log(res)),
       map(companies => companies.map(company => ({
         label: company.name,
         value: company.id
@@ -127,6 +129,11 @@ export class NewJob {
     });
   }
 
+  onCreate(): void{
+    this.displayDialog = false;
+    this.processState = ProcessState.INACTIVE;
+  }
+
   private initData(): void {
     this.experiences = [
       { label: 'Débutants', value: 1 },
@@ -142,5 +149,13 @@ export class NewJob {
       { label: 'Emploi', value: 'permanent' },
       { label: 'Stage', value: 'internship' }
     ];
+  }
+
+  private scrollToBottom(): void {
+    if (!this.scrollContainer) return;
+    setTimeout(() => {
+      const el = this.scrollContainer.nativeElement;
+      el.scrollTop = el.scrollHeight;
+    }, 50);
   }
 }

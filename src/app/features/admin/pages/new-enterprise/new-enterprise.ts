@@ -43,4 +43,5 @@ export class NewEnterprise {
     }
     this.tab = (this.tab+1)%3;
   }
+
 }

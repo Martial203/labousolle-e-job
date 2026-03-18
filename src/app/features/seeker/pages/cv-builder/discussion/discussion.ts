@@ -2,9 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { Attachment, ChatMessage } from '../../../../../core/models/chat/chat';
 import { ChatService } from '../../../../../core/services/chat/chat.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
-import { AuthService } from '../../../../../core/services/auth/auth.service';
 import { DocumentType } from '../../../../../core/enums/document-type/document-type';
-import { mapObservableError } from '../../../../../core/utils/utils';
 
 @Component({
   selector: 'app-discussion',
@@ -32,7 +30,7 @@ export class Discussion {
 
   get isPreview(): boolean { return this.messages.filter(message => message.document ? message.document.isPreview : false).length>0 }
 
-  constructor(private authService: AuthService, private chatService: ChatService) { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     console.log(this.messages)
@@ -44,7 +42,7 @@ export class Discussion {
       next: (res: any) => {
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(res);
-        link.download = `${doc.type === 'LETTER' ? 'LM' : 'CV'}_${this.authService.user.firstName} ${this.authService.user.name}_${new Date().toLocaleDateString()}`;
+        link.download
         link.click();
         this.processState = ProcessState.SUCCESS;
       },

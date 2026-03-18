@@ -19,7 +19,7 @@
               <figure class="hidden overflow-hidden rounded-full lg:block w-26">
                 <img class="object-cover w-full" src="assets/images/reddit.png" alt="">
               </figure>
-              <h1 class="font-semibold capitalize">{{ user.name }}</h1>
+              <h1 class="font-semibold capitalize">{{ user ? user.name : "Anonyme" }}</h1>
             </div>
           </ng-template>
           <ng-template #end>
@@ -59,9 +59,9 @@
                 </div>
 
                 <div class="flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                  <button pButton label="'Evaluer mon CV actuel" icon="pi pi-plus" severity="info" class="mt-4"
+                  <button pButton label="Faire une évaluation de mon CV actuel" icon="pi pi-plus" severity="info" class="mt-4"
                     [loading]="loadingAudit" [disabled]="loadingAudit" (click)="displayCvUploadDialog = true"></button>
-                  <button pButton label="Créer mon CV/Lettre de motivation pour cette offre" icon="pi pi-plus" severity="info" class="mt-4"
+                  <button pButton label="Choisir un modèle et commencer" icon="pi pi-plus" severity="info" class="mt-4"
                     (click)="displayTemplatePicker = true"></button>
                 </div>
               </div>
@@ -80,8 +80,8 @@
                   </p>
                 </div>
                 <div class="flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2">
-                  <button pButton label="Faire un audit de mon CV actuel" icon="pi pi-plus" severity="info" class="mt-4" [loading]="loadingAudit" [disabled]="loadingAudit" (click)="displayCvUploadDialog = true"></button>
-                  <button pButton label="Choisir un modèle et commence" icon="pi pi-plus" severity="info" class="mt-4" (click)="displayTemplatePicker = true"></button>
+                  <button pButton label="Faire une évaluation de mon CV actuel" icon="pi pi-plus" severity="info" class="mt-4" [loading]="loadingAudit" [disabled]="loadingAudit" (click)="displayCvUploadDialog = true"></button>
+                  <button pButton label="Choisir un modèle et commencer" icon="pi pi-plus" severity="info" class="mt-4" (click)="displayTemplatePicker = true"></button>
                 </div>
               </div>
             </ng-template>

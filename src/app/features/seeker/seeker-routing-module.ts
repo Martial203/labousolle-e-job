@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home', component: Home },
   { path: 'jobs', component: JobsList },
   { path: 'jobs/:id', component: JobDetails },
-  { path: 'cv-builder', component: CvBuilder, canActivate: [AuthGuard] },
+  { path: 'cv-builder', component: CvBuilder },
   { path: 'cv-builder/:jobId', component: CvBuilder, canActivate: [AuthGuard] },
   { path: 'payment-callback', component: PaymentCallback, canActivate: [AuthGuard] }
 ];

@@ -40,7 +40,7 @@ export class JobService {
       image: jobData.coverImage,
       about: "null",
       description: jobData.description,
-      profile_required: ' ',
+      profile_required: 'Empty',
       experience_required: jobData.experience,
       salary_min: '0',
       salary_max: '0',
@@ -172,7 +172,7 @@ export class JobService {
       image: jobData.coverImage,
       about: "null",
       description: jobData.description,
-      profile_required: ' ',
+      profile_required: 'Empty',
       experience_required: jobData.experience,
       salary_min: '0',
       salary_max: '0',
@@ -195,7 +195,8 @@ export class JobService {
   applyToJob(jobId: number): Observable<any> {
     return this.http.get(`${environment.apiUrl}/jobs/${jobId}/generate_application_email/`).pipe(
       tap((res: any) => {
-        const email = this._jobs$.value.filter(job => job.id)[0].email;
+        const email = this._jobs$.value.find(job => job.id === jobId)?.email;
+        console.log('Email 2', email)
         const subject = encodeURIComponent(res.subject);
         const body = encodeURIComponent(res.body);
         const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
@@ -246,7 +247,7 @@ export class JobService {
       experience: "Bac",
       isFeatured: tmpJob.is_featured,
       jobType: tmpJob.job_type,
-      profileRequired: tmpJob.profile_required ?? ' ',
+      profileRequired: tmpJob.profile_required ?? 'Empty',
     }
     return job;
   }

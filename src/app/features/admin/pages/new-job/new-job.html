@@ -73,6 +73,6 @@
   <button pButton class="w-full lg:w-fit" severity="info" label="Publier l'offre d'emploi" icon="pi pi-arrow-right" iconPos="right" [disabled]="processState === PROCESS_STATES.LOADING" [loading]="processState === PROCESS_STATES.LOADING"></button>
 </form>
 
-<p-dialog [(visible)]="displayDialog" [modal]="true" [maximizable]="true" header="Ajouter une entreprise">
-  <app-new-enterprise></app-new-enterprise>
+<p-dialog [(visible)]="displayDialog" [modal]="true" [maximizable]="true" header="Ajouter une entreprise" styleClass="w-[90%] lg:!w-1/4">
+  <app-new-enterprise [isModal]="true" (created)="onCreate()"></app-new-enterprise>
 </p-dialog>
