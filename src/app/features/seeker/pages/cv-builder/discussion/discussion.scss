@@ -2,7 +2,7 @@ div.message{
   div.content{
     @apply text-gray shadow;
     p, div{
-      @apply mb-2;
+      @apply mb-2 !important;
     }
   }
 }

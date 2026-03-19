@@ -4,6 +4,7 @@ import { SignUpCredentials } from '../../models/sign-up-credentials/sign-up-cred
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { mapObservableError } from '../../../../core/utils/utils';
+import { ChatService } from '../../../../core/services/chat/chat.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +20,7 @@ export class SignUp {
   processState: ProcessState = ProcessState.INACTIVE;
   error!: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private chatService: ChatService, private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -29,6 +30,8 @@ export class SignUp {
     this.authService.signUp(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
+        const migration = this.chatService.migrateChatSession();
+        if(migration) migration.subscribe();
         setTimeout(() => this.router.navigateByUrl('/auth/choose-interests'), 2000);
       },
       error: (err) => {
