@@ -113,7 +113,7 @@ export class CompanyService {
       name: res.name,
       phone: res.phone,
       size: res.company_size,
-      type: res.company_type,
+      type: this.getLabelFromValue(res.company_type),
       website: res.website,
       address: '',
       contacts: [],
@@ -127,5 +127,18 @@ export class CompanyService {
       },
       jobsCount: res.jobs_count ?? 0
     }
+  }
+
+  private getLabelFromValue(value: string): string {
+    const map: Record<string, string> = {
+      startup: 'Startup',
+      multinational: 'Grande entreprise',
+      public: 'Administration publique',
+      pme: 'PME / PMI',
+      ong: 'ONG / Association',
+      other: 'Autre'
+    };
+
+    return map[value] || 'Autre';
   }
 }

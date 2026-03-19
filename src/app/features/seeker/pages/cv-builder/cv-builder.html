@@ -14,12 +14,15 @@
       <header class="w-full">
         <p-toolbar class="mx-auto shadow-md ">
           <ng-template #start>
-            <p-button icon="pi pi-comments" severity="info" [rounded]="true" class="block mr-2 lg:hidden" (click)="onToggleChatHistory()"></p-button>
+            <p-button icon="pi pi-align-left" severity="info" [rounded]="true" class="block mr-2 lg:hidden" (click)="onToggleChatHistory()"></p-button>
             <div class="flex flex-row items-center justify-between gap-8 ml-1">
               <figure class="hidden overflow-hidden rounded-full lg:block w-26">
                 <img class="object-cover w-full" src="assets/images/reddit.png" alt="">
               </figure>
-              <h1 class="font-semibold capitalize">{{ user ? user.name : "Anonyme" }}</h1>
+              <h1 class="font-semibold capitalize">
+                <span class="hidden lg:inline">{{ user ? user.name : "Anonyme" }}</span>
+                <span class="inline lg:hidden">Historique</span>
+              </h1>
             </div>
           </ng-template>
           <ng-template #end>

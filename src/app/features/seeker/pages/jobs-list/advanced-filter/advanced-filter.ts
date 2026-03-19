@@ -41,14 +41,14 @@ export class AdvancedFilter {
 
   private initData(): void {
     this.experiences = [
-      { label: 'Débutants', value: 1 },
-      { label: '1-2 ans', value: 2 },
-      { label: '2-4 ans', value: 4 },
-      { label: '4-6 ans', value: 6 },
-      { label: '6-8 ans', value: 8 },
-      { label: '8-10 ans', value: 10 },
-      { label: '10-15 ans', value: 15 },
-      { label: '15+ ans', value: 20 }
+      { label: 'Aucune expérience', value: 0 },
+      { label: 'Moins de 1 an', value: 1 },
+      { label: '1 à 2 ans', value: 2 },
+      { label: '2 à 3 ans', value: 3 },
+      { label: '3 à 5 ans', value: 5 },
+      { label: '5 à 7 ans', value: 7 },
+      { label: '7 à 10 ans', value: 10 },
+      { label: 'Plus de ans', value: 20 }
     ];
     this.contractTypes = [
       { label: 'Tous', value: null },
