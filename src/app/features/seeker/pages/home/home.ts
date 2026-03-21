@@ -2,7 +2,7 @@ import { map, Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { JobService } from '../../../../core/services/job/job.service';
 import { Category } from '../../../../core/models/category/category';
-import { Job } from '../../../../core/models/job/job';
+import { Job, JobSearchParams } from '../../../../core/models/job/job';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { TestimonyService } from '../../../../core/services/testimony/testimony.service';
@@ -66,8 +66,17 @@ export class Home {
     ]
   }
 
-  onSearch(): void {
-    this.router.navigateByUrl('/jobs')
+  onSearch(val: { job: string, city: string }): void {
+    const params = new JobSearchParams();
+    if(val.job.length>0) params.q = val.job;
+    if(val.city.length>0) params.city = val.city;
+    if(val.city.length>0 || val.job.length>0) this.router.navigate(['/jobs'], { queryParams: params });
+  }
+
+  onSearchByCategory(category: string): void{
+    const params = new JobSearchParams();
+    params.category = category.toLowerCase();
+    this.router.navigate(['/jobs'], { queryParams: params });
   }
 
 

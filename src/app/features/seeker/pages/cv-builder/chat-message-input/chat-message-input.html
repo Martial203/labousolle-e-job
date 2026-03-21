@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl">
+<div class="flex flex-col gap-2 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl {{ disabled ? 'pointer-events-none' : '' }}">
   <div *ngIf="attachment" class="relative w-full py-2 overflow-hidden h-28 w-fit">
     <span class="absolute top-0 left-12 scale-[60%]"><button pButton icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onRemoveAttachment()"></button></span>
     <img class="w-auto h-20" [src]="attachmentPreview" alt="" onerror="this.src = 'assets/images/pdf.png'">
@@ -10,9 +10,9 @@
       <p-badge *ngIf="this.attachment" class="absolute bottom-0.5 right-0.5" severity="success"></p-badge>
     </div>
     <input #attachmentInput class="hidden" type="file" accept=".pdf, .png, .jpg" (change)="uploadAttachment($event)">
-    <textarea pTextarea class="flex-1 py-1 text-sm bg-transparent lg:text-md" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text" [disabled]="!isChatSelected"></textarea>
+    <textarea pTextarea class="flex-1 py-1 text-sm bg-transparent lg:text-md" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text" [disabled]="!isChatSelected || disabled"></textarea>
     <div class="flex flex-row items-center gap-0.5 pl-0.5 lg:pl-2 p-2 lg:gap-4">
-      <button *ngIf="text.length===0" pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
+      <button *ngIf="text.length===0 && !disabled" pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
       <p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [showHeader]="false">
         <div class="flex flex-col items-center justify-center gap-6 p-8">
           <div class="flex items-center justify-center">

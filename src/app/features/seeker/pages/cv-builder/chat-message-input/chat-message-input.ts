@@ -16,6 +16,7 @@ export class ChatMessageInput {
 
   @Input() minLength: number = 1;
   @Input() isChatSelected: boolean = false;
+  @Input() disabled: boolean = false;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
   @Output() uploadedFile: EventEmitter<File> = new EventEmitter<File>();
 

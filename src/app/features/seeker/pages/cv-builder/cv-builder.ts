@@ -50,6 +50,7 @@ export class CvBuilder {
   tmpUploadedCvToPreview!: any;
 
   isPreviewMode: boolean = false;
+  auditMode: boolean = false;
 
   get isAnonymMode(): boolean { return this.user == undefined || this.user ==null }
   get shouldPromptLogin(): boolean { return (this.user == null || this.user == undefined) && this.isPreviewMode }
@@ -189,6 +190,7 @@ export class CvBuilder {
         console.log(res)
         this.selectChat(res.chatId);
         console.log(this.selectedDiscussion)
+        this.auditMode = true
       },
       error: err => alert(mapObservableError(err)),
       complete: () => this.loadingAudit = false
@@ -199,7 +201,7 @@ export class CvBuilder {
     if(this.jobId==null) return;
     this.loadingApplication = true;
     this.jobService.applyToJob(this.jobId).subscribe({
-      next: () => setTimeout(() => this.displayTestimonialDialog = true, 10000),
+      next: () => setTimeout(() => this.displayTestimonialDialog = true, 3000),
       error: (err) => alert(mapObservableError(err)),
       complete: () => this.loadingApplication = false
     });

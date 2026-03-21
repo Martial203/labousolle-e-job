@@ -92,8 +92,8 @@
         </div>
       </main>
     </div>
-    <div *ngIf="selectedDiscussion">
-      <app-chat-message-input [isChatSelected]="isChatSelected || isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
+    <div *ngIf="selectedDiscussion" (click)="isAnonymMode && auditMode ? isPreviewMode=true : undefined">
+      <app-chat-message-input [isChatSelected]="isChatSelected || isAnonymMode" [disabled]="auditMode && isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
 </div>
@@ -109,7 +109,7 @@
 </p-dialog>
 
 <p-dialog #uploadCvDialog [(visible)]="displayCvUploadDialog" header="Rajoutes ton CV" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
-  <div class="flex flex-col gap-8 p-4">
+  <div class="flex flex-col gap-8 p-4">  
 
     <figure *ngIf="tmpUploadedCvToPreview" class="h-60 border-light-gray p-0.5 border rounded overflow-hidden">
       <img [src]="tmpUploadedCvToPreview" class="object-cover w-full h-full" alt="" onerror="this.src='assets/images/pdf.png'">
@@ -127,16 +127,16 @@
   </div>
 </p-dialog>
 
-<p-dialog #restrictedAccessDialog [modal]="true" [visible]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
   <ng-template #header>
     <div class="w-full text-end">
-      <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="goBack()"></p-button>
+      <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="isPreviewMode = false"></p-button>
     </div>
   </ng-template>
   <div class="relative flex flex-col items-center gap-6 pb-8 text-center">
     <i class="text-4xl text-primary pi pi-lock"></i>
     <h2 class="text-2xl font-semibold">Accès restreint</h2>
-    <p class="text-gray">Connecte-toi ou crée un compte pour prévisualiser le resultat, le téléchager ou l'adjuster.</p>
+    <p class="text-gray">🚀 Passez au niveau supérieur : connectez-vous pour débloquer l’audit complet et transformer votre CV en véritable aimant à recruteurs.</p>
     <div class="flex w-full gap-4">
       <button pButton class="flex-1" severity="info" label="Créer un compte" (click)="goToSignUp()"></button>
       <button pButton class="flex-1" severity="info" label="Se connecter" (click)="goToLogin()"></button>
