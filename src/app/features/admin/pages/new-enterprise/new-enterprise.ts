@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Company } from '../../../../core/models/company/company';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '../../../../core/services/company/company.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-enterprise',
@@ -18,7 +19,7 @@ export class NewEnterprise {
   @Input() editMode: boolean = true;
   @Output() created: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private companyService: CompanyService, private messageService: MessageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const companyId = this.route.snapshot.params['id'];
@@ -35,6 +36,7 @@ export class NewEnterprise {
   onValidateStep(company: Company): void{
     this.company = company;
     if(this.tab === 2) {
+      this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Entreprise crée avec succès." })
       if(this.isModal){
         this.created.emit();
       }else{

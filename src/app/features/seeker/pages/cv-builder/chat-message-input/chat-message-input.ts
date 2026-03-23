@@ -13,6 +13,7 @@ export class ChatMessageInput {
   visible: boolean = false;
   attachment!: File|null;
   attachmentPreview!: any;
+  attachmentType: 'cv'|'profile' = 'cv';
 
   @Input() minLength: number = 1;
   @Input() isChatSelected: boolean = false;
@@ -47,7 +48,7 @@ export class ChatMessageInput {
   onSend(): void{
     const message : MessageInput = {
       content: this.text,
-      file: this.attachment ? this.attachment : undefined
+      file: this.attachment ? { file: this.attachment, type: this.attachmentType } : undefined
     }
     this.message.emit(message);
     this.text = '';
@@ -67,11 +68,12 @@ export class ChatMessageInput {
     this.stop();
   }
 
-  uploadAttachment(event: any): void{
+  uploadAttachment(event: any, type: 'cv'|'profile'): void{
     const files = event.target.files;
     if(files.length===0) return;
     this.attachment = files[0];
     this.attachmentPreview = URL.createObjectURL(this.attachment!);
+    this.attachmentType = type;
     this.uploadedFile.emit(this.attachment!);
   }
 

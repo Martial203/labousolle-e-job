@@ -13,9 +13,9 @@
               <i class="mr-4 text-primary pi pi-map-marker"></i>
               <input class="h-full text-sm border-none outline-none" type="text" name="city" id="city" placeholder="Votre emplacement" ngModel>
             </div>
-            <p-button type="submit" class="mx-auto border-none lg:mx-0" severity="info" (click)="onSearch(searchFrom.value)">Rechercher</p-button>
+            <p-button class="mx-auto border-none lg:mx-0" severity="info" (click)="onSearch(searchFrom.value)">Rechercher</p-button>
           </form>
-          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" routerLink="/jobs" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest.name }}, </a> etc</p>
+          <p class="text-sm"><label class="text-gray">Suggestion : </label> <a *ngFor="let interest of ((userInterests$|async) | slice:0:3) as interests; let i=index" (click)="onSearchByCategory(interest.name)" class="hover:text-primary hover:font-semibold {{ i===interests.length-1 ? 'text-primary' : '' }}">{{ interest.name }}, </a> etc</p>
         </div>
       </div>
       <div class="relative">

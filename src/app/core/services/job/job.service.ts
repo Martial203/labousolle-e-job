@@ -214,7 +214,6 @@ export class JobService {
       )
     });   
 
-    console.log(params)
     return this.http.get<Job[]>(`${environment.apiUrl}/jobs/search/`, { params }).pipe(
       map((res: any) => {
         const jobs: Job[] = res.results.map((tmpJob: any) => this.mapJobResToJob(tmpJob));

@@ -221,11 +221,11 @@ export class CvBuilder {
   }
 
   goToSignUp(): void{
-    this.router.navigate(['/auth/sign-up'])
+    this.router.navigate(['/auth/sign-up'], { queryParams: { chatId: this.selectedDiscussion } })
   }
 
   goToLogin(): void{
-    this.router.navigate(['/auth/login'])
+    this.router.navigate(['/auth/login'], { queryParams: { chatId: this.selectedDiscussion } })
   }
 
   goBack(): void{

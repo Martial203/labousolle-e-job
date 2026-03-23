@@ -16,6 +16,7 @@ export class Login {
 
   jobId!: string;
   loginError!: string;
+  goToChatId!: string;
   private returnUrl!: string;
 
   readonly PROCESS_STATES = ProcessState;
@@ -26,8 +27,10 @@ export class Login {
   ngOnInit(): void {
     const val = this.route.snapshot.queryParams['jobId'];
     const _returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    const chatId = this.route.snapshot.queryParams['chatId'];
     if(_returnUrl) this.returnUrl = _returnUrl;
     if(val) this.jobId = val;
+    if(chatId) this.goToChatId = chatId;
   }
 
   onSubmit(credentials: LoginCredentials): void {
@@ -37,7 +40,7 @@ export class Login {
         this.processState = ProcessState.SUCCESS;
         const migration = this.chatService.migrateChatSession();
         if(migration){
-          migration.subscribe(() => setTimeout(() => this.router.navigateByUrl('/cv-builder'), 2000))
+          migration.subscribe(() => setTimeout(() => this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.goToChatId } }), 2000))
         }else{
           setTimeout(() => {
             if(this.returnUrl){

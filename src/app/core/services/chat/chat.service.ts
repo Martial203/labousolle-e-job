@@ -58,18 +58,18 @@ export class ChatService {
     return this.http.delete<void>(`${environment.apiUrl}/ai-agent/conversations/${chatId}/`);
   }
 
-  sendAMessage(discussionId: string, message: string, file?: File): Observable<ChatMessage>{
+  sendAMessage(discussionId: string, message: string, file?: { file: File, type: 'cv'|'profile'}): Observable<ChatMessage>{
     const data = new FormData();
     data.append('content', message);
     if(file) {
-      data.append(file.type.startsWith('image/') ? 'profile_file' : 'old_cvfile', file);
+      data.append(file.type === 'profile' ? 'profile_file' : 'old_cvfile', file.file);
     }
     console.log(message)
     let additionnalMessage = ''
     if(file) additionnalMessage = 
     `
       <div class="flex flex-col gap-2 py-3 rounded-lg bg-gray-50 mt-4 italic">
-        <p class="text-sm font-medium text-gray-700"> <span class="font-bold">Fichier joint:</span> ${file.name}</p>
+        <p class="text-sm font-medium text-gray-700"> <span class="font-bold">Fichier joint:</span> ${file.file.name}</p>
       </div>`
     // '\n\n📎 [Fichier joint: '+file.name+']';
     this.addMessage({
@@ -144,7 +144,7 @@ export class ChatService {
 
   initCVAudit(file: File, jobId?: number): Observable<ChatMessage> {
     return this.initChat(DocumentType.CV, this._cvTemplates[0].id, jobId).pipe(
-      switchMap(chat => this.sendAMessage(chat.id, jobId ? "Fais moi un audit de ce CV pour l'offre d'emploi sélectionnée et optimisons le ensemble." : "Fais moi stp un audit de ce CV et optimisons le ensemble.", file))
+      switchMap(chat => this.sendAMessage(chat.id, jobId ? "Fais moi un audit de ce CV pour l'offre d'emploi sélectionnée et optimisons le ensemble." : "Fais moi stp un audit de ce CV et optimisons le ensemble.", { file: file, type: 'cv' }))
     )
   }
 

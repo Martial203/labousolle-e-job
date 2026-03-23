@@ -8,6 +8,7 @@ import { ProcessState } from '../../../../core/enums/process-state/process-state
 import { NgForm } from '@angular/forms';
 import { ViewportScroller } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 interface SelectOption {
   label: string;
@@ -40,7 +41,7 @@ export class NewJob {
   @ViewChild("jobForm") jobForm!: NgForm;
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private router: Router, private route: ActivatedRoute) {}
+  constructor(private jobService: JobService, private companyService: CompanyService, private viewportScroller: ViewportScroller, private messageService: MessageService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.initData();
@@ -118,6 +119,7 @@ export class NewJob {
         this.selectedFile = null;
         this.preview = null;
         this.viewportScroller.scrollToPosition([0, 0]);
+        this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Opération effectuée avec succès." })
         if(this.activeJob){
           setTimeout(() => this.router.navigateByUrl('/admin/jobs'), 2000);
         }

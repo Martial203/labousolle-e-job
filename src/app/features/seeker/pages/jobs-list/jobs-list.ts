@@ -27,6 +27,7 @@ export class JobsList {
   constructor(private jobService: JobService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log(this.route.snapshot.queryParams)
     const params: JobSearchParams = this.route.snapshot.queryParams ?? new JobSearchParams();
     this.jobs$ = this.jobService.searchJobs(params).pipe(tap(res => this.processJobsRes(res)));
   }
@@ -42,6 +43,7 @@ export class JobsList {
 
   onSearch(params: JobSearchParams): void{
     this.processState = ProcessState.LOADING;
+    console.log('params', params)
     this.jobs$ = this.jobService.searchJobs(params).pipe(tap(res => this.processJobsRes(res)));
     this.isFilterModalOpen = false;
   }

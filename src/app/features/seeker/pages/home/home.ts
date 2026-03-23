@@ -67,10 +67,8 @@ export class Home {
   }
 
   onSearch(val: { job: string, city: string }): void {
-    const params = new JobSearchParams();
-    if(val.job.length>0) params.q = val.job;
-    if(val.city.length>0) params.city = val.city;
-    if(val.city.length>0 || val.job.length>0) this.router.navigate(['/jobs'], { queryParams: params });
+    const params: JobSearchParams = { q: val.job, city: val.city };
+    if(params.city!.length>0 || params.q!.length>0) this.router.navigate(['/jobs'], { queryParams: params });
   }
 
   onSearchByCategory(category: string): void{
