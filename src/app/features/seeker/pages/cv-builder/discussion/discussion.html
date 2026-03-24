@@ -31,7 +31,7 @@
     <ng-template #emptyDiscussion>
       <div class="flex flex-col items-center justify-center gap-4 py-12 text-center">
         <i class="scale-[2] p-2 text-gray pi pi-comments italic"></i>
-        <p class="text-lg italic font-semibold text-gray">Aucun message pour le moment.</p>
+        <p class="text-lg italic font-semibold text-gray">Écris <strong>Créer mon CV</strong> pour commencer.</p>
         <p class="max-w-md text-sm italic text-gray">
           Lance une discussion avec l’assistant pour commencer à construire ton CV, ou télécharge simplement ton dernier CV. Je pourrai en extraire les informations essentielles et t’aider à les améliorer pour créer une version encore plus efficace.
         </p>
@@ -66,7 +66,7 @@
       [original-size]="false"
       class="w-[60vh] h-[80vh] {{ isPreview ? 'blur-[1px]' : '' }}"
     ></pdf-viewer>
-    <p-message *ngIf="isPreview" severity="info" class="absolute w-full scale-75 inset-y-1/2" text="Procèdes au paiement pour obtenir le document complet, sans filligrane ni floutage."></p-message>
+    <a [href]="getPaymentUrl()"><p-message *ngIf="isPreview" severity="info" class="absolute w-full scale-75 inset-y-1/2" text="Procèdes au paiement pour obtenir le document complet, sans filligrane ni floutage."></p-message></a>
     <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
   </div>
 

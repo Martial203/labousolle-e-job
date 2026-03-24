@@ -102,6 +102,17 @@ export class Discussion {
     }
   }
 
+  getPaymentUrl(): string{
+    let paymentUrl = '';
+    for(let i=this.messages.length-1; i>=0; i--){
+      if(this.messages[i].paymentUrl){
+        paymentUrl = this.messages[i].paymentUrl!
+        break;
+      }
+    }
+    return paymentUrl;
+  }
+
   onApply(): void {
     this.apply.emit();
   }
