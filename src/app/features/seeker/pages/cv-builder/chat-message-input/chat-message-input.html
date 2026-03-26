@@ -29,7 +29,7 @@
     <input #profilePicInput class="hidden" type="file" accept=".png, .jpg, .jpeg, .gif" (change)="uploadAttachment($event, 'profile')">
     <textarea pTextarea class="flex-1 py-1 text-sm bg-transparent lg:text-md" style="border: none; box-shadow: 0;" rows="1"  name="" id="" minlength="{{ minLength }}" [(ngModel)]="text" [disabled]="!isChatSelected || disabled"></textarea>
     <div class="flex flex-row items-center gap-0.5 pl-0.5 lg:pl-2 p-2 lg:gap-4">
-      <button *ngIf="text.length===0 && !disabled" pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
+      <button *ngIf="text.length===0 && !disabled" class="hidden lg:block" pButton [text]="true" [rounded]="true" severity="secondary" icon="pi pi-microphone" (click)="visible=true; startSpeech()"></button>
       <p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [showHeader]="false">
         <div class="flex flex-col items-center justify-center gap-6 p-8">
           <div class="flex items-center justify-center">
