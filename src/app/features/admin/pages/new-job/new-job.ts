@@ -119,7 +119,7 @@ export class NewJob {
         this.selectedFile = null;
         this.preview = null;
         this.viewportScroller.scrollToPosition([0, 0]);
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Opération effectuée avec succès." })
+        this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Opération effectuée avec succès."  })
         if(this.activeJob){
           setTimeout(() => this.router.navigateByUrl('/admin/jobs'), 2000);
         }

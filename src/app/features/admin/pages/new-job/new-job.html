@@ -26,11 +26,15 @@
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div *ngIf="categories$|async as categories">
         <label for="">Catégorie</label>
-        <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" optionValue="value" name="categoryId" [showClear]="true" [filter]="true" filterBy="label" required ngModel></p-select>
+        <p-select placeholder="Sélectionner" [options]="categories" optionLabel="label" optionValue="value" name="categoryId" [showClear]="true" [filter]="true" filterBy="label" [pt]="{
+          optionLabel: { style: 'min-width: 0; max-width: 73vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' }
+        }" required ngModel></p-select>
       </div>
       <div *ngIf="companies$|async as companies">
         <label for="">Entreprise</label>
-        <p-select placeholder="Sélectionner" [options]="companies" optionLabel="label" optionValue="value" name="companyId" [showClear]="true" [filter]="true" filterBy="label" required ngModel>
+        <p-select placeholder="Sélectionner" [options]="companies" optionLabel="label" optionValue="value" name="companyId" [showClear]="true" [filter]="true" filterBy="label" [pt]="{
+          optionLabel: { style: 'min-width: 0; max-width: 73vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' }
+        }" required ngModel>
           <ng-template pTemplate="footer">
             <button pButton (click)="displayDialog=true" label="Ajouter" icon="pi pi-plus" class="w-full"></button>
           </ng-template>

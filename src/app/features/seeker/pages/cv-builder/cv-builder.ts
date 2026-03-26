@@ -65,6 +65,7 @@ export class CvBuilder {
       this.jobDetails = { title: params['title'], company: params['company'] };
       const chatId = params['chatId'];
       this.selectChat(chatId);
+      this.scrollToBottom();
     });
     this.chatHistory$ = this.chatService.history$;
     this.user = this.authService.user;
@@ -108,6 +109,7 @@ export class CvBuilder {
       next: () => {
         this.processState = ProcessState.SUCCESS;
         this.isChatSelected = true;
+        this.displayChatHistory = false;
       },
       error: (err) => {
         this.processState = ProcessState.ERROR;
@@ -128,7 +130,7 @@ export class CvBuilder {
   sendMessage(message: MessageInput): void{
     this.messageProcessing = ProcessState.LOADING;
     this.scrollToBottom();
-    this.chatService.sendAMessage(this.selectedDiscussion, message.content, message.file ? message.file : undefined).subscribe({
+    this.chatService.sendAMessage(this.selectedDiscussion, message.content, message.oldCV ?? undefined, message.profile ?? undefined).subscribe({
       next: () => this.messageProcessing = ProcessState.SUCCESS,
       error: (err) => {
         this.messageProcessing = ProcessState.ERROR
@@ -140,6 +142,7 @@ export class CvBuilder {
   onDiscussionCreated(discussionId: string): void{
     this.displayTemplatePicker = false;
     this.selectChat(discussionId);
+    this.displayChatHistory = false;
   }
 
   groupChatsByDate(chats: ChatHeader[]): ChatGroupedByPeriod {

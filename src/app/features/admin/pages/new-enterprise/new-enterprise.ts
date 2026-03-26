@@ -36,7 +36,7 @@ export class NewEnterprise {
   onValidateStep(company: Company): void{
     this.company = company;
     if(this.tab === 2) {
-      this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Entreprise crée avec succès." })
+      this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Entreprise crée avec succès.", styleClass: "w-[90%" })
       if(this.isModal){
         this.created.emit();
       }else{

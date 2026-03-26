@@ -11,9 +11,13 @@ export class ChatMessageInput {
   private recognition: any;
   text = '';
   visible: boolean = false;
+
   attachment!: File|null;
   attachmentPreview!: any;
-  attachmentType: 'cv'|'profile' = 'cv';
+
+  profileAttachment!: File|null;
+  profileAttachmentPreview!: any;
+
 
   @Input() minLength: number = 1;
   @Input() isChatSelected: boolean = false;
@@ -48,12 +52,15 @@ export class ChatMessageInput {
   onSend(): void{
     const message : MessageInput = {
       content: this.text,
-      file: this.attachment ? { file: this.attachment, type: this.attachmentType } : undefined
+      oldCV: this.attachment ?? undefined,
+      profile: this.profileAttachment ?? undefined
     }
     this.message.emit(message);
     this.text = '';
     this.attachment = null!;
-    this.attachmentPreview = null;
+    this.profileAttachment = null!;
+    this.attachmentPreview = null!;
+    this.profileAttachmentPreview = null!;
   }
 
   stop() {
@@ -61,7 +68,7 @@ export class ChatMessageInput {
   }
 
   startSpeech() {
-    this.start(t => this.text = t);
+    this.requestMicPermission().then(() => this.start(t => this.text = t));
   }
 
   stopSpeech() {
@@ -71,14 +78,33 @@ export class ChatMessageInput {
   uploadAttachment(event: any, type: 'cv'|'profile'): void{
     const files = event.target.files;
     if(files.length===0) return;
-    this.attachment = files[0];
-    this.attachmentPreview = URL.createObjectURL(this.attachment!);
-    this.attachmentType = type;
-    this.uploadedFile.emit(this.attachment!);
+    if(type==='cv'){
+      this.attachment = files[0];
+      this.attachmentPreview = URL.createObjectURL(this.attachment!);
+      this.uploadedFile.emit(this.attachment!);
+    }else{
+      this.profileAttachment = files[0];
+      this.profileAttachmentPreview = URL.createObjectURL(this.profileAttachment!);
+      this.uploadedFile.emit(this.attachment!);
+    }
   }
 
-  onRemoveAttachment(): void{
-    this.attachment = null;
-    this.attachmentPreview = null;
+  onRemoveAttachment(type: 'cv'|'profile'): void{
+    if(type==='cv'){
+      this.attachment = null;
+      this.attachmentPreview = null;
+    }else{
+      this.profileAttachment = null;
+      this.profileAttachmentPreview = null;
+    }
+  }
+
+  async requestMicPermission() {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      console.log("Permission accordée");
+    } catch (err) {
+      console.log("Permission refusée", err);
+    }
   }
 }

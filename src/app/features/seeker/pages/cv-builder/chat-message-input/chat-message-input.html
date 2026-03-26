@@ -1,12 +1,20 @@
 <div class="flex flex-col gap-2 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl {{ disabled ? 'pointer-events-none' : '' }}">
-  <div *ngIf="attachment" class="relative w-full py-2 overflow-hidden h-28 w-fit">
-    <span class="absolute top-0 left-12 scale-[60%]"><button pButton icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onRemoveAttachment()"></button></span>
-    <img class="w-auto h-20" [src]="attachmentPreview" alt="" onerror="this.src = 'assets/images/pdf.png'">
-    <p class="mt-2 text-xs italic font-semibold text-gray">{{ attachment.name }}</p>
+  <div *ngIf="attachment || profileAttachment" class="flex flex-row justify-start gap-4">
+    <div *ngIf="attachment" class="relative py-2 overflow-hidden h-28 w-fit max-w-28 lg:max-36">
+      <span class="absolute top-0 left-12 scale-[60%]"><button pButton icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onRemoveAttachment('cv')"></button></span>
+      <img class="w-auto h-20" [src]="attachmentPreview" alt="" onerror="this.src = 'assets/images/pdf.png'">
+      <p class="mt-2 text-xs italic font-semibold truncate text-gray">{{ attachment.name }}</p>
+    </div>
+    <div *ngIf="profileAttachment" class="relative py-2 overflow-hidden h-28 w-fit max-w-28 lg:max-36">
+      <span class="absolute top-0 left-12 scale-[60%]"><button pButton icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onRemoveAttachment('profile')"></button></span>
+      <img class="w-auto h-20" [src]="profileAttachmentPreview" alt="" onerror="this.src = 'assets/images/pdf.png'">
+      <p class="mt-2 text-xs italic font-semibold truncate text-gray">{{ profileAttachment.name }}</p>
+    </div>
   </div>
+
   <div class="flex flex-row items-center w-full gap-0.5 lg:gap-4 h-fit">
     <div class="relative {{ this.attachment ? 'rounded-full bg-primary bg-opacity-10' : '' }}">
-      <p-button class="p-0" icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentPopover.show($event)"></p-button>
+      <p-button class="p-0" icon="pi pi-link" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentPopover.toggle($event)"></p-button>
       <p-popover #attachmentPopover>
         <ng-template pTemplate="content">
           <div class="flex flex-col gap-2">
@@ -15,7 +23,6 @@
           </div>
         </ng-template>
       </p-popover>
-      <p-button class="p-0" icon="pi pi-chevron-down" [rounded]="true" [text]="true" severity="secondary" (click)="attachmentPopover.toggle($event)"></p-button>
       <p-badge *ngIf="this.attachment" class="absolute bottom-0.5 right-0.5" severity="success"></p-badge>
     </div>
     <input #oldCvInput class="hidden" type="file" accept=".pdf, .png, .jpg, .docx" (change)="uploadAttachment($event, 'cv')">

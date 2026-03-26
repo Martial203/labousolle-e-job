@@ -47,7 +47,7 @@ export class EnterprisesManagement {
       },
       accept: () => {
         this.deleteAnEnterprise(enterpriseId);
-        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Entreprise supprimée avec succès.' });
+        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Entreprise supprimée avec succès.', styleClass: "w-[90%" });
       }
     });
   }

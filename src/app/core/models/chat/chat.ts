@@ -26,7 +26,8 @@ export interface ChatGroupedByPeriod {
 
 export interface MessageInput {
   content: string;
-  file?: { file: File, type: 'cv'|'profile' };
+  oldCV?: File;
+  profile?: File;
 }
 
 export interface Attachment {
