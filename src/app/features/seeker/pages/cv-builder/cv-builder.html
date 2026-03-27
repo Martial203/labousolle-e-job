@@ -1,4 +1,4 @@
-<div class="container flex flex-row w-full h-full px-6 pb-10 mx-auto lg:px-16 {{ shouldPromptLogin ? 'blur pointer-events-none select-none' : '' }}">
+<div class="container flex flex-row w-full h-full px-6 pb-10 mx-auto lg:px-16 {{ displayLoginModal ? 'blur pointer-events-none select-none' : '' }}">
   <ng-container *ngIf="chatHistory$|async as chatHistory">
     <aside class="w-[30em] h-[calc(100vh-11em)] overflow-auto pb-6 hidden lg:block">
       <app-chat-history [chatHistory]="groupChatsByDate(chatHistory)" (newChat)="onNewChat()"
@@ -34,7 +34,7 @@
         <div class="flex-1">
           <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
             <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING"
-              [messages]="(discussion$|async)!" [jobSelected]="jobDetails.title!==undefined" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()"></app-discussion>
+              [messages]="(discussion$|async)!" [jobSelected]="isJobSelected()" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()"></app-discussion>
           </ng-container>
           <ng-template #noSelectedDiscussion>
             <ng-container *ngIf="jobDetails.title; else noSelectedJob">
@@ -92,8 +92,8 @@
         </div>
       </main>
     </div>
-    <div *ngIf="selectedDiscussion" (click)="isAnonymMode && auditMode ? isPreviewMode=true : undefined">
-      <app-chat-message-input [isChatSelected]="isChatSelected || isAnonymMode" [disabled]="auditMode && isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
+    <div *ngIf="selectedDiscussion" (click)="isAnonymMode && auditMode ? displayLoginModal=true : undefined">
+      <app-chat-message-input [isChatSelected]="selectedDiscussion!=null || isAnonymMode" [disabled]="auditMode && isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
 </div>
@@ -127,10 +127,10 @@
   </div>
 </p-dialog>
 
-<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="displayLoginModal" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
   <ng-template #header>
     <div class="w-full text-end">
-      <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="isPreviewMode = false"></p-button>
+      <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="displayLoginModal = false"></p-button>
     </div>
   </ng-template>
   <div class="relative flex flex-col items-center gap-6 pb-8 text-center">

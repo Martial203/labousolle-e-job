@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, viewChild, ViewChild } from '@angular/core';
 import { ChatService } from '../../../../core/services/chat/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
@@ -10,6 +10,7 @@ import { MessageInput } from '../../../../core/models/chat/chat';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { JobService } from '../../../../core/services/job/job.service';
 import { mapObservableError } from '../../../../core/utils/utils';
+import { Job } from '../../../../core/models/job/job';
 
 @Component({
   selector: 'app-cv-builder',
@@ -52,11 +53,15 @@ export class CvBuilder {
   isPreviewMode: boolean = false;
   auditMode: boolean = false;
 
+  selectedJob: Job|null = null;
+
   get isAnonymMode(): boolean { return this.user == undefined || this.user ==null }
   get shouldPromptLogin(): boolean { return (this.user == null || this.user == undefined) && this.isPreviewMode }
 
+  displayLoginModal: boolean = false;
+  
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
-
+  
   constructor(private chatService: ChatService, private jobService: JobService, private authService: AuthService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
@@ -76,6 +81,14 @@ export class CvBuilder {
 
   ngAfterViewInit(): void {
     this.scrollToBottom();
+  }
+
+  isJobSelected(): boolean{
+    console.log('chatId', this.chatId)
+    const chatHeader = this.chatService.getChatHeaderSnapshot(this.selectedDiscussion)
+    console.log('chatHeader', chatHeader)
+    if(chatHeader === undefined) return false;
+    return chatHeader.jobId !== undefined;
   }
 
   onToggleChatHistory(): void{
@@ -203,7 +216,11 @@ export class CvBuilder {
   onApply(): void{
     if(this.jobId==null) return;
     this.loadingApplication = true;
-    this.jobService.applyToJob(this.jobId).subscribe({
+    const chatHeader = this.chatService.getChatHeaderSnapshot(this.selectedDiscussion);
+    if(chatHeader===undefined) return;
+    const jobId = chatHeader.jobId;
+    if(jobId === undefined) return;
+    this.jobService.applyToJob(jobId).subscribe({
       next: () => setTimeout(() => this.displayTestimonialDialog = true, 3000),
       error: (err) => alert(mapObservableError(err)),
       complete: () => this.loadingApplication = false

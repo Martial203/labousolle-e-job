@@ -7,6 +7,7 @@ export class ChatHeader {
   documentType!: DocumentType;
   language!: string;
   status!: string;
+  jobId?: number;
 }
 
 export class ChatMessage {

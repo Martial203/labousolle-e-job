@@ -29,6 +29,10 @@ export class ChatService {
     return sessionStorage.getItem(this.LAST_CHAT_ID) ?? "";
   }
 
+  getChatHeaderSnapshot(id: string): ChatHeader|undefined{
+    return this._history$.value.find(chat => chat.id === id)
+  }
+
   migrateChatSession(): Observable<void>|null{
     const lastChatId = this.getLastChatId();
     if(lastChatId.length>0){
@@ -188,7 +192,8 @@ export class ChatService {
       language: history.language,
       documentType: history.document_type,
       status: history.status,
-      title: history.title ?? history.session_id.toString().split('-')[0]+'-'+history.session_id.toString().split('-')[1]+'-'+history.session_id.toString().split('-')[2]
+      title: history.title ?? history.session_id.toString().split('-')[0]+'-'+history.session_id.toString().split('-')[1]+'-'+history.session_id.toString().split('-')[2],
+      jobId: history.job_id ?? undefined
     }))
   }
 

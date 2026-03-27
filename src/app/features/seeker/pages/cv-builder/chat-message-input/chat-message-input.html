@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl {{ disabled ? 'pointer-events-none' : '' }}">
+<div class="flex flex-col gap-2 pl-4 overflow-hidden border shadow bg-secondary border-divide-color rounded-3xl" [ngClass]="{ 'pointer-events-none': disabled }">
   <div *ngIf="attachment || profileAttachment" class="flex flex-row justify-start gap-4">
     <div *ngIf="attachment" class="relative py-2 overflow-hidden h-28 w-fit max-w-28 lg:max-36">
       <span class="absolute top-0 left-12 scale-[60%]"><button pButton icon="pi pi-times" [rounded]="true" [text]="false" severity="danger" (click)="onRemoveAttachment('cv')"></button></span>

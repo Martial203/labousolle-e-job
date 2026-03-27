@@ -37,9 +37,11 @@ export class Discussion {
   docToDownload!:Attachment;
 
   get isPreview(): boolean { 
-    const val = this.messages.filter(message => message.document ? message.document.isPreview : false).length>0;
+    console.log(this.messages)
+    const val = !this.messages.some(message => message.document && message.document.isPreview === false);
+    console.log('val', val)
     if(val) this.turnPreviewMode.emit()
-    return val;  
+    return val;
   }
 
   constructor(private authService: AuthService, private chatService: ChatService) { }
