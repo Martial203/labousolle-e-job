@@ -214,7 +214,6 @@ export class CvBuilder {
   }
 
   onApply(): void{
-    if(this.jobId==null) return;
     this.loadingApplication = true;
     const chatHeader = this.chatService.getChatHeaderSnapshot(this.selectedDiscussion);
     if(chatHeader===undefined) return;
