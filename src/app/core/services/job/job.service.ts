@@ -122,7 +122,8 @@ export class JobService {
             youtubeUrl: res.company_details.social_links.youtube,
             facebookUrl: res.company_details.social_links.facebook,
             instagramUrl: res.company_details.social_links.instagram,
-            twitterUrl: res.company_details.social_links.twitter
+            twitterUrl: res.company_details.social_links.twitter,
+            linkedinUrl: res.company_details.social_links.linkedin
           },
           contacts: []
         }

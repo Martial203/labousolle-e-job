@@ -33,11 +33,14 @@ export class ChatService {
     return this._history$.value.find(chat => chat.id === id)
   }
 
-  migrateChatSession(): Observable<void>|null{
+  migrateChatSession(): Observable<string>|null{
     const lastChatId = this.getLastChatId();
     if(lastChatId.length>0){
       const body = { session_id: lastChatId }
-      return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/migrate/`, body).pipe(tap(() => sessionStorage.removeItem(this.LAST_CHAT_ID)));
+      return this.http.post<any>(`${environment.apiUrl}/ai-agent/conversations/migrate/`, body).pipe(
+        map(res => res.session_id),
+        tap(() => sessionStorage.removeItem(this.LAST_CHAT_ID)),
+      );
     }
     return null;
   }

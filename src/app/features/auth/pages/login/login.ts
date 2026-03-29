@@ -40,7 +40,7 @@ export class Login {
         this.processState = ProcessState.SUCCESS;
         const migration = this.chatService.migrateChatSession();
         if(migration){
-          migration.subscribe(() => setTimeout(() => this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.goToChatId } }), 2000))
+          migration.subscribe((session_id) => setTimeout(() => this.router.navigate(['/cv-builder'], { queryParams: { chatId: session_id } }), 2000))
         }else{
           setTimeout(() => {
             if(this.returnUrl){

@@ -104,11 +104,11 @@
     (result)="onDiscussionCreated($event)"></app-template-picker>
 </p-dialog>
 
-<p-dialog [(visible)]="displayTestimonialDialog" header="Quelle est ton appréciation ?" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
+<p-dialog [(visible)]="displayTestimonialDialog" header="Quelle est ton appréciation ?" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <app-add-testimony (cancel)="displayTestimonialDialog = false"></app-add-testimony>
 </p-dialog>
 
-<p-dialog #uploadCvDialog [(visible)]="displayCvUploadDialog" header="Rajoutes ton CV" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/4">
+<p-dialog #uploadCvDialog [(visible)]="displayCvUploadDialog" header="Rajoutes ton CV" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <div class="flex flex-col gap-8 p-4">  
 
     <figure *ngIf="tmpUploadedCvToPreview" class="h-60 border-light-gray p-0.5 border rounded overflow-hidden">

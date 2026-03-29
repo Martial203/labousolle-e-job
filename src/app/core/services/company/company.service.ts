@@ -123,7 +123,8 @@ export class CompanyService {
         facebookUrl: '',
         twitterUrl: '',
         instagramUrl: '',
-        youtubeUrl: ''
+        youtubeUrl: '',
+        linkedinUrl: ''
       },
       jobsCount: res.jobs_count ?? 0
     }

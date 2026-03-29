@@ -21,6 +21,7 @@ export class SocialNetwork {
   twitterUrl!: string;
   instagramUrl!: string;
   youtubeUrl!: string;
+  linkedinUrl!: string;
 }
 
 export class Contact {
