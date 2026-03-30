@@ -86,6 +86,7 @@ export class GeneralInfosForm {
 
   onSubmit(company: Company): void{
     this.processState = ProcessState.LOADING;
+    company.website = 'https://' + company.website.replace(/^(https?:\/\/)?/, '');
     company.logo = this.selectedFile;
     company.creationYear = new Date(company.creationYear).getFullYear();
     let request!: Observable<any>;

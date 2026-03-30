@@ -43,8 +43,8 @@ export class ContactsForm {
       }
       if(this.company){
         this.contactForm.resetForm({
-          phone: '+23765968596',
-          email: 'this.company.email',
+          phone: '+237'+ (this.company.phone ?? ''),
+          email: this.company.email ?? '',
         });
       }
     }
