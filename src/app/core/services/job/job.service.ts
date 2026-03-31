@@ -111,9 +111,10 @@ export class JobService {
           email: res.company_details.email,
           phone: res.company_details.phone,
           logo: res.company_details.logo,
-          type: " ",
-          size: " ",
-          address: "",
+          type: res.company_details.company_type,
+          size: res.company_details.company_size,
+          
+          address: res.company_details.address,
           creationYear: new Date(res.company_details.created_date).getFullYear(),
           website: res.company_details.website,
           about: res.company_details.about,
