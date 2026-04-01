@@ -72,7 +72,7 @@ export class ChatService {
       data.append('old_cvfile', oldCV);
     }
     if(profile){
-      data.append('profile', profile);
+      data.append('profile_file', profile);
     }
     console.log(message)
     let additionnalMessage = ''

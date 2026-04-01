@@ -106,15 +106,15 @@ export class GeneralInfosForm {
 
   private initData(): void{
     this.companyTypes = [
-      { label: 'Entreprise privée', value: 'pme' }, 
-      { label: 'Startup', value: 'startup' },
-      { label: 'Grande entreprise', value: 'multinational' },
-      { label: 'Administration publique', value: 'public' },
-      { label: 'PME / PMI', value: 'pme' },
-      { label: 'Organisation internationale', value: 'multinational' },
-      { label: 'ONG / Association', value: 'ong' },
-      { label: 'Freelance / Indépendant', value: 'other' },
-      { label: 'Autre', value: 'other' }
+      { label: 'Entreprise privée', value: 'Entreprise privée' }, 
+      { label: 'Startup', value: 'Startup' },
+      { label: 'Grande entreprise', value: 'Grande entreprise' },
+      { label: 'Administration publique', value: 'Administration publique' },
+      { label: 'PME / PMI', value: 'PME / PMI' },
+      { label: 'Organisation internationale', value: 'Organisation internationale' },
+      { label: 'ONG / Association', value: 'ONG / Association' },
+      { label: 'Freelance / Indépendant', value: 'Freelance / Indépendant' },
+      { label: 'Autre', value: 'Autre' }
     ]
 
     this.companySizes = [
