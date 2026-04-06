@@ -18,6 +18,14 @@
                   <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
                   <!-- <a *ngIf="message.paymentUrl" pButton class="w-32" severity="secondary" [href]="message.paymentUrl">Acheter</a> -->
                   <a *ngIf="!isPreview" pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="onInitDownload(attachment)">Télécharger</a>
+                  <button *ngIf="attachment.type === DOCUMENT_TYPES.CV" pButton severity="info" icon="pi-ellipsis-v" [text]="true" (click)="optimizationPopover.toggle($event)"></button>
+                  <p-popover #optimizationPopover>
+                    <ng-template pTemplate="content">
+                      <div class="flex flex-col gap-2">
+                        <button pButton type="button" label="Optimiser le CV sur une page." icon="pi pi-image" class="w-full" severity="secondary" (click)="onOptimize(); optimizationPopover.hide()"></button>
+                      </div>
+                    </ng-template>
+                  </p-popover>
                 </div>
               </figure>
               <button *ngIf="jobSelected && !isPreview" pButton class="mt-2" severity="info" [outlined]="true" label="Postuler maintenant" (click)="onApply()"></button>
@@ -54,7 +62,7 @@
     <p class="ml-10 text-sm italic text-gray"> Cette opération peut prendre jusqu'à 2 minutes, veuillez patienter svp...</p>
   </ng-container>
   <ng-container *ngIf="typingState===PROCESS_STATES.ERROR">
-    <p-message severity="error" text="L'envoi de message a échoué, veuillez ressayer." class="w-full mb-4"></p-message>
+    <p-message severity="error" text="{{ msgError }}" class="w-full mb-4"></p-message>
   </ng-container>
 </div>
 

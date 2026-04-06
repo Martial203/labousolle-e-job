@@ -27,6 +27,7 @@ export class Discussion {
 
   @Output() apply: EventEmitter<void> = new EventEmitter<void>();
   @Output() turnPreviewMode: EventEmitter<void> = new EventEmitter<void>();
+  @Output() optimize: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild('pdfViewer') pdfViewer!: any;
 
@@ -35,6 +36,8 @@ export class Discussion {
   displayFileNameDialog: boolean = false;
   pdfSrc!: any;
   docToDownload!:Attachment;
+
+  @Input() msgError: string = '';
 
   get isPreview(): boolean { 
     console.log(this.messages)
@@ -113,6 +116,10 @@ export class Discussion {
       }
     }
     return paymentUrl;
+  }
+
+  onOptimize(): void{
+    this.optimize.emit("Mon CV S'étend sur plus d'une page. Je voudrais que tu le rendes plus concis afin que tout son contenu puisse tenir sur une page A4.");
   }
 
   onApply(): void {

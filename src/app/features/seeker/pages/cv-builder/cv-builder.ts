@@ -54,6 +54,7 @@ export class CvBuilder {
   auditMode: boolean = false;
 
   selectedJob: Job|null = null;
+  msgError: string = '';
 
   get isAnonymMode(): boolean { return this.user == undefined || this.user ==null }
   get shouldPromptLogin(): boolean { return (this.user == null || this.user == undefined) && this.isPreviewMode }
@@ -146,7 +147,8 @@ export class CvBuilder {
     this.chatService.sendAMessage(this.selectedDiscussion, message.content, message.oldCV ?? undefined, message.profile ?? undefined).subscribe({
       next: () => this.messageProcessing = ProcessState.SUCCESS,
       error: (err) => {
-        this.messageProcessing = ProcessState.ERROR
+        this.messageProcessing = ProcessState.ERROR;
+        this.msgError = mapObservableError(err);
       },
       complete: () => this.scrollToBottom()
     });
@@ -208,7 +210,10 @@ export class CvBuilder {
         console.log(this.selectedDiscussion)
         this.auditMode = true
       },
-      error: err => alert(mapObservableError(err)),
+      error: err => {
+        alert(mapObservableError(err));
+        this.msgError = mapObservableError(err);
+      },
       complete: () => this.loadingAudit = false
     })
   }

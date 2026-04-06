@@ -34,11 +34,11 @@
         <div class="flex-1">
           <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
             <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING"
-              [messages]="(discussion$|async)!" [jobSelected]="isJobSelected()" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()"></app-discussion>
+              [messages]="(discussion$|async)!" [jobSelected]="isJobSelected()" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()" (optimize)="sendMessage({ content: $event })" [msgError]="msgError"></app-discussion>
           </ng-container>
           <ng-template #noSelectedDiscussion>
             <ng-container *ngIf="jobDetails.title; else noSelectedJob">
-              <div class="flex flex-col-reverse items-center justify-center gap-6 lg:flex-col h-96">
+              <div class="flex flex-col-reverse items-center justify-center gap-6 h-96">
 
                 <div class="hidden p-2 bg-gray-100 rounded-full lg:block">
                   <i class="block scale-[2] text-gray pi pi-sparkles"></i>
@@ -71,7 +71,7 @@
             </ng-container>
 
             <ng-template #noSelectedJob>
-              <div class="flex flex-col-reverse items-center justify-center h-full gap-6 lg:flex-col">
+              <div class="flex flex-col-reverse items-center justify-center h-full gap-6">
                 <div class="hidden p-2 bg-gray-100 rounded-full lg:block">
                   <i class="block scale-[2] text-gray pi pi-inbox"></i>
                 </div>
@@ -117,7 +117,7 @@
 
     <div>
       <button class="block w-full" pButton label="{{ tmpUploadedCvToAudit ? 'Remplacer' : 'Ajouter' }}" severity="info" [disabled]="loadingAudit" (click)="fileInput.click()"></button>
-      <input #fileInput type="file" accept=".png, .jpg, .jpeg, .pdf" class="hidden" (change)="onUploadCV($event)">
+      <input #fileInput type="file" accept=".png, .jpg, .jpeg, .pdf, .docx, .txt" class="hidden" (change)="onUploadCV($event)">
     </div>
 
     <div class="flex justify-center gap-2">
