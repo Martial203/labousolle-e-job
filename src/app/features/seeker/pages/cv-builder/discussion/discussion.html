@@ -18,11 +18,11 @@
                   <button pButton severity="info" (click)="previewDocument(attachment.url)">Prévisualiser</button>
                   <!-- <a *ngIf="message.paymentUrl" pButton class="w-32" severity="secondary" [href]="message.paymentUrl">Acheter</a> -->
                   <a *ngIf="!isPreview" pButton severity="secondary" download [loading]="processState === PROCESS_STATES.LOADING" (click)="onInitDownload(attachment)">Télécharger</a>
-                  <button *ngIf="attachment.type === DOCUMENT_TYPES.CV" pButton severity="info" icon="pi-ellipsis-v" [text]="true" (click)="optimizationPopover.toggle($event)"></button>
+                  <p-button severity="info" icon="pi pi-ellipsis-v" (click)="optimizationPopover.toggle($event)"></p-button>
                   <p-popover #optimizationPopover>
                     <ng-template pTemplate="content">
                       <div class="flex flex-col gap-2">
-                        <button pButton type="button" label="Optimiser le CV sur une page." icon="pi pi-image" class="w-full" severity="secondary" (click)="onOptimize(); optimizationPopover.hide()"></button>
+                        <button pButton type="button" label="Optimiser pour faire tenir sur une page." icon="pi pi-image" class="w-full" severity="secondary" (click)="onOptimize(); optimizationPopover.hide()"></button>
                       </div>
                     </ng-template>
                   </p-popover>
