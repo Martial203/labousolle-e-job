@@ -8,10 +8,12 @@
       <a class="" routerLink="/cv-builder" [queryParams]="{ document: DOCUMENT_TYPES.LETTER }"><li>Ma lettre de motivation</li></a>
     </ul>
     <div class="flex-row hidden gap-4 lg:flex">
-      <div class="flex flex-row items-center flex-1 w-40 px-4 py-2 rounded-full bg-input-background">
-        <i class="block mr-2.5 align-middle pi pi-search"></i>
-        <input class="bg-transparent outline-none" icon="pi pi-marker" type="text" name="search" id="search" placeholder="Recherche">
-      </div>
+      <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm.value.search)" class="flex flex-row items-center flex-1 w-40 px-2 py-1 rounded-full bg-input-background">
+        <input class="flex-1 bg-transparent outline-none px-2" type="text" name="search" placeholder="Recherche" aria-label="Recherche" ngModel required/>
+        <button type="submit" class="flex items-center justify-center p-2 rounded-full hover:bg-gray-200 transition">
+          <i class="pi pi-search"></i>
+        </button>
+      </form>
       <ng-container *ngIf="user; else loggedOut">
         <button class="font-semibold rounded-full size-11 text-secondary bg-primary" (click)="userMenu.toggle($event)">{{ getInitials() }}</button>
       </ng-container>

@@ -17,7 +17,7 @@ export class ChatMessageInput {
 
   profileAttachment!: File|null;
   profileAttachmentPreview!: any;
-
+  lastProfileFile!: File|null;
 
   @Input() minLength: number = 1;
   @Input() isChatSelected: boolean = false;
@@ -50,9 +50,10 @@ export class ChatMessageInput {
   }
 
   onSend(): void{
+    if(this.profileAttachment) this.lastProfileFile = this.profileAttachment;
     const message : MessageInput = {
       content: this.text,
-      oldCV: this.attachment ?? undefined,
+      oldCV: this.profileAttachment ?? undefined,
       profile: this.profileAttachment ?? undefined
     }
     this.message.emit(message);

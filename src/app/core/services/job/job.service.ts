@@ -63,6 +63,10 @@ export class JobService {
     );
   }
 
+  getJobDetailsSnapshot(jobId: number): Job|undefined{
+    return this._jobs$.value.find(job => job.id === jobId);
+  }
+
   getJobDetails(jobId: number): Observable<{ job: Job, company: Company, similarJobs: Job[] }> {
     return this.http.get<Job>(`${environment.apiUrl}/jobs/${jobId}/`).pipe(
       map((res: any) => {

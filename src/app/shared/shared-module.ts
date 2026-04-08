@@ -20,7 +20,8 @@ import { DaysToPipe } from './pipes/days-to/days-to-pipe';
     CommonModule,
     RouterModule,
     PrimeNgModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
 ],
   exports: [
     HeaderToolbar,

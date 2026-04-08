@@ -1,7 +1,7 @@
 import { Component, ElementRef, viewChild, ViewChild } from '@angular/core';
 import { ChatService } from '../../../../core/services/chat/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ChatGroupedByPeriod, ChatHeader, ChatMessage } from '../../../../core/models/chat/chat';
 import { DocumentType } from '../../../../core/enums/document-type/document-type';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
@@ -73,7 +73,10 @@ export class CvBuilder {
       this.selectChat(chatId);
       this.scrollToBottom();
     });
-    this.chatHistory$ = this.chatService.history$;
+    this.chatHistory$ = this.chatService.history$.pipe(map(headers => headers.map(header => ({
+      ...header,
+      title: header.jobId ? (this.jobService.getJobDetailsSnapshot(header.jobId!) ? this.jobService.getJobDetailsSnapshot(header.jobId!)!.title : header.title) : header.title
+    }))));
     this.user = this.authService.user;
     this.discussion$ = this.chatService.discussion$;
     const jobId = this.route.snapshot.params['jobId'];

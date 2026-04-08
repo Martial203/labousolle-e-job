@@ -114,7 +114,7 @@
         <p-message *ngIf="state===PROCESS_STATES.SUCCESS" severity="success" text="Vous pouvez postuler !" class="w-full mb-4"></p-message>
         <p-message *ngIf="state===PROCESS_STATES.ERROR" severity="error" [text]="error" class="w-full mb-4"></p-message>
       </div>
-      <p class="mt-2 text-sm text-right text-gray"><button class="italic" (click)="apply()">Je dispose déjà de tout le necessaire</button></p>
+      <p class="mt-2 text-sm text-right text-gray"><button class="italic underline" (click)="apply()">Je dispose déjà de tout le necessaire</button></p>
   </p-dialog>
 
   <p-dialog [modal]="true" [(visible)]="isDocUploadModalOpen" [style]="{ width: '27rem', background: '#ffffff' }">

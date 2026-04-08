@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { User } from '../../../core/models/user/user';
 import { Router } from '@angular/router';
 import { DocumentType } from '../../../core/enums/document-type/document-type';
 import { ConfirmationService } from 'primeng/api';
 import { Role } from '../../../core/enums/role/role';
+import { JobSearchParams } from '../../../core/models/job/job';
 
 @Component({
   selector: 'app-header-toolbar',
@@ -41,6 +42,11 @@ export class HeaderToolbar {
     }else{
       return "";
     }
+  }
+
+  onSearch(keyword: string): void{
+    const params: JobSearchParams = { q: keyword };
+    if(params.q!.length>0) this.router.navigate(['/jobs'], { queryParams: params });
   }
 
   onLogout(): void {

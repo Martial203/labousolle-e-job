@@ -119,7 +119,19 @@ export class Discussion {
   }
 
   onOptimize(): void{
-    this.optimize.emit("Mon CV S'étend sur plus d'une page. Je voudrais que tu le rendes plus concis afin que tout son contenu puisse tenir sur une page A4.");
+    const cvOptimizationPrompt: string = `
+      Mon CV dépasse une page. Je souhaite que tu le restructures et l’optimises pour qu’il tienne sur une seule page A4.
+
+      Ne te contente pas de réduire le texte :
+      - Reformule et synthétise les contenus pour les rendre plus concis et percutants
+      - Supprime les redondances et les informations à faible valeur ajoutée
+      - Priorise les éléments les plus pertinents selon le poste ciblé
+      - Améliore la clarté, la lisibilité et l’impact (phrases courtes, verbes d’action, résultats mesurables si possible)
+      - Réorganise les sections si nécessaire pour une meilleure structure
+
+      L’objectif est d’obtenir un CV clair, professionnel, dense et efficace, tenant sur une seule page A4, sans perte d’informations essentielles ni de valeur.
+      `;
+    this.optimize.emit(cvOptimizationPrompt);
   }
 
   onApply(): void {
