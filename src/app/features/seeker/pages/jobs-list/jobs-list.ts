@@ -28,8 +28,10 @@ export class JobsList {
 
   ngOnInit(): void {
     console.log(this.route.snapshot.queryParams)
-    const params: JobSearchParams = this.route.snapshot.queryParams ?? new JobSearchParams();
-    this.jobs$ = this.jobService.searchJobs(params).pipe(tap(res => this.processJobsRes(res)));
+    this.route.queryParams.subscribe((_params: JobSearchParams) => {
+      const params: JobSearchParams = _params ?? new JobSearchParams();
+      this.jobs$ = this.jobService.searchJobs(params).pipe(tap(res => this.processJobsRes(res)));
+    })    
   }
 
   getPages(pagesCount: number): number[] {
