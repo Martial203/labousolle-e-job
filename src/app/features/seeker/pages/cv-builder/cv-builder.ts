@@ -75,7 +75,7 @@ export class CvBuilder {
     });
     this.chatHistory$ = this.chatService.history$.pipe(map(headers => headers.map(header => ({
       ...header,
-      title: header.jobId ? (this.jobService.getJobDetailsSnapshot(header.jobId!) ? this.jobService.getJobDetailsSnapshot(header.jobId!)!.title : header.title) : header.title
+      title: header.jobId ? (this.jobService.getJobDetailsSnapshot(header.jobId!) ? this.jobService.getJobDetailsSnapshot(header.jobId!)!.companyName+' - '+this.jobService.getJobDetailsSnapshot(header.jobId)!.companyName : header.title) : header.title
     }))));
     this.user = this.authService.user;
     this.discussion$ = this.chatService.discussion$;

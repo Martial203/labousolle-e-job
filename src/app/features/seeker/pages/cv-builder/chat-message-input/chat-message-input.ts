@@ -53,8 +53,8 @@ export class ChatMessageInput {
     if(this.profileAttachment) this.lastProfileFile = this.profileAttachment;
     const message : MessageInput = {
       content: this.text,
-      oldCV: this.profileAttachment ?? undefined,
-      profile: this.profileAttachment ?? undefined
+      oldCV: this.attachment ?? undefined,
+      profile: this.lastProfileFile ?? undefined
     }
     this.message.emit(message);
     this.text = '';
