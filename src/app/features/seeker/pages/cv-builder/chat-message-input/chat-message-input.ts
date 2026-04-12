@@ -86,7 +86,7 @@ export class ChatMessageInput {
     }else{
       this.profileAttachment = files[0];
       this.profileAttachmentPreview = URL.createObjectURL(this.profileAttachment!);
-      this.uploadedFile.emit(this.attachment!);
+      this.uploadedFile.emit(this.profileAttachment!);
     }
   }
 
