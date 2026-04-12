@@ -58,10 +58,10 @@ export class ChatMessageInput {
     }
     this.message.emit(message);
     this.text = '';
-    this.attachment = null!;
-    this.profileAttachment = null!;
-    this.attachmentPreview = null!;
-    this.profileAttachmentPreview = null!;
+    this.attachment = null;
+    this.profileAttachment = null;
+    this.attachmentPreview = null;
+    this.profileAttachmentPreview = null;
   }
 
   stop() {
