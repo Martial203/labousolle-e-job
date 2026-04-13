@@ -16,10 +16,10 @@ export class ChatMessageInput {
   attachmentPreview!: any;
 
   profileAttachment!: File|null;
-  lastProfileFile!: File|null;
+  profileAttachmentPreview!: any;
 
   @Input() minLength: number = 1;
-  @Input() isChatSelected: boolean profileAttachment false;
+  @Input() isChatSelected: boolean = false;
   @Input() disabled: boolean = false;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
   @Output() uploadedFile: EventEmitter<File> = new EventEmitter<File>();
