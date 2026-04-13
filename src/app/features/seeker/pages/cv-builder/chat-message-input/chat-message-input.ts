@@ -16,11 +16,10 @@ export class ChatMessageInput {
   attachmentPreview!: any;
 
   profileAttachment!: File|null;
-  profileAttachmentPreview!: any;
   lastProfileFile!: File|null;
 
   @Input() minLength: number = 1;
-  @Input() isChatSelected: boolean = false;
+  @Input() isChatSelected: boolean profileAttachment false;
   @Input() disabled: boolean = false;
   @Output() message: EventEmitter<MessageInput> = new EventEmitter<MessageInput>();
   @Output() uploadedFile: EventEmitter<File> = new EventEmitter<File>();
@@ -50,11 +49,10 @@ export class ChatMessageInput {
   }
 
   onSend(): void{
-    if(this.profileAttachment) this.lastProfileFile = this.profileAttachment;
     const message : MessageInput = {
       content: this.text,
       oldCV: this.attachment ?? undefined,
-      profile: this.lastProfileFile ?? undefined
+      profile: this.profileAttachment ?? undefined
     }
     this.message.emit(message);
     this.text = '';
