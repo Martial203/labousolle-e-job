@@ -96,7 +96,7 @@
       <app-chat-message-input [isChatSelected]="selectedDiscussion!=null || isAnonymMode" [disabled]="auditMode && isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
-</div>
+</div> 
 
 <p-dialog [(visible)]="displayTemplatePicker" header="Assistance AI" [modal]="true" [closable]="true"
   styleClass="w-[90%] lg:!w-1/2" (onShow)="templatePicker.selectedType = toChangeDocumentType ? toChangeDocumentType : DOCUMENT_TYPES.CV" (onHide)="onClearChangeSelection()">

@@ -15,6 +15,8 @@ export class AddTestimony {
   readonly PROCESS_STATES = ProcessState;
   error!: string;
 
+  rating: number = 5;
+
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private testimonyService: TestimonyService) { }
