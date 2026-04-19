@@ -76,7 +76,7 @@ export class CompanyService {
 
   updateCompany(companyId: number, company: Company): Observable<any>{
     const body = {
-      logo: company.logo,
+      // logo: company.logo,
       name: company.name,
       company_type: company.type,
       company_size: company.size,
@@ -102,6 +102,7 @@ export class CompanyService {
   }
 
   private mapCompanyResToCompany(res: any): Company{
+    console.log('res', res)
     return {
       id: res.id,
       about: res.about,
@@ -112,7 +113,7 @@ export class CompanyService {
       size: res.company_size,
       type: this.getLabelFromValue(res.company_type),
       website: res.website,
-      address: '',
+      address: res.address,
       contacts: [],
       creationYear: new Date(res.created_date).getFullYear(),
       vision: res.vision,
