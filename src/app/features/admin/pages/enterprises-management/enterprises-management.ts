@@ -46,14 +46,15 @@ export class EnterprisesManagement {
         severity: 'danger'
       },
       accept: () => {
-        this.deleteAnEnterprise(enterpriseId);
-        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Entreprise supprimée avec succès.', styleClass: "w-[90%" });
+        console.log(enterpriseId)
+        this.deleteAnEnterprise(enterpriseId).subscribe();
+        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Entreprise supprimée avec succès.', styleClass: "w-[90%]" })
       }
     });
   }
 
-  deleteAnEnterprise(enterpriseId: number): void{
-    this.companyService.deleteCompany(enterpriseId).subscribe();
+  deleteAnEnterprise(enterpriseId: number): Observable<any>{
+    return this.companyService.deleteCompany(enterpriseId);
   }
 
   private mapToCompanyRow(companies: Company[]): CompanyRow[] {

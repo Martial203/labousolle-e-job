@@ -60,7 +60,7 @@ export class JobsManagement {
       },
       accept: () => {
         this.deleteJob(jobId);
-        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Offre supprimée avec succès.', styleClass: "w-[90%" });
+        this.messageService.add({ severity: 'primary', summary: 'Confirmé', detail: 'Offre supprimée avec succès.', styleClass: "w-[90%]" });
       }
     });
   }
@@ -75,6 +75,6 @@ export class JobsManagement {
   }
 
   deleteJob(job: any): void {
-    // Handle delete job logic
+    this.jobService.deleteAJob(job).subscribe()
   }
 }

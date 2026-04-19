@@ -175,7 +175,7 @@ export class JobService {
       city: jobData.address,
       country: jobData.email,
       job_type: jobData.jobType,
-      image: jobData.coverImage,
+      // image: jobData.coverImage,
       about: "null",
       description: jobData.description,
       profile_required: 'Empty',
@@ -191,11 +191,10 @@ export class JobService {
   }
 
   deleteAJob(jobId: number): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/jobs/${jobId}/`).pipe(tap(() => {
-      const jobs = this._jobs$.value;
-      const updatedJobs = jobs.filter(job => job.id !== jobId);
-      this._jobs$.next(updatedJobs);
-    }));
+    const jobs = this._jobs$.value;
+    const updatedJobs = jobs.filter(job => job.id !== jobId);
+    this._jobs$.next(updatedJobs);
+    return this.http.delete(`${environment.apiUrl}/jobs/${jobId}/`);
   }
 
   applyToJob(jobId: number): Observable<any> {
@@ -214,7 +213,7 @@ export class JobService {
   searchJobs(query: JobSearchParams): Observable<{ jobs: Job[], count: number, page: number, totalPage: number }> {
     const params = new HttpParams({
       fromObject: Object.fromEntries(
-        Object.entries(query).filter(
+        Object.entries({ ...query, page_size: 20 }).filter(
           ([_, v]) => v !== undefined && v !== null && v !== ''
         )
       )

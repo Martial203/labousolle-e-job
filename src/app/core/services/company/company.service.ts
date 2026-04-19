@@ -95,13 +95,10 @@ export class CompanyService {
   }
 
   deleteCompany(companyId: number): Observable<any>{
-    return this.http.delete(`${environment.apiUrl}/companies/${companyId}/`).pipe(
-      tap(() => {
-        const currentCompanies = this._companies$.getValue();
-        const updatedCompanies = currentCompanies.filter(company => company.id !== companyId);
-        this._companies$.next(updatedCompanies);
-      })
-    );
+    const currentCompanies = this._companies$.getValue();
+    const updatedCompanies = currentCompanies.filter(company => company.id !== companyId);
+    this._companies$.next(updatedCompanies);
+    return this.http.delete(`${environment.apiUrl}/companies/${companyId}/`);
   }
 
   private mapCompanyResToCompany(res: any): Company{

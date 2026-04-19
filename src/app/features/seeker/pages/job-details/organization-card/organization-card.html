@@ -28,7 +28,7 @@
         <span>Email :</span>
         <span>{{ company.email }}</span>
       </li>
-      <li>
+      <li *ngIf="company.website == DefaultWebsiteUrl">
         <span>Site web :</span>
         <span>{{ company.website }}</span>
       </li>

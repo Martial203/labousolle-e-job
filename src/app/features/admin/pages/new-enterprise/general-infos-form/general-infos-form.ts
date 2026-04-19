@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from
 import { CompanyService } from '../../../../../core/services/company/company.service';
 import { Company } from '../../../../../core/models/company/company';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
+import { DEFAULT_WEBSITE_URL } from '../../../../../core/constants/constant';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -86,7 +87,7 @@ export class GeneralInfosForm {
 
   onSubmit(company: Company): void{
     this.processState = ProcessState.LOADING;
-    company.website = 'https://' + company.website.replace(/^(https?:\/\/)?/, '');
+    company.website = company.website ? 'https://' + company.website.replace(/^(https?:\/\/)?/, '') : DEFAULT_WEBSITE_URL;
     company.logo = this.selectedFile;
     company.creationYear = new Date(company.creationYear).getFullYear();
     let request!: Observable<any>;

@@ -1,0 +1,1 @@
+export const DEFAULT_WEBSITE_URL = 'https://nowebsite.com';

@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { JobService } from '../../../../core/services/job/job.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-jobs-list',
@@ -20,16 +21,17 @@ export class JobsList {
   totalPages: number = 0;
 
   jobs$!: Observable<{ jobs: Job[], count: number, page: number, totalPage: number }>;
+  params: JobSearchParams = new JobSearchParams();
 
   processState: ProcessState = ProcessState.LOADING;
   readonly PROCESS_STATES = ProcessState;
 
-  constructor(private jobService: JobService, private route: ActivatedRoute) { }
+  constructor(private jobService: JobService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.queryParams)
     this.route.queryParams.subscribe((_params: JobSearchParams) => {
-      const params: JobSearchParams = _params ?? new JobSearchParams();
+      const params: JobSearchParams = _params as JobSearchParams ?? new JobSearchParams();
+      this.params = params;
       this.jobs$ = this.jobService.searchJobs(params).pipe(tap(res => this.processJobsRes(res)));
     })    
   }
@@ -51,7 +53,10 @@ export class JobsList {
   }
 
   onChangePage(page: number): void {
+    this.processState = ProcessState.LOADING;
     this.activePage = page;
+    this.params = { ...this.params, page };
+    this.router.navigate(['/jobs'], { queryParams: this.params })
   }
 
   private processJobsRes(res: { jobs: Job[], count: number, page: number, totalPage: number }): void{
