@@ -89,7 +89,7 @@ export class GeneralInfosForm {
     this.processState = ProcessState.LOADING;
     company.website = company.website ? 'https://' + company.website.replace(/^(https?:\/\/)?/, '') : DEFAULT_WEBSITE_URL;
     company.logo = this.selectedFile;
-    company.creationYear = new Date(company.creationYear).getFullYear();
+    company.creationYear = new Date(company.creationYear || 0).getFullYear();
     let request!: Observable<any>;
     if(this.company) {
       request = this.companyService.updateCompany(this.company.id, company)

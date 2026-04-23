@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Company } from '../../models/company/company';
+import { DEFAULT_ABOUT, DEFAULT_ADDRESS, DEFAULT_VISION, DEFAULT_WEBSITE_URL, DEFAULT_YEAR } from '../../constants/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -32,14 +33,14 @@ export class CompanyService {
   createCompany(company: Company): Observable<any>{
     const body: { [key: string]: any } = {
       logo: company.logo,
-      name: company.name,
+      name: company.name || "Non spécifié",
       company_type: company.type,
       company_size: company.size,
-      website: company.website,
-      founded_year: company.creationYear.toString(),
-      vision: company.vision,
-      about: company.about,
-      address: company.address,
+      website: company.website || DEFAULT_WEBSITE_URL,
+      founded_year: company.creationYear ? company.creationYear.toString() : DEFAULT_YEAR.toString(),
+      vision: company.vision || DEFAULT_VISION,
+      about: company.about || DEFAULT_ABOUT,
+      address: company.address || DEFAULT_ADDRESS,
       latitude: 0,
       longitude: 0
     };
@@ -77,14 +78,14 @@ export class CompanyService {
   updateCompany(companyId: number, company: Company): Observable<any>{
     const body = {
       // logo: company.logo,
-      name: company.name,
+      name: company.name || "Non spécifié",
       company_type: company.type,
       company_size: company.size,
-      website: company.website,
+      website: company.website || DEFAULT_WEBSITE_URL,
       social_links: company.socialNetworks,
       founded_year: company.creationYear,
-      vision: company.vision,
-      about: company.about,
+      vision: company.vision || DEFAULT_VISION,
+      about: company.about || DEFAULT_ABOUT,
       address: '',
       phone: company.phone,
       email: company.email,

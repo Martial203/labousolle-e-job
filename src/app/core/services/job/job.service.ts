@@ -6,6 +6,7 @@ import { Job, JobSearchParams } from '../../models/job/job';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { formatDate } from '@angular/common';
+import { DEFAULT_ADDRESS } from '../../constants/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -30,16 +31,16 @@ export class JobService {
   createJob(jobData: Job): Observable<any> {
     console.log(jobData)
     const body: { [key: string]: any } = {
-      title: jobData.title,
+      title: jobData.title || "Sans titre",
       category: jobData.categoryId.toString(),
       company: jobData.companyId.toString(),
-      expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
-      city: jobData.address,
-      country: jobData.email,
+      expiration_date: formatDate(jobData.expirationDate || new Date((new Date()).getTime()+3600*1000*24*31), "yyyy-MM-dd", "en-US"),
+      city: jobData.address || DEFAULT_ADDRESS,
+      country: jobData.email || "...",
       job_type: jobData.jobType,
       image: jobData.coverImage,
       about: "null",
-      description: jobData.description,
+      description: jobData.description || "Aucune description",
       profile_required: 'Empty',
       experience_required: jobData.experience,
       salary_min: '0',
@@ -168,12 +169,12 @@ export class JobService {
 
   updateAJob(jobId: number, jobData: Job): Observable<any> {
     const body: { [key: string]: any } = {
-      title: jobData.title,
+      title: jobData.title || "Non spécifié",
       category: jobData.categoryId.toString(),
       company: jobData.companyId.toString(),
       expiration_date: formatDate(jobData.expirationDate, "yyyy-MM-dd", "en-US"),
-      city: jobData.address,
-      country: jobData.email,
+      city: jobData.address || DEFAULT_ADDRESS,
+      country: jobData.email || "...",
       job_type: jobData.jobType,
       // image: jobData.coverImage,
       about: "null",
