@@ -49,7 +49,7 @@ importante de ta vie, et nous sommes là pour te guider tout au long de ce proce
           
           <!-- Password Field -->
           <p-floatlabel variant="on">
-            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="Fournir un mot de passe" [toggleMask]="true" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" autocomplete="password" variant="filled" ngModel required>
+            <p-password type="password" inputStyleClass="w-full" id="password" name="password" class="w-full" placeholder="Fournir un mot de passe" [toggleMask]="true" strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" minLength="4" autocomplete="password" variant="filled" ngModel required>
               <ng-template #footer>
                 <p-divider />
                 <ul class="pl-2 my-0 leading-normal">

@@ -5,6 +5,7 @@ import { ProcessState } from '../../../../core/enums/process-state/process-state
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { mapObservableError } from '../../../../core/utils/utils';
 import { ChatService } from '../../../../core/services/chat/chat.service';
+import { PASSWORD_SUFFIX } from '../../../../core/constants/constant';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,6 +28,8 @@ export class SignUp {
 
   onSubmit(credentials: SignUpCredentials): void {
     this.processState = ProcessState.LOADING;
+    credentials.password += PASSWORD_SUFFIX;
+    credentials.confirmPassword += PASSWORD_SUFFIX;
     this.authService.signUp(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;

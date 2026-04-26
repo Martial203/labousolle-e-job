@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageInput } from '../../../../../core/models/chat/chat';
+import { FILE_MAX_SIZE } from '../../../../../core/constants/constant';
 
 @Component({
   selector: 'app-chat-message-input',
@@ -77,6 +78,7 @@ export class ChatMessageInput {
   uploadAttachment(event: any, type: 'cv'|'profile'): void{
     const files = event.target.files;
     if(files.length===0) return;
+    if(files[0].size>FILE_MAX_SIZE) alert('Fichier trop volumineux, la limite de taill est fixée à 5Mo')
     if(type==='cv'){
       this.attachment = files[0];
       this.attachmentPreview = URL.createObjectURL(this.attachment!);

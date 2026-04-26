@@ -5,6 +5,7 @@ import { LoginCredentials } from '../../models/login-credentials/login-credentia
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { mapObservableError } from '../../../../core/utils/utils';
 import { ChatService } from '../../../../core/services/chat/chat.service';
+import { PASSWORD_SUFFIX } from '../../../../core/constants/constant';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class Login {
 
   onSubmit(credentials: LoginCredentials): void {
     this.processState = ProcessState.LOADING;
+    credentials.password += PASSWORD_SUFFIX;
     this.authService.login(credentials).subscribe({
       next: () => {
         this.processState = ProcessState.SUCCESS;
