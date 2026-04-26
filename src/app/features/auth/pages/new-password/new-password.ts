@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ProcessState } from '../../../../core/enums/process-state/process-state';
 import { mapObservableError } from '../../../../core/utils/utils';
-import { PASSWORD_SUFFIX } from '../../../../core/constants/constant';
 
 @Component({
   selector: 'app-new-password',
@@ -28,8 +27,6 @@ export class NewPassword {
   onSubmit(data: { password: string, confirmPassword: string }): void {
     if(this.resetToken===undefined) return;
     this.processState = ProcessState.LOADING;
-    data.password += PASSWORD_SUFFIX;
-    data.confirmPassword += PASSWORD_SUFFIX;
     this.authService.changePassword({ 
       resetToken: this.resetToken, 
       newPassword: data.password, 

@@ -78,7 +78,7 @@ export class ChatMessageInput {
   uploadAttachment(event: any, type: 'cv'|'profile'): void{
     const files = event.target.files;
     if(files.length===0) return;
-    if(files[0].size>FILE_MAX_SIZE) alert('Fichier trop volumineux, la limite de taill est fixée à 5Mo')
+    if(files[0].size>FILE_MAX_SIZE) alert('Fichier trop volumineux, la limite de taille est fixée à 7Mo')
     if(type==='cv'){
       this.attachment = files[0];
       this.attachmentPreview = URL.createObjectURL(this.attachment!);
