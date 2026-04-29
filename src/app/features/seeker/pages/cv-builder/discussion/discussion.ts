@@ -35,6 +35,7 @@ export class Discussion {
   displayDocumentPreview: boolean = false;
   displayFileNameDialog: boolean = false;
   displayPhoneNumberDialog: boolean = false;
+  displayWaitingPaymentDialog: boolean = false;
   pdfSrc!: any;
   docToDownload!:Attachment;
   paymentState: ProcessState = ProcessState.INACTIVE;
@@ -78,6 +79,7 @@ export class Discussion {
 
   verifyPayment(reference: string): void{
     this.paymentState = ProcessState.LOADING;
+    this.displayWaitingPaymentDialog = true;
     this.error = null;
     this.chatService.verifyPayment(reference).subscribe({
       next: (res) => {
@@ -85,12 +87,14 @@ export class Discussion {
           setTimeout(() => this.verifyPayment(reference), 5000)
         }else if(res === ProcessState.SUCCESS){
           this.paymentState = res;
+          this.chatService.getChatMessages(this.messages[0].chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
         }else{
           this.paymentState = res;
+          alert("Le paiement a échoué, veuillez ressayer.")
         }
       },
       error: (err) => {
-        this.error = mapObservableError(err);
+        alert(mapObservableError(err));
       }
     })
   }

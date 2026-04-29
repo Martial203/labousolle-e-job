@@ -22,8 +22,8 @@
               <button pButton class="mt-2" severity="info" [outlined]="true" label="Améliorer le document pour le faire tenir sur une page." (click)="onOptimize()"></button>
               <button *ngIf="jobSelected && !isPreview" pButton class="mt-2" severity="info" [outlined]="true" label="Postuler maintenant" (click)="onApply()"></button> 
             </ng-container>
-            <ng-container *ngIf="message.paymentUrl">
-              <a pButton severity="info" class="mt-2" [outlined]="true" label="Proceder au paiement maintenant" [href]="message.paymentUrl"></a>
+            <ng-container *ngIf="isPreview">
+              <a pButton severity="info" class="mt-2" [outlined]="true" label="Proceder au paiement maintenant" (click)="displayPhoneNumberDialog = true"></a>
             </ng-container>
           </div>
         </div>
@@ -106,5 +106,31 @@
       <button pButton class="flex-1 block" label="Annuler" severity="secondary" (click)="displayPhoneNumberDialog = false"></button>
       <button pButton class="flex-1 block" label="Confirmer" severity="info" (click)="initPayment(phoneInput.value )" [disabled]="phoneInput.value.length<6"></button>
     </div>
+  </div>
+</p-dialog>
+
+<p-dialog header="Validation du paiement" [(visible)]="displayWaitingPaymentDialog" [modal]="true" [closable]="false" [draggable]="false" styleClass="w-[90%] lg:!w-1/3 text-center">
+  <div class="flex flex-col items-center justify-center gap-6 py-6">
+
+    <!-- Spinner -->
+    <i class="pi pi-spinner animate-spin text-primary text-5xl"></i>
+
+    <!-- Message principal -->
+    <p class="text-lg font-semibold">
+      En attente de validation du paiement...
+    </p>
+
+    <!-- Instructions -->
+    <div class="text-sm text-gray leading-relaxed">
+      <p>Veuillez valider la transaction sur votre téléphone :</p>
+      <p class="mt-2 font-semibold text-primary">Orange Money : #150*5#</p>
+      <p class="font-semibold text-primary">MTN MoMo : *126#</p>
+    </div>
+
+    <!-- Info -->
+    <p class="text-xs italic text-gray">
+      Cette étape peut prendre quelques secondes. Ne fermez pas cette fenêtre.
+    </p>
+
   </div>
 </p-dialog>
