@@ -3,7 +3,7 @@ import { Attachment, ChatMessage } from '../../../../../core/models/chat/chat';
 import { ChatService } from '../../../../../core/services/chat/chat.service';
 import { ProcessState } from '../../../../../core/enums/process-state/process-state';
 import { DocumentType } from '../../../../../core/enums/document-type/document-type';
-import { base64ToPdfDataUrl } from '../../../../../core/utils/utils';
+import { base64ToPdfDataUrl, mapObservableError } from '../../../../../core/utils/utils';
 import { AuthService } from '../../../../../core/services/auth/auth.service';
 import { User } from '../../../../../core/models/user/user';
 
@@ -34,8 +34,11 @@ export class Discussion {
   user!: User;
   displayDocumentPreview: boolean = false;
   displayFileNameDialog: boolean = false;
+  displayPhoneNumberDialog: boolean = false;
   pdfSrc!: any;
   docToDownload!:Attachment;
+  paymentState: ProcessState = ProcessState.INACTIVE;
+  error!: any;
 
   @Input() msgError: string = '';
 
@@ -52,6 +55,44 @@ export class Discussion {
   ngOnInit(): void {
     console.log(this.messages)
     this.user = this.authService.user;
+  }
+
+  initPayment(phone: string): void{
+    this.processState = ProcessState.LOADING;
+    this.error = null;
+    this.chatService.initPayment(phone, this.messages[0].chatId).subscribe({
+      next: (res: any) => {
+        if(res.success){
+          this.processState = ProcessState.SUCCESS;
+          this.paymentState = ProcessState.LOADING;
+          this.verifyPayment(res.reference);
+        }
+      },
+      error: (err) => {
+        this.processState = ProcessState.ERROR;
+        this.error = mapObservableError(err)
+      },
+      complete: () => this.displayPhoneNumberDialog = false
+    })
+  }
+
+  verifyPayment(reference: string): void{
+    this.paymentState = ProcessState.LOADING;
+    this.error = null;
+    this.chatService.verifyPayment(reference).subscribe({
+      next: (res) => {
+        if(res === ProcessState.LOADING){
+          setTimeout(() => this.verifyPayment(reference), 5000)
+        }else if(res === ProcessState.SUCCESS){
+          this.paymentState = res;
+        }else{
+          this.paymentState = res;
+        }
+      },
+      error: (err) => {
+        this.error = mapObservableError(err);
+      }
+    })
   }
 
   download(fileName: string): void {

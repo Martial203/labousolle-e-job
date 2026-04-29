@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { DocumentTemplate } from '../../models/template/document-template';
 import { Cacheable } from 'ts-cacheable';
 import { DocumentType } from '../../enums/document-type/document-type';
+import { ProcessState } from '../../enums/process-state/process-state';
 
 @Injectable({
   providedIn: 'root',
@@ -155,6 +156,29 @@ export class ChatService {
   initCVAudit(file: File, jobId?: number): Observable<ChatMessage> {
     return this.initChat(DocumentType.CV, this._cvTemplates[0].id, jobId).pipe(
       switchMap(chat => this.sendAMessage(chat.id, jobId ? "Fais moi un audit de ce CV pour l'offre d'emploi sélectionnée et optimisons le ensemble." : "Fais moi stp un audit de ce CV et optimisons le ensemble.", file))
+    )
+  }
+
+  initPayment(phone: string, chatId: string): Observable<void>{
+    const body = {
+      payer_phone: phone.replace("+", "").replace(" ", "").replace("(", "").replace(")", ""),
+      conversation_id: chatId,
+      currency: "XAF"
+    };
+    return this.http.post<any>(`${environment.apiUrl}/payments/freemopay/initialize/`, body)
+  }
+
+  verifyPayment(reference: string): Observable<ProcessState>{
+    return this.http.get(`${environment.apiUrl}/payments/${reference}/verify/`).pipe(
+      map((res: any) => {
+        if(res.payment.status === "complete"){
+          return ProcessState.SUCCESS;
+        }else if(["canceled", "failed", "expired"].includes(res.payment.status)){
+          return ProcessState.ERROR;
+        }else{
+          return ProcessState.LOADING
+        }
+      })
     )
   }
 
