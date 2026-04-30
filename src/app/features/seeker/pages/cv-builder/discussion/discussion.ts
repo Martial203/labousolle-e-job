@@ -24,6 +24,7 @@ export class Discussion {
   @Input() documentType!: DocumentType;
   @Input() loadingMessages: boolean = false;
   @Input() jobSelected: boolean = false;
+  @Input() chatId!: string;
 
   @Output() apply: EventEmitter<void> = new EventEmitter<void>();
   @Output() turnPreviewMode: EventEmitter<void> = new EventEmitter<void>();
@@ -61,7 +62,7 @@ export class Discussion {
   initPayment(phone: string): void{
     this.processState = ProcessState.LOADING;
     this.error = null;
-    this.chatService.initPayment(phone, this.messages[0].chatId).subscribe({
+    this.chatService.initPayment(phone, this.chatId).subscribe({
       next: (res: any) => {
         if(res.success){
           this.processState = ProcessState.SUCCESS;
@@ -87,7 +88,7 @@ export class Discussion {
           setTimeout(() => this.verifyPayment(reference), 5000)
         }else if(res === ProcessState.SUCCESS){
           this.paymentState = res;
-          this.chatService.getChatMessages(this.messages[0].chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
+          this.chatService.getChatMessages(this.chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
         }else{
           this.paymentState = res;
           this.displayWaitingPaymentDialog = false;

@@ -33,7 +33,7 @@
       <main #scrollContainer class="flex flex-col flex-1 gap-16 px-4 py-12 overflow-y-auto lg:px-8">
         <div class="flex-1">
           <ng-container *ngIf="selectedDiscussion; else noSelectedDiscussion">
-            <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING"
+            <app-discussion [typingState]="messageProcessing" [documentType]="documentType" [loadingMessages]="processState===PROCESS_STATES.LOADING" [chatId]="chatId"
               [messages]="(discussion$|async)!" [jobSelected]="isJobSelected()" (apply)="onApply()" (turnPreviewMode)="onTurnPreviewMode()" (optimize)="sendMessage({ content: $event })" [msgError]="msgError"></app-discussion>
           </ng-container>
           <ng-template #noSelectedDiscussion>
