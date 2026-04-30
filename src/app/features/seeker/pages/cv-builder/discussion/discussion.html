@@ -22,7 +22,7 @@
               <button pButton class="mt-2" severity="info" [outlined]="true" label="Améliorer le document pour le faire tenir sur une page." (click)="onOptimize()"></button>
               <button *ngIf="jobSelected && !isPreview" pButton class="mt-2" severity="info" [outlined]="true" label="Postuler maintenant" (click)="onApply()"></button> 
             </ng-container>
-            <ng-container *ngIf="message.paymentUrl">
+            <ng-container *ngIf="attachment.isPreview">
               <a pButton severity="info" class="mt-2" [outlined]="true" label="Proceder au paiement maintenant" (click)="displayPhoneNumberDialog = true"></a>
             </ng-container>
           </div>
@@ -94,7 +94,7 @@
   </div>
 </p-dialog>
 
-<p-dialog [(visible)]="displayPhoneNumberDialog" header="Informations due paiement" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
+<p-dialog [visible]="displayPhoneNumberDialog" header="Informations due paiement" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <div class="flex flex-col gap-8 py-2">
 
     <p-floatlabel variant="on">
