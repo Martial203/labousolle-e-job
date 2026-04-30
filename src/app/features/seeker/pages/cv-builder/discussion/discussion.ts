@@ -90,7 +90,7 @@ export class Discussion {
         }else if(res === ProcessState.SUCCESS){
           this.paymentState = res;
           this.chatService.getChatMessages(this.chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
-          this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatId }, onSameUrlNavigation: 'reload' })
+          this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatId } })
         }else{
           this.paymentState = res;
           this.displayWaitingPaymentDialog = false;
