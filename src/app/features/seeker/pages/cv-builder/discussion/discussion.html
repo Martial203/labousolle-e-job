@@ -89,7 +89,7 @@
 
     <div class="flex justify-center gap-2">
       <button pButton class="flex-1 block" label="Annuler" severity="secondary" (click)="displayFileNameDialog = false"></button>
-      <button pButton class="flex-1 block" label="Confirmer" severity="info" [disabled]="filename.value.length===0" (click)="download(filename.value)"></button>
+      <button pButton class="flex-1 block" label="Confirmer" severity="info" [disabled]="filename.value.length===0 || processState === PROCESS_STATES.LOADING" [loading]="processState === PROCESS_STATES.LOADING" (click)="download(filename.value)"></button>
     </div>
   </div>
 </p-dialog>
@@ -106,7 +106,7 @@
 
     <div class="flex justify-center gap-2">
       <button pButton class="flex-1 block" label="Annuler" severity="secondary" (click)="displayPhoneNumberDialog = false"></button>
-      <button pButton class="flex-1 block" label="Confirmer" severity="info" (click)="initPayment(phoneInput.value )" [disabled]="phoneInput.value.length<6"></button>
+      <button pButton class="flex-1 block" label="Confirmer" severity="info" (click)="initPayment(phoneInput.value )" [disabled]="phoneInput.value.length<6 || processState === PROCESS_STATES.LOADING" [loading]="processState === PROCESS_STATES.LOADING"></button>
     </div>
   </div>
 </p-dialog>
