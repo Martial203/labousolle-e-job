@@ -94,11 +94,13 @@
   </div>
 </p-dialog>
 
-<p-dialog [visible]="displayPhoneNumberDialog" header="Informations due paiement" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
+<p-dialog [visible]="displayPhoneNumberDialog" header="Informations du paiement" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <div class="flex flex-col gap-8 py-2">
 
     <p-floatlabel variant="on">
-      <input #phoneInput pInputText type="text" autocomplete="tel" inputmode="tel" class="w-full" helper="Format: +xxx xxxxxxxx" required>
+      <input #phoneInput pInputText type="text" autocomplete="tel" inputmode="tel" class="w-full" required>
+      <small id="phoneNumber-help">Format: +xxx xxxxxxxx.</small>
+
       <label for="on_label">Tel (OM/MoMo/Moov-Bénin)</label>
     </p-floatlabel>
 
