@@ -90,6 +90,7 @@ export class Discussion {
           this.chatService.getChatMessages(this.messages[0].chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
         }else{
           this.paymentState = res;
+          this.displayWaitingPaymentDialog = false;
           alert("Le paiement a échoué, veuillez ressayer.")
         }
       },

@@ -96,7 +96,7 @@ export class ChatService {
           // content: !res.payment_required ? res.content : this.buildPaymentMessage(res.payment_url ?? ''),
           content: res.content,
           sender: "agent",
-          paymentUrl: res.payment_required ? res.payment_url : undefined,
+          paymentUrl: res.payment_required ? (res.payment_url || 'url') : undefined,
           date: new Date(res.timestamp),
           document: res.document ? this.mapDocument(res.document) : undefined
         }
