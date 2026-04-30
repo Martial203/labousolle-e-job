@@ -230,7 +230,7 @@ export class ChatService {
       chatId: message.session_id,
       // content: !message.payment_required ? message.content : this.buildPaymentMessage(message.payment_url ?? ''),
       content: message.content,
-      paymentUrl: message.payment_required ? message.payment_url : undefined,
+      paymentUrl: message.document ? (message.document.isPreview ? 'url' : undefined) : undefined,
       sender: message.role==="assistant" ? "agent" : "user",
       date: new Date(message.timestamp),
       document: message.document ? this.mapDocument(message.document) : undefined
