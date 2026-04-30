@@ -6,6 +6,7 @@ import { DocumentType } from '../../../../../core/enums/document-type/document-t
 import { base64ToPdfDataUrl, mapObservableError } from '../../../../../core/utils/utils';
 import { AuthService } from '../../../../../core/services/auth/auth.service';
 import { User } from '../../../../../core/models/user/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-discussion',
@@ -52,7 +53,7 @@ export class Discussion {
     return val;
   }
 
-  constructor(private authService: AuthService, private chatService: ChatService) { }
+  constructor(private authService: AuthService, private chatService: ChatService, private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.messages)
@@ -89,6 +90,7 @@ export class Discussion {
         }else if(res === ProcessState.SUCCESS){
           this.paymentState = res;
           this.chatService.getChatMessages(this.chatId).subscribe((res) => this.displayWaitingPaymentDialog = false)
+          this.router.navigate(['/cv-builder'], { queryParams: { chatId: this.chatId }, onSameUrlNavigation: 'reload' })
         }else{
           this.paymentState = res;
           this.displayWaitingPaymentDialog = false;
