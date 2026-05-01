@@ -67,7 +67,7 @@
       [original-size]="false"
       class="w-[60vh] h-[80vh] {{ isPreview ? 'blur-[1px]' : '' }}"
     ></pdf-viewer>
-    <a [href]="getPaymentUrl()"><p-message *ngIf="isPreview" severity="info" class="absolute w-full scale-75 inset-y-1/2" text="Procèdes au paiement pour obtenir le document complet, sans filligrane ni floutage."></p-message></a>
+    <p-message *ngIf="isPreview" (click)="displayPhoneNumberDialog = true" severity="info" class="absolute w-full scale-75 inset-y-1/2" text="Procèdes au paiement pour obtenir le document complet, sans filligrane ni floutage."></p-message>
     <p-message *ngIf="processState===PROCESS_STATES.ERROR" severity="error" text="Erreur de chargement du documment. Veuillez ressayer." class="w-full mb-4"></p-message>
   </div>
 
@@ -101,7 +101,7 @@
       <input #phoneInput pInputText type="text" autocomplete="tel" inputmode="tel" class="w-full" required>
       <small id="phoneNumber-help">Format: +xxx xxxxxxxx.</small>
 
-      <label for="on_label">Tel (OM/MoMo/Moov-Bénin)</label>
+      <label for="on_label">Tel (OM/MoMo)</label>
     </p-floatlabel>
 
     <div class="flex justify-center gap-2">
@@ -125,7 +125,7 @@
     <!-- Instructions -->
     <div class="text-sm text-gray leading-relaxed">
       <p>Veuillez valider la transaction sur votre téléphone :</p>
-      <p class="mt-2 font-semibold text-primary">Orange Money : #150*5#</p>
+      <p class="mt-2 font-semibold text-primary">Orange Money : #150*50#</p>
       <p class="font-semibold text-primary">MTN MoMo : *126#</p>
     </div>
 
