@@ -37,6 +37,7 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RatingModule } from 'primeng/rating';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ImageCompareModule } from 'primeng/imagecompare';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     ImageModule,
     BadgeModule,
     OverlayBadgeModule,
-    RatingModule
+    RatingModule,
+    ImageCompareModule
   ]
 })
 export class PrimeNgModule { }

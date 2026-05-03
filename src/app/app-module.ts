@@ -15,7 +15,7 @@ import { authInterceptor } from './core/interceptors/auth/auth-interceptor';
 
 @NgModule({
   declarations: [
-    App
+    App,
   ],
   imports: [
     BrowserModule,
