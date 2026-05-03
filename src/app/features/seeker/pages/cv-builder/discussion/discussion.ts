@@ -63,7 +63,7 @@ export class Discussion {
   initPayment(phone: string): void{
     this.processState = ProcessState.LOADING;
     this.error = null;
-    this.chatService.initPayment(phone, this.chatId).subscribe({
+    this.chatService.initPayment(`+237 ${phone}`, this.chatId).subscribe({
       next: (res: any) => {
         if(res.success){
           this.processState = ProcessState.SUCCESS;
@@ -94,7 +94,6 @@ export class Discussion {
         }else{
           this.paymentState = res;
           this.displayWaitingPaymentDialog = false;
-          alert("Le paiement a échoué, veuillez ressayer.")
         }
       },
       error: (err) => {

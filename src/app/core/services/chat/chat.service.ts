@@ -173,8 +173,15 @@ export class ChatService {
       map((res: any) => {
         if(res.payment.status === "complete"){
           return ProcessState.SUCCESS;
-        }else if(["canceled", "failed", "expired"].includes(res.payment.status)){
+        }else if(res.payment.status === "failed"){
+          alert("Le paiement a échoué, veuillez verifier que vous disposez d'un solde suffisant et puis ressayez.")
           return ProcessState.ERROR;
+        }else if(res.payment.status === "canceled"){
+          alert("Le paiement a été annulé par le payeur.")
+          return ProcessState.ERROR
+        }else if(res.payment.status === "expired"){
+          alert("La requete de paiement a expiré.")
+          return ProcessState.ERROR
         }else{
           return ProcessState.LOADING
         }

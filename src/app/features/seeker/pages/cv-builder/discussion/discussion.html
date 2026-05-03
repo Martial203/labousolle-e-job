@@ -97,12 +97,14 @@
 <p-dialog [(visible)]="displayPhoneNumberDialog" header="Informations du paiement" [modal]="true" [closable]="true" styleClass="w-[90%] lg:!w-1/2">
   <div class="flex flex-col gap-8 py-2">
 
-    <p-floatlabel variant="on">
-      <input #phoneInput pInputText type="text" autocomplete="tel" inputmode="tel" class="w-full" required>
-      <small id="phoneNumber-help">Format: +xxx xxxxxxxx.</small>
-
-      <label for="on_label">Tel (OM/MoMo)</label>
-    </p-floatlabel>
+    
+    <div>
+      <label for="tel">Tel (OM / MoMo)</label>
+       <p-inputgroup>
+          <p-inputgroup-addon>+237</p-inputgroup-addon>
+          <input #phoneInput pInputText type="text" autocomplete="tel" inputmode="tel" placeholder="670 00 00 00" id="tel" class="w-full" required>
+      </p-inputgroup>
+    </div>
 
     <div class="flex justify-center gap-2">
       <button pButton class="flex-1 block" label="Annuler" severity="secondary" (click)="displayPhoneNumberDialog = false"></button>
