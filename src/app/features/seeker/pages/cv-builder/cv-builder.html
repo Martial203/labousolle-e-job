@@ -127,7 +127,7 @@
   </div>
 </p-dialog>
 
-<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="displayLoginModal" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
   <ng-template #header>
     <div class="w-full text-end">
       <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="displayLoginModal = false"></p-button>

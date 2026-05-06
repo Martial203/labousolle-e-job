@@ -37,6 +37,7 @@ export class SocialNetworksForm {
       }
 
       if(this.company){
+        this.company.socialNetworks = this.company.socialNetworks ?? {};
         const value = Object.entries(this.company.socialNetworks).map(([network, url]) => ({
           network: network.split('Url')[0].charAt(0).toUpperCase() + network.split('Url')[0].slice(1),
           url: url
