@@ -92,7 +92,7 @@
         </div>
       </main>
     </div>
-    <div *ngIf="selectedDiscussion" (click)="isAnonymMode && auditMode ? displayLoginModal=true : undefined">
+    <div *ngIf="selectedDiscussion" (click)="isAnonymMode ? displayLoginModal=true : undefined">
       <app-chat-message-input [isChatSelected]="selectedDiscussion!=null || isAnonymMode" [disabled]="auditMode && isAnonymMode" (message)="sendMessage($event)"></app-chat-message-input>
     </div>
   </section>
@@ -127,7 +127,7 @@
   </div>
 </p-dialog>
 
-<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="shouldPromptLogin" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
+<p-dialog #restrictedAccessDialog [modal]="true" [(visible)]="displayLoginModal" [closable]="false" [style]="{ width: '27rem', background: '#ffffff' }">
   <ng-template #header>
     <div class="w-full text-end">
       <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="displayLoginModal = false"></p-button>
